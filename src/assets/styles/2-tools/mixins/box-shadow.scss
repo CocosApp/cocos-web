@@ -1,0 +1,11 @@
+@mixin boxShadow($box-shadow){
+    -webkit-box-shadow: $box-shadow !important;
+    -moz-box-shadow: $box-shadow !important;
+    box-shadow: $box-shadow !important;
+}
+
+@mixin disableBoxShadow(){
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+}

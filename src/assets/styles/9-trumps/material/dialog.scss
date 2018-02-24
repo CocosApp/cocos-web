@@ -1,0 +1,12 @@
+.mat-dialog-container{
+    padding: 0 !important;
+}
+
+.chat-wrapper{
+    height: 500px !important;
+    width: 300px !important;
+    @include device-sm{
+        height: 70vh !important;
+        width: 450px !important;
+    }
+}

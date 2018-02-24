@@ -1,0 +1,7 @@
+a{
+    color: inherit;
+    text-decoration: none;
+    &, &:active, &:visited, &:active{
+        text-decoration: none;
+    }
+}

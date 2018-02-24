@@ -1,0 +1,45 @@
+// $supported-colors: ( 
+//     blue: $blue,
+//     green: $green
+// );
+
+// .#{$global-namespace}{
+//     &-btn{
+//         text-align: center;
+//         color: $light-mustard;
+//         font-weight: 600;
+//         min-width: 112px;
+//         border: 1px solid $light-mustard;
+//         padding: 6px 34px;
+//         background-color: #FFFFFF; 
+//         @include borderRadius(3px);
+//         @include transition2(all .2s linear);
+//         &:hover, &:focus{
+//             @extend .#{$global-namespace}-btn--raised;
+//         }
+//         &--raised{
+//             color: #FFFFFF;
+//             background-color: $light-mustard;
+//             &:hover{
+//                 color: #FFFFFF;
+//                 background-color: $light-mustard;
+//             }
+//         }
+//         @each $variant-button, $color in $supported-colors{
+//             &--#{$variant-button}{
+//                 color: $color;
+//                 border: 1px solid $color;
+//                 &.#{$global-namespace}-btn--raised{
+//                     background-color: $color;
+//                     color: #FFFFFF;
+//                 }
+//             }
+//         }
+//         &--disabled,&:disabled{
+//             cursor: not-allowed;
+//             background-color: #E4E0E0;
+//             border: 1px solid #E4E0E0;
+//             color: gray;
+//         }
+//     }
+// }

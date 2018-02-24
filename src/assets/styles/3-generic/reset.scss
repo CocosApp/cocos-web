@@ -1,0 +1,27 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    // -webkit-perspective: 1000;
+    // @extend .scrollbar;
+}
+
+html, body {
+    height: 100%;
+    font-size: 14px;
+    color: $global-color;
+}
+
+body, caption, th, td, textarea, select, option, legend, fieldset {
+    font-size-adjust: 0.5;
+    &:focus{
+        outline: none;
+    }
+}
+
+body {
+    font-family: $font-primary;
+}

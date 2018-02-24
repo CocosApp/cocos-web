@@ -1,0 +1,75 @@
+$mat-vet-primary: (
+  50: $color-primary,
+  100: $color-primary,
+  200: $color-primary,
+  300: $color-primary,
+  400: $color-primary,
+  500: $color-primary,
+  600: $color-primary-lighter,
+  700: $color-primary,
+  800: $color-primary-darker,
+  900: $color-primary,
+  A100: $color-primary,
+  A200: $color-primary,
+  A400: $color-primary,
+  A700: $color-primary,
+  contrast: (
+    50: $white-87-opacity,
+    100: $white-87-opacity,
+    200: $white-87-opacity,
+    300: $white-87-opacity,
+    400: $white-87-opacity,
+    500: $white-87-opacity,
+    600: $white-87-opacity,
+    700: $white-87-opacity,
+    800: $white-87-opacity,
+    900: $white-87-opacity,
+    A100: $white-87-opacity,
+    A200: $white-87-opacity,
+    A400: $white-87-opacity,
+    A700: $white-87-opacity,
+  )
+);
+
+$mat-vet-accent: (
+  50: $color-accent,
+  100: $color-accent,
+  200: $color-accent,
+  300: $color-accent,
+  400: $color-accent-lighter,
+  500: $color-accent,
+  600: $color-accent-darker,
+  700: $color-accent,
+  800: $color-accent,
+  900: $color-accent,
+  A100: $color-accent,
+  A200: $color-accent,
+  A400: $color-accent,
+  A700: $color-accent,
+  contrast: (
+    50: $white-87-opacity,
+    100: $white-87-opacity,
+    200: $white-87-opacity,
+    300: $white-87-opacity,
+    400: $white-87-opacity,
+    500: $white-87-opacity,
+    600: $white-87-opacity,
+    700: $white-87-opacity,
+    800: $white-87-opacity,
+    900: $white-87-opacity,
+    A100: $white-87-opacity,
+    A200: $white-87-opacity,
+    A400: $white-87-opacity,
+    A700: $white-87-opacity,
+  )
+);
+
+$mat-vet-warn: $mat-red;
+
+$vet-app-primary: mat-palette($mat-vet-primary, 700);
+$vet-app-accent:  mat-palette($mat-vet-accent);
+$vet-app-warn:  mat-palette($mat-vet-warn);
+
+$vet-app-theme: mat-light-theme($vet-app-primary, $vet-app-accent, $vet-app-warn);
+
+@include angular-material-theme($vet-app-theme);

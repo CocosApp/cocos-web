@@ -1,0 +1,38 @@
+.no-margin {
+    margin: 0 !important;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.padding {
+    padding: 30px;
+}
+
+.fill-parent{
+    height: 100%;
+    width: 100%;
+}
+
+.fill-height{
+    height: 100%;
+}
+
+.fill-width{
+    width: 100%;
+}
+
+.scrollable-x{
+    overflow-x: auto; 
+    overflow-y: hidden;
+}
+
+.scrollable-y{
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.scrollable{
+    overflow: auto;
+}

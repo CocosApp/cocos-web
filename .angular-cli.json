@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "cocos-admin"
+    "name": "cocos-fe"
   },
   "apps": [
     {
@@ -19,7 +19,8 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.scss"
+        "styles.scss",
+        "../node_modules/material-design-icons/iconfont/material-icons.css"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
