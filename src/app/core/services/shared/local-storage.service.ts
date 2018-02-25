@@ -35,4 +35,5 @@ export class LocalStorageService{
 export class LocalStorageKeys{
     public static TOKEN: string = "TOKEN";
     public static ADDRESS: string = "ADDRESS";
+    public static CURRENT_USER: string = "CURRENT_USER";
 }

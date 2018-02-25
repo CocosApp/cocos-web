@@ -9,7 +9,7 @@ import { User } from "../../shared/models/user.model";
 import { Router } from "@angular/router";
 import { UserByIdSpecification } from "./specifications/user.specification";
 import { JwtService } from "./shared/jwt.service";
-import { LocalStorageService } from "./shared/local-storage.service";
+import { LocalStorageService, LocalStorageKeys } from "./shared/local-storage.service";
 import { ToastService } from "./shared/toast.service";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -22,10 +22,9 @@ export class UsersService extends BaseService implements CrudService<User>{
     constructor(api: ApiService, private router: Router, private jwt: JwtService, private storage: LocalStorageService
     , toast: ToastService){
         super(api,toast);
-        this.currentUser = new BehaviorSubject<User>(new User({
-            hasActiveOrder: false,
-            photoUrl: '/assets/images/bob-esponja.jpg'
-        }));
+        this.currentUser = new BehaviorSubject<User>(
+            new User(this.storage.load(LocalStorageKeys.CURRENT_USER) as any)
+        );
     }
 
     getCurrentUser(): Observable<User>{
@@ -88,7 +87,7 @@ export class UsersService extends BaseService implements CrudService<User>{
 
     populate(): Observable<boolean>{
         this.currentUser.next(new User({
-            hasActiveOrder: true
+            
         }));
         return Observable.of(true);
         // return this.api.get('v1/accounts/')

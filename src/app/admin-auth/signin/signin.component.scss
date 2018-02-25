@@ -1,0 +1,29 @@
+@import "../../../assets/styles/2-tools/index";
+
+.signin{
+    @include layoutFlex();
+    @include alignItems(stretch);
+    &__left{
+        background-image: url('/assets/images/signin-bk.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        @include flexFlex();
+    }
+    &__right{
+        background-color: #FFF;
+        padding: 60px;
+        @include flexFlex(0 0 490px);
+        @include layoutFlex();
+        @include directionFlex(column);
+        @include justifyContent(center);
+        @include alignItems(stretch);
+        form{
+            padding: 20px;
+        }
+    }
+    &__logo{
+        width: 220px;
+        @include alignSelf(center);
+    }
+}
