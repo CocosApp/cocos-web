@@ -1,10 +1,20 @@
 <div class="signup fill-parent flex-col-layout ai-stretch">
+  <div class="signup__bk"></div>
   <mat-toolbar color="primary" class="flex-row-layout ai-center">
     <span class="toolbar__brand">COCOS ADMIN</span>
   </mat-toolbar>
-  <form class="flex padding-y overflow-y scrollbar" [formGroup]="signupFG">
+  <form class="flex padding-y overflow-y scrollbar" [formGroup]="signupFG">    
     <mat-card>
-      <mat-card-title>Registro</mat-card-title>
+      <mat-card-title>
+        <button mat-icon-button type="button" routerLink="/admin/auth">
+          <i class="material-icons">keyboard_backspace</i>
+        </button>
+        <span><b>Registro</b></span>
+      </mat-card-title>
+      <mat-card-subtitle>
+        Complete los siguiente datos para enviar su solicitud de creación
+        de usuario al equipo de <i>COCOS</i>.
+      </mat-card-subtitle>
       <mat-card-content class="flex-col-layout ai-stretch">
         <mat-form-field>
           <input autocomplete="off" type="text" matInput placeholder="Nombres" formControlName="firstName">
@@ -23,7 +33,7 @@
           <mat-error>Requerido</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <textarea cols="3" matInput placeholder="Comentarios" formControlName="comments"></textarea>
+          <textarea cols="4" matInput placeholder="¿Qué actividades realiza su negocio?" formControlName="comments"></textarea>
         </mat-form-field>
         <mat-form-field>
           <input autocomplete="off" type="password" matInput placeholder="Contraseña" formControlName="password">
@@ -43,7 +53,7 @@
         </mat-form-field>
         <div class="flex-row-layout jc-flex-end">
           <button mat-raised-button color="primary">
-            Registrar
+            Enviar solicitud
           </button>
         </div>
       </mat-card-content>

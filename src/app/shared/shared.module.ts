@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatRadioModule, MatCardModule, MatDialogModule, MatToolbarModule, MatMenuModule, MatButtonModule, MatTabsModule, MatInputModule } from '@angular/material';
+import { MatRadioModule, MatCardModule, MatDialogModule, MatToolbarModule, MatMenuModule, MatButtonModule, MatTabsModule, MatInputModule, MatTooltipModule } from '@angular/material';
+import { InstanceResolverForBranch } from './resolvers/instance.resolver';
 
 @NgModule({
   imports: [
@@ -22,7 +23,11 @@ import { MatRadioModule, MatCardModule, MatDialogModule, MatToolbarModule, MatMe
     MatDialogModule,
     MatButtonModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    MatTooltipModule
+  ],
+  providers: [
+    InstanceResolverForBranch
   ]
 })
 export class SharedModule { }

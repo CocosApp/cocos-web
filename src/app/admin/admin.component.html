@@ -10,13 +10,13 @@
         <i class="material-icons">account_circle</i>
         <span>Perfil</span>
       </button>
-      <button mat-menu-item class="flex-row-layout ai-center flex-gap">
+      <button mat-menu-item class="flex-row-layout ai-center flex-gap" routerLink="/admin/auth">
         <i class="material-icons">exit_to_app</i>
         <span>Cerrar sesión</span>
       </button>
     </mat-menu>
   </mat-toolbar>
-  <nav mat-tab-nav-bar backgroundColor="primary">
+  <nav mat-tab-nav-bar>
       <a mat-tab-link
          *ngFor="let link of navLinks"
          [routerLink]="link.path"
@@ -25,7 +25,7 @@
         {{link.label}}
       </a>
   </nav>
-  <div class="flex flex-row-layout ai-stretch overflow-y padding">
+  <div class="admin__content flex flex-row-layout ai-stretch overflow-y padding scrollbar">
     <router-outlet></router-outlet>
   </div>
 </div>

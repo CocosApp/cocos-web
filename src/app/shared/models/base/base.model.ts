@@ -1,5 +1,5 @@
 export class Base<T>{
-    id?: string;
+    id?: number;
 
     constructor(partial?: Partial<T>){
         Object.assign(this, partial);

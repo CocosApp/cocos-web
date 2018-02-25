@@ -20,7 +20,7 @@ export class SignupComponent implements OnInit {
       businessName: ['',[Validators.required]],
       comments: ['',[]],
       password: ['',[Validators.required]],
-      confirmPassword: ['',[Validators.required, EqualsToValidator.buildValidator('password')]],
+      confirmPassword: ['',[EqualsToValidator.buildValidator('password')]],
       email: ['',[Validators.required]],
       phone: ['',[Validators.required]],
     })

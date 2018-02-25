@@ -1,3 +1,29 @@
-<p>
-  branch-list works!
-</p>
+<div class="branch-list">
+  <div class="branches-container" *ngIf="branchList">
+    <div class="branch" *ngFor="let branch of branchList">
+      <mat-card>
+        <div mat-card-image class="branch__image" 
+        [style.backgroundImage]="getBackgroundImage(branch)">
+        </div>
+        <mat-card-content>
+          <p class="text-center">
+            <i>{{branch.name}}</i>
+          </p>
+        </mat-card-content>
+        <mat-card-actions class="flex-row-layout flex-gap">
+            <button mat-button class="flex-50">
+              <span>ELIMINAR</span>
+            </button>
+            <button mat-button color="primary" class="flex-50"
+            [routerLink]="branch.id">
+              <span>EDITAR</span>
+            </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+  <button class="branch-list__add" mat-fab matTooltip="Agregar sucursal"
+  matTooltipPosition="left" routerLink="agregar">
+    <i class="material-icons">add</i>
+  </button>
+</div>

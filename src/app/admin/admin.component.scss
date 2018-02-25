@@ -1,0 +1,9 @@
+@import "../../assets/styles/2-tools/index";
+
+.admin{
+    &__content{
+        /deep/ &>router-outlet ~ * {
+            @include flexFlex();
+        }
+    }
+}

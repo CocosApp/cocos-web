@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastService } from './services/shared/toast.service';
 import { AdminAuthGuard } from './guards/admin-auth.guard';
 import { AdminGuard } from './guards/admin.guard';
+import { BranchesService } from './services/branches.service';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { AdminGuard } from './guards/admin.guard';
     LocalStorageService,
     ToastService,
     AdminAuthGuard,
-    AdminGuard
+    AdminGuard,
+    BranchesService
   ],
   declarations: []
 })
