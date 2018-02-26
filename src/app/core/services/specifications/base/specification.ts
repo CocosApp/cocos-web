@@ -1,5 +1,7 @@
 export abstract class Specification<T>{
-    abstract evaluate(entity: T): boolean;
+    evaluate(entity: T): boolean{
+        return true;
+    }
 }
 
 export class EntityByIdSpecification<T> extends Specification<T>{

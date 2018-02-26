@@ -14,7 +14,7 @@ export class Branch extends Base<Branch>{
     address: number;
     openTime: string;
     closeTime: string;
-    discountList: Discount;
+    discountList: Discount[];
     menu: any;
     menuPublicUrl: string;
     phoneList: string[];

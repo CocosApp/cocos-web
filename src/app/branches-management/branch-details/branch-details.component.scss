@@ -1,0 +1,12 @@
+@import "../../../assets/styles/2-tools/index";
+
+.branch-details{
+    mat-card{
+        margin: 0 auto;
+        width: 95%;
+        max-width: 500px;
+        mat-form-field{
+            padding: 8px 0
+        }
+    }
+}

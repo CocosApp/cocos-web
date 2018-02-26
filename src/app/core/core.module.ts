@@ -11,6 +11,9 @@ import { ToastService } from './services/shared/toast.service';
 import { AdminAuthGuard } from './guards/admin-auth.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { BranchesService } from './services/branches.service';
+import { CategoriesService } from './services/categories.service';
+import { ServicesService } from './services/services.service';
+import { DiscountsService } from './services/discounts.service';
 
 @NgModule({
   imports: [
@@ -27,7 +30,10 @@ import { BranchesService } from './services/branches.service';
     ToastService,
     AdminAuthGuard,
     AdminGuard,
-    BranchesService
+    BranchesService,
+    CategoriesService,
+    ServicesService,
+    DiscountsService
   ],
   declarations: []
 })
