@@ -1,30 +1,32 @@
 <div class="signin fill-parent">
   <div class="signin__left"></div>
   <div class="signin__right">
-    <img class="signin__logo" src="/assets/images/cocos-logo.svg" alt="">
-    <form [formGroup]="signinFG" class="flex-col-layout ai-stretch flex-gap" (submit)="signin()">
-        <mat-form-field>
-          <input type="text" matInput formControlName="email" placeholder="Email">
-          <mat-error>Email inválido</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input type="password" matInput formControlName="password" placeholder="Contraseña">
-          <mat-error>Contraseña requerida</mat-error>
-        </mat-form-field>
-        <div class="flex-col-layout ai-center flex-gap">
-          <button mat-raised-button color="primary">
-            INGRESAR
-          </button>
-          <button type="button" mat-button>
-            Olvidé mi contraseña
-          </button>      
-        </div>
-    </form>
-    <p class="text-center">
-      <span>Aún no cuentas con una cuenta?</span>
-      <button mat-button routerLink='/admin/auth/signup'>
-        REGÍSTRATE!
-      </button>
-    </p>
+    <div class="signin__container flex-col-layout ai-stretch">
+      <img class="signin__logo" src="/assets/images/cocos-logo.svg" alt="">
+      <form [formGroup]="signinFG" class="flex-col-layout ai-stretch flex-gap" (submit)="signin()">
+          <mat-form-field>
+            <input type="text" matInput formControlName="email" placeholder="Email">
+            <mat-error>Email inválido</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input type="password" matInput formControlName="password" placeholder="Contraseña">
+            <mat-error>Contraseña requerida</mat-error>
+          </mat-form-field>
+          <div class="flex-col-layout ai-center flex-gap">
+            <button mat-raised-button color="primary">
+              INGRESAR
+            </button>
+            <button type="button" mat-button>
+              Olvidé mi contraseña
+            </button>      
+          </div>
+      </form>
+      <p class="text-center">
+        <span>Aún no cuentas con una cuenta?</span>
+        <button mat-button routerLink='/admin/auth/signup'>
+          REGÍSTRATE!
+        </button>
+      </p>
+    </div>    
   </div>
 </div>

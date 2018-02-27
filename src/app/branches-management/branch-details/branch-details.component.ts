@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Branch } from '../../shared/models/branch.model';
 import { BranchesService } from '../../core/services/branches.service';
 import { CategoriesService } from '../../core/services/categories.service';
@@ -11,6 +11,7 @@ import { Category } from '../../shared/models/category.model';
 import { Discount } from '../../shared/models/discount.model';
 import { Service } from '../../shared/models/service.model';
 import 'rxjs/add/observable/forkJoin';
+import { ITime } from '../../shared/vendor/material-time-control/time-control/index';
 
 @Component({
   selector: 'app-branch-details',
@@ -24,7 +25,7 @@ export class BranchDetailsComponent implements OnInit {
   categoryList: Category[];
   discountList: Discount[];
   serviceList: Service[];
-  private exportTime = {hour: 7, minute: 15, meriden: 'PM', format: 12};
+  // private exportTime = {hour: 7, minute: 15, meriden: 'PM', format: 12};
   
   constructor(private fb: FormBuilder, private branches: BranchesService, private categories: CategoriesService,
   private services: ServicesService, private discounts: DiscountsService, private route: ActivatedRoute) {
@@ -81,5 +82,21 @@ export class BranchDetailsComponent implements OnInit {
 
   ngOnInit(){
 
+  }
+
+  formatTime(time: string): ITime{
+    time = (!time || time == '') ? '00:00 AM' : time;
+    return {
+      hour: parseInt(time.substr(0,2)),
+      minute: parseInt(time.substr(3,2)),
+      meriden: time.substr(6,2) == 'AM' ? 'AM' : 'PM', 
+      format: 12
+    }
+  }
+
+  setTime(time: ITime, control: AbstractControl){
+    control.setValue( 
+      time.hour.toString().padStart(2,'0') + ':' + time.minute.toString().padStart(2,'0') + ' ' + time.meriden
+    );
   }
 }

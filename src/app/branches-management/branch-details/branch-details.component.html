@@ -8,8 +8,8 @@
         <span><b>{{ branch ? 'Editar sucursal' : 'Crear sucursal' }}</b></span>
       </mat-card-title>
       <mat-card-subtitle>
-        Complete los siguiente datos para enviar su solicitud de creación
-        de usuario al equipo de <i>COCOS</i>.
+        Si desea designar la gestión de esta sucursal a alguien más, deberá contactar con el equipo de
+        <i>COCOS</i> para la creación de un nuevo usuario exclusivo para este local.
       </mat-card-subtitle>
       <mat-card-content class="flex-col-layout ai-stretch">
         <mat-form-field>
@@ -27,8 +27,20 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <div>
-            <w-mat-timepicker color="primary" [userTime]="exportTime" (userTimeChange)="exportime = $event"></w-mat-timepicker>
+        <mat-form-field>
+          <mat-select placeholder="Servicios" formControlName="serviceList" multiple>
+            <mat-option *ngFor="let service of serviceList" [value]="service">
+              {{service.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="flex-row-layout flex-gap">
+            <w-mat-timepicker class="flex-50" color="primary" [userTime]="formatTime(branchFG.get('openTime').value)" 
+            (userTimeChange)="setTime($event,branchFG.get('openTime'))" placeholder="Hora inicio">
+            </w-mat-timepicker>
+            <w-mat-timepicker class="flex" color="primary" [userTime]="formatTime(branchFG.get('closeTime').value)" 
+            (userTimeChange)="setTime($event,branchFG.get('closeTime'))" placeholder="Hora Fin">
+            </w-mat-timepicker>
         </div>
         <div class="flex-row-layout jc-flex-end">
           <button mat-raised-button color="primary">
