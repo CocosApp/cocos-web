@@ -5,5 +5,8 @@
 
 export const environment = {
   production: false,
-  backendUrl: '****'
+  backendUrl: '****',
+  googleMaps: {
+    apiKey: 'AIzaSyCkMxWbKR4Y2SUSnkBRgsK4xxCGzKAoxt0'
+  }
 };

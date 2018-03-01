@@ -25,6 +25,8 @@ export class BranchDetailsComponent implements OnInit {
   categoryList: Category[];
   discountList: Discount[];
   serviceList: Service[];
+  lat: number = 51.678418;
+  lng: number = 7.809007;
   // private exportTime = {hour: 7, minute: 15, meriden: 'PM', format: 12};
   
   constructor(private fb: FormBuilder, private branches: BranchesService, private categories: CategoriesService,
@@ -39,7 +41,7 @@ export class BranchDetailsComponent implements OnInit {
       openTime: ['',[Validators.required]],
       closeTime: ['',[Validators.required]],
       discountList: [[],[Validators.required]],
-      menu: ['',[Validators.required]],
+      menu: [undefined,[Validators.required]],
       menuPublicUrl: ['',[Validators.required]],
       phoneList: ['',[Validators.required]],
       photoList: [[],[Validators.required]],
@@ -98,5 +100,10 @@ export class BranchDetailsComponent implements OnInit {
     control.setValue( 
       time.hour.toString().padStart(2,'0') + ':' + time.minute.toString().padStart(2,'0') + ' ' + time.meriden
     );
+  }
+
+  onLocationRequired(){
+    this.lat = -12.0724471;
+    this.lng = -77.0687049;
   }
 }

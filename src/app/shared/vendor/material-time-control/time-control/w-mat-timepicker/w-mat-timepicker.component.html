@@ -1,24 +1,32 @@
 
-<div fxFlex fxLayout="row" class="w-mat-timepicker">
+<!-- <div fxFlex fxLayout="row" class="w-mat-timepicker">
 
-    <!-- <button mat-button (click)="showPicker($event)" class="time-picker-button">
+    <button mat-button (click)="showPicker($event)" class="time-picker-button">
         <mat-icon>access_time</mat-icon>
-    </button> -->
+    </button>
     
     <mat-input-container fxFlex class="timeContainer">
-        <!-- <button mat-icon-button (click)="showPicker($event)" class="time-picker-button" matPrefix>
+        <button mat-icon-button (click)="showPicker($event)" class="time-picker-button" matPrefix>
             <mat-icon>access_time</mat-icon>
-        </button> -->
-        <!-- <span matPrefix>
+        </button>
+        <span matPrefix>
             <mat-icon (click)="showPicker($event)" class="time-picker-button">access_time</mat-icon>
-        </span>         -->
+        </span>        
         <input matInput (click)="showPicker($event)" readonly
             class="timeInput"
             [placeholder]="placeholder" 
             id="time_Control" 
             name="time_Control"
-            [value]="time"
-        >
+            [value]="time">
     </mat-input-container>
 
-</div>
+</div> -->
+
+<mat-form-field class="fill-width">
+    <input matInput (click)="showPicker($event)" readonly
+    class="timeInput"
+    [placeholder]="placeholder" 
+    id="time_Control" 
+    name="time_Control"
+    [value]="time">
+</mat-form-field>

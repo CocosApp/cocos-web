@@ -18,8 +18,16 @@
         </mat-form-field>
         <mat-form-field>
           <input autocomplete="off" type="text" matInput placeholder="Dirección" formControlName="address">
+          <button mat-button matSuffix mat-icon-button aria-label="Clear" type="button" (click)="onLocationRequired()">
+            <mat-icon>location_on</mat-icon>
+          </button>
           <mat-error>Requerido</mat-error>
         </mat-form-field>
+        <div>
+          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="18">
+            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+          </agm-map>
+        </div>
         <mat-form-field>
           <mat-select placeholder="Categorías" formControlName="subcategoryList" multiple>
             <mat-option *ngFor="let category of categoryList" [value]="category">
@@ -42,9 +50,28 @@
             (userTimeChange)="setTime($event,branchFG.get('closeTime'))" placeholder="Hora Fin">
             </w-mat-timepicker>
         </div>
+        <div class="flex-row-layout flex-gap">
+          <mat-form-field class="flex-50">
+            <input autocomplete="off" type="text" matInput placeholder="Teléfono 1">
+            <mat-error>Requerido</mat-error>
+          </mat-form-field>
+          <mat-form-field class="flex">
+            <input autocomplete="off" type="text" matInput placeholder="Teléfono 2">
+            <mat-error>Requerido</mat-error>
+          </mat-form-field>
+        </div>
+        <mat-form-field>
+          <span matPrefix>+51&nbsp;&nbsp;</span>
+          <input autocomplete="off" type="text" matInput placeholder="Whatsapp">
+          <mat-error>Requerido</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input autocomplete="off" type="text" matInput placeholder="Página de Facebook (URL)">
+          <mat-error>Requerido</mat-error>
+        </mat-form-field>
         <div class="flex-row-layout jc-flex-end">
           <button mat-raised-button color="primary">
-            Enviar solicitud
+            Crear sucursal
           </button>
         </div>
       </mat-card-content>

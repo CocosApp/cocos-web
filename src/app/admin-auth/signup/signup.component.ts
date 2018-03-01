@@ -18,7 +18,7 @@ export class SignupComponent implements OnInit {
       lastName: ['',[Validators.required]],
       ruc: ['',[Validators.required, Validators.minLength(11),Validators.maxLength(11)]],
       businessName: ['',[Validators.required]],
-      comments: ['',[]],
+      comments: ['',[Validators.required]],
       password: ['',[Validators.required]],
       confirmPassword: ['',[EqualsToValidator.buildValidator('password')]],
       email: ['',[Validators.required]],
