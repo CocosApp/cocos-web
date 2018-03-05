@@ -16,46 +16,119 @@
         de usuario al equipo de <i>COCOS</i>.
       </mat-card-subtitle>
       <mat-card-content class="flex-col-layout ai-stretch">
-        <mat-form-field>
-          <input autocomplete="off" type="text" matInput placeholder="Nombres" formControlName="firstName">
-          <mat-error>Requerido</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input autocomplete="off" type="text" matInput placeholder="Apellidos" formControlName="lastName">
-          <mat-error>Requerido</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input autocomplete="off" type="text" matInput placeholder="RUC" formControlName="ruc">
-          <mat-error>RUC inválido</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input autocomplete="off" type="text" matInput placeholder="Razón social" formControlName="businessName">
-          <mat-error>Requerido</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <textarea cols="4" matInput placeholder="¿Qué actividades realiza su negocio?" formControlName="comments"></textarea>
-        </mat-form-field>
-        <mat-form-field>
-          <input autocomplete="off" type="password" matInput placeholder="Contraseña" formControlName="password">
-          <mat-error>Requerido</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input autocomplete="off" type="password" matInput placeholder="Repita su contraseña" formControlName="confirmPassword">
-          <mat-error>Las contraseñas no coinciden</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input autocomplete="off" type="text" matInput placeholder="Email" formControlName="email">
-          <mat-error>Email inválido</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input autocomplete="off" type="text" matInput placeholder="Celular" formControlName="phone">
-          <mat-error>Requerido</mat-error>
-        </mat-form-field>
-        <div class="flex-row-layout jc-flex-end">
-          <button mat-raised-button color="primary">
-            Enviar solicitud
-          </button>
-        </div>
+        <mat-horizontal-stepper [linear]="false">
+          <mat-step [stepControl]="signupFG">
+            <ng-template matStepLabel>Datos del usuario</ng-template>
+            <form [formGroup]="signupFG" class="flex-col-layout ai-stretch">
+              <mat-form-field>
+                <input autocomplete="off" type="text" matInput placeholder="Nombres" formControlName="firstName">
+                <mat-error>Requerido</mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input autocomplete="off" type="text" matInput placeholder="Apellidos" formControlName="lastName">
+                <mat-error>Requerido</mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input autocomplete="off" type="text" matInput placeholder="RUC" formControlName="ruc">
+                <mat-error>RUC inválido</mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input autocomplete="off" type="text" matInput placeholder="Razón social" formControlName="businessName">
+                <mat-error>Requerido</mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <textarea cols="4" matInput placeholder="¿Qué actividades realiza su negocio?" formControlName="comments"></textarea>
+              </mat-form-field>
+              <mat-form-field>
+                <input autocomplete="off" type="password" matInput placeholder="Contraseña" formControlName="password">
+                <mat-error>Requerido</mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input autocomplete="off" type="password" matInput placeholder="Repita su contraseña" formControlName="confirmPassword">
+                <mat-error>Las contraseñas no coinciden</mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input autocomplete="off" type="text" matInput placeholder="Email" formControlName="email">
+                <mat-error>Email inválido</mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input autocomplete="off" type="text" matInput placeholder="Celular" formControlName="phone">
+                <mat-error>Requerido</mat-error>
+              </mat-form-field>
+              <div class="flex-row-layout jc-flex-end">
+                <button mat-raised-button color="primary"  matStepperNext>
+                  Siguiente
+                </button>
+              </div>
+            </form>
+          </mat-step>
+          <mat-step [stepControl]="branchFG">
+            <ng-template matStepLabel>Datos de su negocio</ng-template>
+            <form class="flex-col-layout ai-stretch" [formGroup]="branchFG">
+                <mat-form-field>
+                  <input autocomplete="off" type="text" matInput placeholder="Nombre" formControlName="name">
+                  <mat-error>Requerido</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                  <input autocomplete="off" type="text" matInput placeholder="Dirección" formControlName="address">
+                  <button mat-button matSuffix mat-icon-button aria-label="Clear" type="button" (click)="onLocationRequired()">
+                    <mat-icon>location_on</mat-icon>
+                  </button>
+                  <mat-error>Requerido</mat-error>
+                </mat-form-field>
+                <div>
+                  <agm-map [latitude]="lat" [longitude]="lng" [zoom]="18">
+                    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                  </agm-map>
+                </div>
+                <mat-form-field>
+                  <mat-select placeholder="Categorías" formControlName="subcategoryList" multiple>
+                    <mat-option *ngFor="let category of categoryList" [value]="category">
+                      {{category.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-select placeholder="Servicios" formControlName="serviceList" multiple>
+                    <mat-option *ngFor="let service of serviceList" [value]="service">
+                      {{service.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-select placeholder="Horarios" formControlName="scheduleList" multiple>
+                    <mat-option *ngFor="let schedule of scheduleList" [value]="schedule">
+                      {{schedule.description}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div class="flex-row-layout flex-gap">
+                  <mat-form-field class="flex-50">
+                    <input autocomplete="off" type="text" matInput placeholder="Teléfono 1">
+                    <mat-error>Requerido</mat-error>
+                  </mat-form-field>
+                  <mat-form-field class="flex">
+                    <input autocomplete="off" type="text" matInput placeholder="Teléfono 2">
+                    <mat-error>Requerido</mat-error>
+                  </mat-form-field>
+                </div>
+                <mat-form-field>
+                  <span matPrefix>+51&nbsp;&nbsp;</span>
+                  <input autocomplete="off" type="text" matInput placeholder="Whatsapp">
+                  <mat-error>Requerido</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                  <input autocomplete="off" type="text" matInput placeholder="Página de Facebook (URL)">
+                  <mat-error>Requerido</mat-error>
+                </mat-form-field>
+                <div class="flex-row-layout jc-flex-end">
+                  <button mat-raised-button color="primary">
+                    Crear sucursal
+                  </button>
+                </div>
+            </form>
+          </mat-step>
+        </mat-horizontal-stepper>
       </mat-card-content>
     </mat-card>
   </form>

@@ -1,19 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatRadioModule, MatCardModule, MatDialogModule, MatToolbarModule, MatMenuModule, MatButtonModule, MatTabsModule, MatInputModule, MatTooltipModule, MatSelectModule, MatIconModule } from '@angular/material';
+import { MatRadioModule, MatCardModule, MatDialogModule, MatToolbarModule, MatMenuModule, MatButtonModule, MatTabsModule, MatInputModule, MatTooltipModule, MatSelectModule, MatIconModule, MatStepperModule } from '@angular/material';
 import { InstanceResolverForBranch } from './resolvers/instance.resolver';
 import { MaterialTimeControlModule } from './vendor/material-time-control/material-time-control.module';
+import { AgmCoreModule } from '@agm/core';
+import { environment } from '../../environments/environment';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialTimeControlModule
+    MaterialTimeControlModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.googleMaps.apiKey
+    })
   ],
   declarations: [],
   exports: [
+    AgmCoreModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -29,7 +35,8 @@ import { MaterialTimeControlModule } from './vendor/material-time-control/materi
     MatTooltipModule,
     MatSelectModule,
     MaterialTimeControlModule,
-    MatIconModule
+    MatIconModule,
+    MatStepperModule
   ],
   providers: [
     InstanceResolverForBranch

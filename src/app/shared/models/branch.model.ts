@@ -3,6 +3,7 @@ import { Category } from './category.model';
 import { Discount } from './discount.model';
 import { Service } from './service.model';
 import { Photo } from './shared/photo.model';
+import { Schedule } from './schedule.model';
 
 export class Branch extends Base<Branch>{
 
@@ -22,5 +23,6 @@ export class Branch extends Base<Branch>{
     whatsapp: string;
     facebookPageUrl: string;
     serviceList: Service[];
+    schedule: Schedule;
 
 }

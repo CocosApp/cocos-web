@@ -13,9 +13,9 @@ export class EqualsToValidator implements Validator {
     static buildValidator(otherControlName: string){
         return (c: AbstractControl) => {
             if(c.parent){
-                c.parent.get(otherControlName).valueChanges.subscribe( () => {
-                    c.updateValueAndValidity();
-                });
+                // c.parent.get(otherControlName).valueChanges.subscribe( () => {
+                //     c.updateValueAndValidity();
+                // });
                 if( c.value == c.parent.get(otherControlName).value ){
                     return null;
                 }else{

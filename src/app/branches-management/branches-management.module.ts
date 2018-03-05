@@ -11,10 +11,7 @@ import { environment } from '../../environments/environment';
 @NgModule({
   imports: [
     SharedModule,
-    BranchesManagementRoutingModule,
-    AgmCoreModule.forRoot({
-      apiKey: environment.googleMaps.apiKey
-    })
+    BranchesManagementRoutingModule
   ],
   declarations: [BranchesManagementComponent, BranchListComponent, BranchDetailsComponent]
 })
