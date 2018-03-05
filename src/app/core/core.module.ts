@@ -15,6 +15,7 @@ import { CategoriesService } from './services/categories.service';
 import { ServicesService } from './services/services.service';
 import { DiscountsService } from './services/discounts.service';
 import { SchedulesService } from './services/schedules.service';
+import { GeocodingService } from './services/geocoding.service';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { SchedulesService } from './services/schedules.service';
     CategoriesService,
     ServicesService,
     DiscountsService,
-    SchedulesService
+    SchedulesService,
+    GeocodingService
   ],
   declarations: []
 })

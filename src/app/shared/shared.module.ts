@@ -14,7 +14,8 @@ import { environment } from '../../environments/environment';
     ReactiveFormsModule,
     MaterialTimeControlModule,
     AgmCoreModule.forRoot({
-      apiKey: environment.googleMaps.apiKey
+      apiKey: environment.googleMaps.apiKey,
+      libraries: ["places"]
     })
   ],
   declarations: [],

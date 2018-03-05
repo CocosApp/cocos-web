@@ -8,5 +8,8 @@ export const environment = {
   backendUrl: '****',
   googleMaps: {
     apiKey: 'AIzaSyCkMxWbKR4Y2SUSnkBRgsK4xxCGzKAoxt0'
+  },
+  geocoding: {
+    apiKey: 'AIzaSyAJFRUPXdItUpNzBDLOiMpZ1YfZhXTd2vo'
   }
 };

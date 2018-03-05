@@ -1,3 +1,4 @@
+@import "../../../assets/styles/1-settings/index";
 @import "../../../assets/styles/2-tools/index";
 
 .signup{
@@ -20,7 +21,7 @@
     mat-card{
         margin: 0 auto;
         width: 95%;
-        max-width: 500px;
+        max-width: 560px;
         mat-form-field{
             padding: 8px 0
         }
@@ -28,5 +29,49 @@
     
     agm-map {
         height: 300px;
+    }
+
+    .photo-container{
+        padding: 8px;
+    }
+    .add-photo, .photo{
+        height: 100px;
+        width: 100px;
+        // border: 1px dashed rgba(0,0,0,.5);
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        cursor: pointer;
+        position: relative;
+        .delete{
+            position: absolute;
+            // background-color: #ff5f34;
+            background-color: rgba(0,0,0,.3);
+            color: #FFF;
+            top: -1px;
+            right: -1px;
+            @include layoutFlex();
+            @include justifyContent(center);
+            @include alignItems(center);
+            &:hover{
+                background-color: rgba(0,0,0,.6);
+            }
+        }
+    }
+    .add-photo{
+        background: rgba(0,0,0,.1);
+        position: relative;
+        font-weight: bold;
+        i{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            @include transform(translate(-50%,-50%));
+        }
+        &.disabled{
+            cursor: not-allowed;
+            background: rgba($color-warn,.2);
+            color: $color-warn;
+        }
     }
 }

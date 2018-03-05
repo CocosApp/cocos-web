@@ -24,9 +24,9 @@ export class BranchListComponent implements OnInit {
     let backgroundUrl = '/assets/images/branch-placeholder.jpg';
     if( branch.photoList 
       && branch.photoList.length > 0 
-      && branch.photoList[0].publicUrl != ''
-      && branch.photoList[0].publicUrl != undefined ){
-      backgroundUrl = branch.photoList[0].publicUrl;
+      && branch.photoList[0].imageUrl != ''
+      && branch.photoList[0].imageUrl != undefined ){
+      backgroundUrl = branch.photoList[0].imageUrl;
     }
     return this.sanitizer.bypassSecurityTrustStyle(`url(${backgroundUrl})`);
   }
