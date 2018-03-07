@@ -12,14 +12,14 @@ export class ApiService {
     private backendUrl: string;
 
     constructor(private jwt: JwtService, private http: HttpClient) {
-        this.backendUrl = environment.backendUrl;
+        this.backendUrl = environment.backendUrl+'api/';
     }
 
     private appendAuthorizationHeader(headers: HttpHeaders): HttpHeaders{
         headers = headers || new HttpHeaders();
         let token = this.jwt.getToken();
         if( token && token != ''){
-            headers = headers.append('Authorization', `Bearer ${this.jwt.getToken()}`);
+            headers = headers.append('Authorization', `Token ${this.jwt.getToken()}`);
         }
         return headers;
     }

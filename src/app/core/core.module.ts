@@ -16,12 +16,15 @@ import { ServicesService } from './services/services.service';
 import { DiscountsService } from './services/discounts.service';
 import { SchedulesService } from './services/schedules.service';
 import { GeocodingService } from './services/geocoding.service';
+import { CardsService } from './services/cards.service';
+import { MatSnackBarModule } from '@angular/material';
 
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MatSnackBarModule
   ],
   providers: [
     ApiService,
@@ -37,7 +40,8 @@ import { GeocodingService } from './services/geocoding.service';
     ServicesService,
     DiscountsService,
     SchedulesService,
-    GeocodingService
+    GeocodingService,
+    CardsService
   ],
   declarations: []
 })

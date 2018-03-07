@@ -4,6 +4,7 @@
     @include layoutFlex();
     @include alignItems(stretch);
     &__left{
+        position: relative;
         background-image: url('/assets/images/signin-bk.jpg');
         background-repeat: no-repeat;
         background-size: cover;
@@ -14,6 +15,7 @@
         }
     }
     &__right{
+        position: relative;
         background-color: #FFF;
         padding: 60px;
         @include flexFlex();

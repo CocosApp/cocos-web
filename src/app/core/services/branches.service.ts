@@ -5,6 +5,7 @@ import { Specification } from './specifications/base/specification';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/observable/of';
+import { BranchMapper } from './mappers/branch.mapper';
 
 @Injectable()
 export class BranchesService extends BaseService implements CrudService<Branch>{
@@ -33,10 +34,18 @@ export class BranchesService extends BaseService implements CrudService<Branch>{
         throw new Error("Method not implemented.");
     }
     add(entity: Branch): Observable<Branch> {
-        throw new Error("Method not implemented.");
+        return this.api.post('admin/create/restaurant', BranchMapper.mapToBe(entity))
+            .map( resp  => {
+                return Observable.of( new Branch({}));
+            })
+            .catch( err => {
+                this.toast.error('No se pudo crear el restaurante');
+                return Observable.of(undefined);
+            })
     }
     remove(entity: Branch): Observable<Branch> {
         throw new Error("Method not implemented.");
     }
 
+    
 }

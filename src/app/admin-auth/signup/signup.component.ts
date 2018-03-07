@@ -21,6 +21,11 @@ import { LocationValidator } from '../../shared/validators/location.validator';
 import { FormArray } from '@angular/forms/src/model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Photo } from '../../shared/models/shared/photo.model';
+import { LengthValidator } from '../../shared/validators/length.validator';
+import { ToastService } from '../../core/services/shared/toast.service';
+import { User } from '../../shared/models/user.model';
+import { Branch } from '../../shared/models/branch.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -34,9 +39,9 @@ export class SignupComponent implements OnInit {
   categoryList: Category[];
   scheduleList: Schedule[];
   serviceList: Service[];
-  lat: number = 51.678418;
-  lng: number = 7.809007;
-  zoom: number = 18;
+  lat: number = -12.0375515;
+  lng: number = -77.0790227;
+  zoom: number = 12;
   @ViewChild("searchAddress") public searchElementRef: ElementRef;
   //FOR IMAGE UPLOAD
   maxPhotoQuantity: number = 3;
@@ -47,17 +52,17 @@ export class SignupComponent implements OnInit {
   constructor(private fb: FormBuilder, private users: UsersService,private branches: BranchesService, 
   private categories: CategoriesService, private services: ServicesService, private geocoding: GeocodingService,
   private schedules: SchedulesService, private mapsAPILoader: MapsAPILoader, private ngZone: NgZone,
-  private sanitizer: DomSanitizer) { 
+  private sanitizer: DomSanitizer, private toast: ToastService, private router: Router) { 
     this.signupFG = this.fb.group({
       firstName: ['',[Validators.required]],
       lastName: ['',[Validators.required]],
-      ruc: ['',[Validators.required, Validators.minLength(11),Validators.maxLength(11)]],
+      ruc: ['',[Validators.required, new LengthValidator(11)]],
       businessName: ['',[Validators.required]],
       comments: ['',[Validators.required]],
       password: ['',[Validators.required]],
       confirmPassword: ['',[EqualsToValidator.buildValidator('password')]],
-      email: ['',[Validators.required]],
-      phone: ['',[Validators.required]],
+      email: ['',[Validators.email]],
+      phone: ['', [new LengthValidator(9)]],
     });
     this.branchFG = this.fb.group({
       name: ['',[Validators.required]],
@@ -66,12 +71,11 @@ export class SignupComponent implements OnInit {
       latitude: ['',[Validators.required]],
       address: ['',[new LocationValidator()]],
       scheduleList: [[],[Validators.required]],
-      discountList: [[],[Validators.required]],
       menu: [undefined,[Validators.required]],
-      menuPublicUrl: ['',[Validators.required]],
-      phoneList: [this.fb.array(['','']),[Validators.required]],
+      // menuPublicUrl: ['',[Validators.required]],
+      phoneList: this.fb.array(['','']),
       photoList: this.fb.array([]),
-      whatsapp: ['',[Validators.required]],
+      whatsapp: ['', [new LengthValidator(9)]],
       facebookPageUrl: ['',[new UrlValidator()]],
       serviceList: [[],[Validators.required]],
     });
@@ -99,6 +103,7 @@ export class SignupComponent implements OnInit {
           //set latitude, longitude and zoom
           this.lat = place.geometry.location.lat();
           this.lng = place.geometry.location.lng();
+          this.zoom = 18;
           this.branchFG.patchValue({
             latitude: this.lat,
             longitude: this.lng
@@ -140,8 +145,12 @@ export class SignupComponent implements OnInit {
     })
   }
 
-  onSendRequest(){
-
+  onChangeMenu(ev){
+    if(ev.target.files[0]){
+      this.branchFG.patchValue({
+        menu: ev.target.files[0]
+      });
+    }
   }
 
   get nonDeleteImagesCount(): number{
@@ -182,6 +191,28 @@ export class SignupComponent implements OnInit {
       this.photoListFA.controls[index].patchValue({
         forDelete: true
       });
+    }
+  }
+
+  onConfirm(){
+    if(this.photoListFA.controls.length==0){
+      this.toast.warning('Al menos una imagen del restaurante');
+      return;
+    }
+    if(this.signupFG.valid && this.branchFG.valid){
+      this.users.register( new User(this.signupFG.value) )
+      .subscribe(canRegister => {
+        if(canRegister){
+          this.branches.add(new Branch(this.branchFG.value)).subscribe(created=>{
+            if(created){
+              this.router.navigateByUrl('/admin');
+            }
+          });
+        }
+      })
+    }else{
+      this.toast.warning('Hay campos requeridos sin completar');
+      return;
     }
   }
 }

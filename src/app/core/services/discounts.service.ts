@@ -13,18 +13,22 @@ export class DiscountsService extends BaseService implements CrudService<Discoun
         return Observable.of([
             new Discount({
                 id: 1,
+                name: 'Descuento en un lugar',
                 description: 'Descuento X',
             }),
             new Discount({
                 id: 2,
+                name: 'Descuento en un lugar',
                 description: 'Descuento X',
             }),
             new Discount({
                 id: 3,
+                name: 'Descuento en un lugar',
                 description: 'Descuento X',
             }),
             new Discount({
                 id: 4,
+                name: 'Descuento en un lugar',
                 description: 'Descuento X',
             })
         ]);

@@ -12,7 +12,7 @@ export class Branch extends Base<Branch>{
     subcategoryList: Category[];
     longitude: number;
     latitude: number;
-    address: number;
+    address: string;
     openTime: string;
     closeTime: string;
     discountList: Discount[];
@@ -23,6 +23,6 @@ export class Branch extends Base<Branch>{
     whatsapp: string;
     facebookPageUrl: string;
     serviceList: Service[];
-    schedule: Schedule;
+    scheduleList: Schedule[];
 
 }

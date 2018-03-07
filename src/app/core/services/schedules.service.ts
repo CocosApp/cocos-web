@@ -10,24 +10,12 @@ import 'rxjs/add/observable/of';
 export class SchedulesService extends BaseService implements CrudService<Schedule>{
     
     get(specification?: Specification<Schedule>): Observable<Schedule[]> {
-        return Observable.of([
-            new Schedule({
-                id: 1,
-                description: 'Horario X',
-            }),
-            new Schedule({
-                id: 2,
-                description: 'Horario X',
-            }),
-            new Schedule({
-                id: 3,
-                description: 'Horario X',
-            }),
-            new Schedule({
-                id: 4,
-                description: 'Horario X',
-            })
-        ]);
+        return this.api.get('schedule/list').map( (resp: {results: any[]}) => {
+            return resp.results.map( be => new Schedule({
+                id: be.id,
+                description: be.name
+            }));
+        });
     }
     update(entity: Schedule): Observable<Schedule> {
         throw new Error("Method not implemented.");

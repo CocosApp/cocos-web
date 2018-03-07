@@ -17,15 +17,14 @@
           <mat-error>Requerido</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <input autocomplete="off" type="text" matInput placeholder="Dirección" formControlName="address">
-          <button mat-button matSuffix mat-icon-button aria-label="Clear" type="button" (click)="onLocationRequired()">
-            <mat-icon>location_on</mat-icon>
-          </button>
-          <mat-error>Requerido</mat-error>
+          <input autocomplete="off" type="text" matInput placeholder="Dirección" formControlName="address"
+          #searchAddress>
+          <mat-error>Debe seleccionar un punto del mapa o un lugar del autocompletado.</mat-error>
         </mat-form-field>
         <div>
-          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="18">
-            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" (mapClick)="onMapClick($event.coords)">
+            <agm-marker [latitude]="branchFG.get('latitude').value" [longitude]="branchFG.get('longitude').value">
+            </agm-marker>
           </agm-map>
         </div>
         <mat-form-field>
@@ -42,14 +41,13 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <div class="flex-row-layout flex-gap">
-            <w-mat-timepicker class="flex-50" color="primary" [userTime]="formatTime(branchFG.get('openTime').value)" 
-            (userTimeChange)="setTime($event,branchFG.get('openTime'))" placeholder="Hora inicio">
-            </w-mat-timepicker>
-            <w-mat-timepicker class="flex" color="primary" [userTime]="formatTime(branchFG.get('closeTime').value)" 
-            (userTimeChange)="setTime($event,branchFG.get('closeTime'))" placeholder="Hora Fin">
-            </w-mat-timepicker>
-        </div>
+        <mat-form-field>
+          <mat-select placeholder="Horarios" formControlName="scheduleList" multiple>
+            <mat-option *ngFor="let schedule of scheduleList" [value]="schedule">
+              {{schedule.description}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
         <div class="flex-row-layout flex-gap">
           <mat-form-field class="flex-50">
             <input autocomplete="off" type="text" matInput placeholder="Teléfono 1">
@@ -66,12 +64,46 @@
           <mat-error>Requerido</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <input autocomplete="off" type="text" matInput placeholder="Página de Facebook (URL)">
-          <mat-error>Requerido</mat-error>
+          <input autocomplete="off" type="text" matInput placeholder="Página de Facebook (URL)"
+          formControlName="facebookPageUrl">
+          <mat-error>URL inválida</mat-error>
         </mat-form-field>
+        <div class="photos-container">
+          <div class="photos-container__title">
+            <b>Carga de imágenes (máx. 3)</b>
+          </div>
+          <div class="flex-row-layout flex-wrap ai-stretch">
+              <ng-container *ngFor="let image of photoListFA.controls; let i = index;">
+                  <div class="photo-container animated fadeIn" *ngIf="!image.value.forDelete">
+                    <div class="photo" (click)="photoInputChange.click()"
+                    [style.backgroundImage]="getPhotoBackground(image.value.imageUrl)">
+                      <input #photoInputChange class="hide" type="file" (change)="changePhoto($event,i)">
+                      <div class="delete" *ngIf="image.value.imageUrl"
+                      (click)="$event.stopPropagation();onDeleteImage(image.value,i)">
+                        <i class="material-icons">close</i>
+                      </div>
+                    </div>
+                  </div>
+              </ng-container>
+              <div class="photo-container">
+                  <div class="add-photo" (click)="photoInputAdd.click()"
+                  [ngClass]="{ 'disabled': nonDeleteImagesCount==maxPhotoQuantity }">
+                  <!-- <button mat-icon-buton type="button" [disabled]="nonDeleteImagesCount==maxPhotoQuantity"> -->
+                    <i class="material-icons">add</i>
+                  <!-- </button> -->
+                  <input #photoInputAdd class="hide" type="file" (change)="addPhoto($event)" 
+                  [disabled]="nonDeleteImagesCount==maxPhotoQuantity" >
+                  </div>
+              </div>            
+          </div>
+        </div>
+        <div class="padding-10-y">
+          <b>Carta del local</b>
+          <input type="file">
+        </div>
         <div class="flex-row-layout jc-flex-end">
           <button mat-raised-button color="primary">
-            Crear sucursal
+            Guardar
           </button>
         </div>
       </mat-card-content>

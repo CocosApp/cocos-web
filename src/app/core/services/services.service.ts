@@ -10,24 +10,12 @@ import 'rxjs/add/observable/of';
 export class ServicesService extends BaseService implements CrudService<Service>{
     
     get(specification?: Specification<Service>): Observable<Service[]> {
-        return Observable.of([
-            new Service({
-                id: 1,
-                name: 'Servicio X',
-            }),
-            new Service({
-                id: 2,
-                name: 'Servicio X',
-            }),
-            new Service({
-                id: 3,
-                name: 'Servicio X',
-            }),
-            new Service({
-                id: 4,
-                name: 'Servicio X',
-            })
-        ]);
+        return this.api.get('service/list').map( (resp: {results: any[]}) => {
+            return resp.results.map( be => new Service({
+                id: be.id,
+                name: be.name
+            }));
+        });
     }
     update(entity: Service): Observable<Service> {
         throw new Error("Method not implemented.");

@@ -6,7 +6,7 @@
   <form class="flex padding-y overflow-y scrollbar" [formGroup]="signupFG">    
     <mat-card>
       <mat-card-title>
-        <button mat-icon-button type="button" routerLink="/admin/auth">
+        <button mat-icon-button type="button" routerLink="/auth">
           <i class="material-icons">keyboard_backspace</i>
         </button>
         <span><b>Registro</b></span>
@@ -16,7 +16,7 @@
         de usuario al equipo de <i>COCOS</i>.
       </mat-card-subtitle>
       <mat-card-content class="flex-col-layout ai-stretch">
-        <mat-horizontal-stepper [linear]="false">
+        <mat-horizontal-stepper [linear]="true">
           <mat-step [stepControl]="signupFG">
             <ng-template matStepLabel>Datos del usuario</ng-template>
             <form [formGroup]="signupFG" class="flex-col-layout ai-stretch">
@@ -29,7 +29,7 @@
                 <mat-error>Requerido</mat-error>
               </mat-form-field>
               <mat-form-field>
-                <input autocomplete="off" type="text" matInput placeholder="RUC" formControlName="ruc">
+                <input autocomplete="off" type="number" matInput placeholder="RUC" formControlName="ruc">
                 <mat-error>RUC inválido</mat-error>
               </mat-form-field>
               <mat-form-field>
@@ -52,11 +52,11 @@
                 <mat-error>Email inválido</mat-error>
               </mat-form-field>
               <mat-form-field>
-                <input autocomplete="off" type="text" matInput placeholder="Celular" formControlName="phone">
-                <mat-error>Requerido</mat-error>
+                <input autocomplete="off" type="number" matInput placeholder="Celular" formControlName="phone">
+                <mat-error>Número de celular inválido</mat-error>
               </mat-form-field>
               <div class="flex-row-layout jc-flex-end">
-                <button mat-raised-button color="primary"  matStepperNext>
+                <button  mat-raised-button color="primary"  matStepperNext>
                   Siguiente
                 </button>
               </div>
@@ -64,7 +64,8 @@
           </mat-step>
           <mat-step [stepControl]="branchFG">
             <ng-template matStepLabel>Datos de su negocio</ng-template>
-            <form class="flex-col-layout ai-stretch" [formGroup]="branchFG">
+            <form class="flex-col-layout ai-stretch" [formGroup]="branchFG"
+            (submit)="onConfirm()">
                 <mat-form-field>
                   <input autocomplete="off" type="text" matInput placeholder="Nombre" formControlName="name">
                   <mat-error>Requerido</mat-error>
@@ -101,20 +102,23 @@
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
-                <div class="flex-row-layout flex-gap">
-                  <mat-form-field class="flex-50">
-                    <input autocomplete="off" type="text" matInput placeholder="Teléfono 1">
+                <div class="flex-row-layout flex-gap" formArrayName="phoneList">
+                  <mat-form-field>
+                    <input autocomplete="off" type="number" matInput placeholder="Teléfono"
+                    formControlName="0">
                     <mat-error>Requerido</mat-error>
                   </mat-form-field>
-                  <mat-form-field class="flex">
-                    <input autocomplete="off" type="text" matInput placeholder="Teléfono 2">
+                  <!-- <mat-form-field class="flex">
+                    <input autocomplete="off" type="number" matInput placeholder="Teléfono 2"
+                    formControlName="1">
                     <mat-error>Requerido</mat-error>
-                  </mat-form-field>
+                  </mat-form-field> -->
                 </div>
                 <mat-form-field>
                   <span matPrefix>+51&nbsp;&nbsp;</span>
-                  <input autocomplete="off" type="text" matInput placeholder="Whatsapp">
-                  <mat-error>Requerido</mat-error>
+                  <input autocomplete="off" type="number" matInput placeholder="Whatsapp"
+                  formControlName="whatsapp">
+                  <mat-error>Whatsapp no válido</mat-error>
                 </mat-form-field>
                 <mat-form-field>
                   <input autocomplete="off" type="text" matInput placeholder="Página de Facebook (URL)"
@@ -152,7 +156,7 @@
                 </div>
                 <div class="padding-10-y">
                   <b>Carta del local</b>
-                  <input type="file">
+                  <input type="file" (change)="onChangeMenu($event)">
                 </div>
                 <div class="flex-row-layout jc-flex-end">
                   <button mat-raised-button color="primary">

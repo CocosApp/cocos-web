@@ -7,12 +7,14 @@ const routes: Routes = [
         loadChildren: 'app/landing/landing.module#LandingModule'
     },
     {
-        path: 'admin/auth',
-        loadChildren: 'app/admin-auth/admin-auth.module#AdminAuthModule'
+        path: 'auth',
+        loadChildren: 'app/admin-auth/admin-auth.module#AdminAuthModule',
+        data: { animation : 'loginPage' }
     },
     {
         path: 'admin',
-        loadChildren: 'app/admin/admin.module#AdminModule'
+        loadChildren: 'app/admin/admin.module#AdminModule',
+        data: { animation : 'adminPage' }
     }
 ];
 

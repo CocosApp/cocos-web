@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, AbstractControl, FormArray } from '@angular/forms';
 import { Branch } from '../../shared/models/branch.model';
 import { BranchesService } from '../../core/services/branches.service';
 import { CategoriesService } from '../../core/services/categories.service';
@@ -10,8 +10,15 @@ import { Observable } from 'rxjs/Observable';
 import { Category } from '../../shared/models/category.model';
 import { Discount } from '../../shared/models/discount.model';
 import { Service } from '../../shared/models/service.model';
-import 'rxjs/add/observable/forkJoin';
+import { MapsAPILoader } from '@agm/core';
+import { } from 'googlemaps';
 import { ITime } from '../../shared/vendor/material-time-control/time-control/index';
+import { Schedule } from '../../shared/models/schedule.model';
+import { SchedulesService } from '../../core/services/schedules.service';
+import 'rxjs/add/observable/forkJoin';
+import { GeocodingService } from '../../core/services/geocoding.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Photo } from '../../shared/models/shared/photo.model';
 
 @Component({
   selector: 'app-branch-details',
@@ -23,31 +30,65 @@ export class BranchDetailsComponent implements OnInit {
   branch: Branch;
   branchFG: FormGroup;
   categoryList: Category[];
+  scheduleList: Schedule[];
   discountList: Discount[];
   serviceList: Service[];
   lat: number = 51.678418;
   lng: number = 7.809007;
-  // private exportTime = {hour: 7, minute: 15, meriden: 'PM', format: 12};
+  zoom: number = 18;
+  @ViewChild("searchAddress") public searchElementRef: ElementRef;
+  //FOR IMAGE UPLOAD
+  maxPhotoQuantity: number = 3;
+  changingPhotoIndex: number = undefined;
+  reader = new FileReader();
+  @ViewChild('photoInputAdd') photoInputAddElm: ElementRef;
   
-  constructor(private fb: FormBuilder, private branches: BranchesService, private categories: CategoriesService,
-  private services: ServicesService, private discounts: DiscountsService, private route: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private branches: BranchesService, 
+    private categories: CategoriesService, private services: ServicesService, private geocoding: GeocodingService,
+    private schedules: SchedulesService, private mapsAPILoader: MapsAPILoader, private ngZone: NgZone,
+    private sanitizer: DomSanitizer, private route: ActivatedRoute, private discounts: DiscountsService) {
     this.branch = this.route.snapshot.data.branch;
     this.branchFG = this.fb.group({
+      id: undefined,
       name: ['',[Validators.required]],
       subcategoryList: [[],[Validators.required]],
       longitude: ['',[Validators.required]],
       latitude: ['',[Validators.required]],
       address: ['',[Validators.required]],
-      openTime: ['',[Validators.required]],
-      closeTime: ['',[Validators.required]],
+      scheduleList: [[],[Validators.required]],
       discountList: [[],[Validators.required]],
       menu: [undefined,[Validators.required]],
       menuPublicUrl: ['',[Validators.required]],
-      phoneList: ['',[Validators.required]],
-      photoList: [[],[Validators.required]],
+      phoneList: this.fb.array([]),
+      photoList: this.fb.array([]),
       whatsapp: ['',[Validators.required]],
       facebookPageUrl: ['',[Validators.required]],
       serviceList: [[],[Validators.required]],
+    });
+    this.mapsAPILoader.load().then(() => {
+      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: ["address"]
+      });
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          //get the place result
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+          //verify result
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+
+          //set latitude, longitude and zoom
+          this.lat = place.geometry.location.lat();
+          this.lng = place.geometry.location.lng();
+          this.branchFG.patchValue({
+            latitude: this.lat,
+            longitude: this.lng
+          });
+          this.branchFG.get('address').updateValueAndValidity();
+        });
+      });
     });
     this.fillFormModels();
   }
@@ -55,14 +96,16 @@ export class BranchDetailsComponent implements OnInit {
   fillFormModels(){
     if(this.branch) this.branchFG.patchValue(this.branch);
     Observable.forkJoin(
-      this.categories.get(), this.discounts.get(), this.services.get()
+      this.categories.get(), this.discounts.get(), this.services.get(), this.schedules.get()
     ).subscribe(results=>{
       this.categoryList = results[0];
       this.discountList = results[1];
       this.serviceList = results[2];
+      this.scheduleList = results[3];
       let categoriesFromList = [];
       let discountsFromList = [];
       let servicesFromList = [];
+      let schedulesFromList = []
       if(this.branch){
         if( this.branch.subcategoryList && this.branch.subcategoryList.length > 0){
           categoriesFromList = this.categoryList.filter( c => this.branch.subcategoryList.find( caux => c.id == caux.id ) );
@@ -73,17 +116,33 @@ export class BranchDetailsComponent implements OnInit {
         if( this.branch.serviceList && this.branch.serviceList.length > 0){
           servicesFromList = this.serviceList.filter( s => this.branch.serviceList.find( saux => s.id == saux.id ) );
         }
+        if( this.branch.scheduleList && this.branch.scheduleList.length > 0){
+          schedulesFromList = this.scheduleList.filter( s => this.branch.scheduleList.find( saux => s.id == saux.id ) );
+        }
       }
       this.branchFG.patchValue({
         categoryList: categoriesFromList,
         discountList: discountsFromList,
-        serviceList: servicesFromList
+        serviceList: servicesFromList,
+        scheduleList: schedulesFromList
       });
     })
   }
 
   ngOnInit(){
-
+    this.reader.addEventListener('load', ()=>{
+      if(this.changingPhotoIndex != undefined){
+        this.photoListFA.controls[this.changingPhotoIndex].patchValue({
+          imageUrl: this.reader.result
+        });
+        this.changingPhotoIndex = undefined;
+      }else{
+        this.photoListFA.controls[this.photoListFA.controls.length-1].patchValue({
+          imageUrl: this.reader.result
+        });
+      }
+      this.photoInputAddElm.nativeElement.value = '';
+    });
   }
 
   formatTime(time: string): ITime{
@@ -102,8 +161,63 @@ export class BranchDetailsComponent implements OnInit {
     );
   }
 
-  onLocationRequired(){
-    this.lat = -12.0724471;
-    this.lng = -77.0687049;
+  get photoListFA(): FormArray{
+    return this.branchFG.get('photoList') as FormArray;
+  }
+
+  onMapClick(coords){
+    this.geocoding.getAddress(coords.lat,coords.lng).subscribe( address => {
+      this.branchFG.patchValue({
+        address: address,
+        latitude: coords.lat,
+        longitude: coords.lng
+      });
+      this.branchFG.get('address').updateValueAndValidity();
+    })
+  }
+
+  onSendRequest(){
+
+  }
+
+  get nonDeleteImagesCount(): number{
+    return this.photoListFA.controls.filter( c => !c.value.forDelete ).length ;
+  }
+
+  addPhoto(ev){
+    let file = ev.target.files[0];
+    if(file){
+      this.photoListFA.push( this.fb.group({
+        image: file,
+        imageUrl: '',
+        forDelete: false
+      }));
+      this.reader.readAsDataURL( file );
+    }
+  }
+
+  changePhoto(ev,i){
+    let file = ev.target.files[0];
+    if(file){
+      this.photoListFA.controls[i].patchValue({
+        image: file,
+      });
+      this.changingPhotoIndex = i;
+      this.reader.readAsDataURL( file );
+    }
+  }
+
+  getPhotoBackground(image) {
+    return this.sanitizer.bypassSecurityTrustStyle(`url(${image})`);
+  }
+
+  onDeleteImage(image: Photo, index: number){
+    if(!image.id){
+      this.photoListFA.removeAt(index);
+    }else{
+      this.photoListFA.controls[index].patchValue({
+        forDelete: true
+      });
+    }
   }
 }

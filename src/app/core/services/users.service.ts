@@ -50,19 +50,25 @@ export class UsersService extends BaseService implements CrudService<User>{
     }
 
     register(user: User): Observable<boolean>{
-        return this.api.post('v1/register',{
-            "first_name": user.firstName,
-        	"last_name": user.lastName,
-        	"password": user.password,
-        	"email": user.email,
-        	"phone_number": user.phone
-        },undefined,false).map( resp => {
-            if(resp.data.access_token){
-                this.jwt.setToken(resp.access_token);
+        return this.api.post('user/admin/register',{
+            email: user.email,
+        	password: user.password,
+        	first_name: user.firstName,
+            last_name: user.lastName,
+            ruc: user.ruc,
+            business_name: user.businessName,
+            cellphone: user.phone,
+            comment: user.phone
+        }).map( resp => {
+            if(resp.token){
+                this.jwt.setToken(resp.token);
                 return true;
             }
             return false;
-        })
+        }).catch( err => {
+            this.toast.error('No se pudo registrar el usuario');
+            return Observable.of(false);
+        });
     }
 
     // loginWithFacebook(): Observable<boolean>{
