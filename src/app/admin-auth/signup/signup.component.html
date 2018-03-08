@@ -36,9 +36,9 @@
                 <input autocomplete="off" type="text" matInput placeholder="Razón social" formControlName="businessName">
                 <mat-error>Requerido</mat-error>
               </mat-form-field>
-              <mat-form-field>
+              <!-- <mat-form-field>
                 <textarea cols="4" matInput placeholder="¿Qué actividades realiza su negocio?" formControlName="comments"></textarea>
-              </mat-form-field>
+              </mat-form-field> -->
               <mat-form-field>
                 <input autocomplete="off" type="password" matInput placeholder="Contraseña" formControlName="password">
                 <mat-error>Requerido</mat-error>
@@ -103,7 +103,7 @@
                   </mat-select>
                 </mat-form-field>
                 <div class="flex-row-layout flex-gap" formArrayName="phoneList">
-                  <mat-form-field>
+                  <mat-form-field class="fill-width">
                     <input autocomplete="off" type="number" matInput placeholder="Teléfono"
                     formControlName="0">
                     <mat-error>Requerido</mat-error>

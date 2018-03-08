@@ -58,7 +58,7 @@ export class SignupComponent implements OnInit {
       lastName: ['',[Validators.required]],
       ruc: ['',[Validators.required, new LengthValidator(11)]],
       businessName: ['',[Validators.required]],
-      comments: ['',[Validators.required]],
+      comments: ['',[/*Validators.required*/]],
       password: ['',[Validators.required]],
       confirmPassword: ['',[EqualsToValidator.buildValidator('password')]],
       email: ['',[Validators.email]],
@@ -200,12 +200,19 @@ export class SignupComponent implements OnInit {
       return;
     }
     if(this.signupFG.valid && this.branchFG.valid){
+      this.signupFG.patchValue({
+        comments: `
+        Nombre: ${this.branchFG.value.name}; 
+        Dirección: ${this.branchFG.value.address}; 
+        Categorías: ${(this.branchFG.value.subcategoryList || []).map(c => c.name).join(', ')}; 
+        Facebook: ${this.branchFG.value.facebookPageUrl};`  
+      });
       this.users.register( new User(this.signupFG.value) )
       .subscribe(canRegister => {
         if(canRegister){
           this.branches.add(new Branch(this.branchFG.value)).subscribe(created=>{
             if(created){
-              this.router.navigateByUrl('/admin');
+              this.users.logout();
             }
           });
         }

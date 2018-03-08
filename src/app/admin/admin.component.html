@@ -10,7 +10,7 @@
         <i class="material-icons">account_circle</i>
         <span>Perfil</span>
       </button>
-      <button mat-menu-item class="flex-row-layout ai-center flex-gap" routerLink="/auth">
+      <button mat-menu-item class="flex-row-layout ai-center flex-gap" (click)="users.logout()">
         <i class="material-icons">exit_to_app</i>
         <span>Cerrar sesión</span>
       </button>

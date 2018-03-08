@@ -13,6 +13,7 @@ import { LocalStorageService, LocalStorageKeys } from "./shared/local-storage.se
 import { ToastService } from "./shared/toast.service";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/mergeMap';
 
 @Injectable()
 export class UsersService extends BaseService implements CrudService<User>{
@@ -36,15 +37,16 @@ export class UsersService extends BaseService implements CrudService<User>{
     }
 
     login(email :string, password: string): Observable<boolean>{
-        return this.api.post('v1/login',{ email: email, password: password },undefined,false)
+        return this.api.post('user/admin/login',{ email: email, password: password },undefined,false)
                 .map( resp => {
-                    if(resp){
-                        this.jwt.setToken(resp.data.access_token);
+                    if(resp.token){
+                        this.jwt.setToken(resp.token);
                         return true;
                     }
+                    this.toast.error('Credenciales incorrectas o usuario inactivo');
                     return false;
                 }).catch( err => {
-                    // this.toast.error('','Credenciales incorrectas');
+                    this.toast.error('Credenciales incorrectas o usuario inactivo');
                     return Observable.of(false);
                 });
     }
@@ -58,7 +60,7 @@ export class UsersService extends BaseService implements CrudService<User>{
             ruc: user.ruc,
             business_name: user.businessName,
             cellphone: user.phone,
-            comment: user.phone
+            comment: user.comments
         }).map( resp => {
             if(resp.token){
                 this.jwt.setToken(resp.token);
@@ -88,14 +90,37 @@ export class UsersService extends BaseService implements CrudService<User>{
 
     logout(){
         this.purge();
+        this.currentUser.next(undefined);
         this.router.navigateByUrl('/auth');
     }
 
     populate(): Observable<boolean>{
-        this.currentUser.next(new User({
-            
-        }));
-        return Observable.of(true);
+        let token = this.jwt.getToken();
+        if( !token || token == '' ){
+            return Observable.of(false);
+        }else{
+            return this.api.get('user/admin/retrieve')
+            .map( resp => {
+                if(resp){
+                    if(resp.is_admin_res){
+                        this.currentUser.next(new User({
+                            id: resp.id,
+                            email: resp.email,
+                            firstName: resp.first_name,
+                            lastName: resp.last_name,
+                        }));
+                        return true;
+                    }else{
+                        this.toast.error('No tiene accesos a esta plataforma');
+                        return false;
+                    }
+                }
+                return false;
+            }).catch( err => {
+                this.toast.error('No se pudo recuperar la información del usuario');
+                return Observable.of(false);
+            });
+        }
         // return this.api.get('v1/accounts/')
         //     .map( resp => {
         //         this.currentUser.next(new User({
