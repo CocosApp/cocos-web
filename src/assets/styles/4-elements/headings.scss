@@ -1,16 +1,16 @@
 $heading-sizes: (
-    h1: 25px,
-    h2: 22px,
-    h3: 19px,
-    h4: 16px,
-    h5: 13px,
-    h6: 10px,
+    h1: 2em,
+    h2: 1.8em,
+    h3: 1.6em,
+    h4: 1.4em,
+    h5: 1.2em,
+    h6: 1em,
 );
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
     font-size-adjust: 0.5;
-    margin: 4px 12px;
+    // margin: 4px 12px;
 }
 
 @each $header, $size in $heading-sizes{

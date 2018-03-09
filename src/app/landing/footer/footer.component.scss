@@ -1,0 +1,31 @@
+@import "../../../assets/styles/2-tools/index";        
+
+.footer{
+    background-color: #252525;
+    color: #FFF;
+    padding: 45px;
+    input{
+        padding: 12px;
+        width: 90%;
+        max-width: 360px;
+        text-align: center;
+        @include borderRadius(20px unquote("/") 50%);
+    }
+    .copyright{
+        margin-top: 25px;
+        text-align: center;
+        &:before{
+            content: '';
+            height: 1px;
+            width: 150px;
+            background-color: rgba(255,255,255,0.5);
+            margin: 8px auto;
+            display: block;
+        }
+    }
+    .links{
+        a{
+            margin: 15px 25px;
+        }
+    }
+}

@@ -1,8 +1,14 @@
 @import "../../../assets/styles/2-tools/index";
 
 .signin{
+    position: relative;
     @include layoutFlex();
     @include alignItems(stretch);
+    .back-to-landing{
+        position: absolute;
+        left: 10px;
+        top: 10px;
+    }
     &__left{
         position: relative;
         background-image: url('/assets/images/signin-bk.jpg');

@@ -1,5 +1,5 @@
 <div class="discount-details fill-parent flex-col-layout ai-stretch">
-  <form class="flex padding-y overflow-y scrollbar" [formGroup]="discountFG">    
+  <form class="flex padding-y overflow-y scrollbar" [formGroup]="discountFG" (submit)="onConfirm()">    
     <mat-card>
       <mat-card-title>
         <button mat-icon-button type="button" goToBack>
@@ -17,7 +17,7 @@
           <mat-error>Requerido</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <textarea autocomplete="off" type="text" matInput placeholder="Términos y condiciones" rows="4"
+          <textarea autocomplete="off" type="text" matInput placeholder="Términos y condiciones" rows="6"
           formControlName="termsAndConditions"></textarea>
           <mat-error>Requerido</mat-error>
         </mat-form-field>
@@ -30,16 +30,29 @@
           <input autocomplete="off" type="number" matInput placeholder="Precio" formControlName="price">
           <mat-error>Requerido</mat-error>
         </mat-form-field>
-        <div class="mat-form-field flex-col-layout flex-gap">
-          <p><b>Tarjeta asociada al descuento:</b></p>
-          <mat-radio-group class="flex-col-layout flex-gap" formControlName="card">
+        <mat-form-field>
+          <mat-select placeholder="Asociar a la sucursal" formControlName="branch">
+            <mat-option *ngFor="let branch of branchList" [value]="branch">
+              {{branch.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="mat-form-field flex-col-layout flex-gap ai-stretch">
+          <p><b>Tarjeta asociada al descuento (opcional):</b></p>
+          <mat-radio-group class="cards-container flex-col-layout flex-gap scrollbar" formControlName="card">
             <mat-radio-button *ngFor="let card of cardList" [value]="card" color="primary">
               <div class="flex-row-layout ai-center flex-gap">
-                  <img [src]="card.photo.imageUrl" [attr.alt]="card.name" width="30">
+                  <img [src]="card.photo.imageUrl" [attr.alt]="card.name" width="40">
                   <span>{{card.name}}</span>
               </div>
             </mat-radio-button>
           </mat-radio-group>
+          <div class="flex-row-layout">
+            <span class="flex"></span>
+            <button type="button" mat-button color="primary" (click)="clearCards()">
+              LIMPIAR SELECCIÓN
+            </button>
+          </div>
         </div>
         <div class="mat-form-field photos-container">
           <div class="photos-container__title">
@@ -65,7 +78,7 @@
                     <i class="material-icons">add</i>
                   <!-- </button> -->
                   <input #photoInputAdd class="hide" type="file" (change)="addPhoto($event)" 
-                  [disabled]="nonDeleteImagesCount==maxPhotoQuantity" >
+                  [disabled]="nonDeleteImagesCount==maxPhotoQuantity">
                   </div>
               </div>            
           </div>

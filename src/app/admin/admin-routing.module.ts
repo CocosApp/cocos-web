@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
+import { ProfileComponent } from './profile/profile.component';
+import { TabsComponent } from './tabs/tabs.component';
 
 const routes: Routes = [
   {
@@ -8,17 +10,27 @@ const routes: Routes = [
     component: AdminComponent,
     children: [
       {
-        path: 'sucursales',
-        loadChildren: 'app/branches-management/branches-management.module#BranchesManagementModule',
-      },
-      {
-        path: 'descuentos',
-        loadChildren: 'app/discounts-management/discounts-management.module#DiscountsManagementModule',
+        path: 'perfil',
+        component: ProfileComponent,
       },
       {
         path: '',
-        pathMatch: 'exact',
-        redirectTo: 'sucursales'
+        component: TabsComponent,
+        children: [
+          {
+            path: 'sucursales',
+            loadChildren: 'app/branches-management/branches-management.module#BranchesManagementModule',
+          },
+          {
+            path: 'descuentos',
+            loadChildren: 'app/discounts-management/discounts-management.module#DiscountsManagementModule',
+          },
+          {
+            path: '',
+            pathMatch: 'exact',
+            redirectTo: 'sucursales'
+          }
+        ]
       }
     ]
   }

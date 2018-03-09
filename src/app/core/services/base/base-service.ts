@@ -9,3 +9,10 @@ export class BaseService{
     }
 
 }
+
+export class DjangoPagination{
+
+    count: number;
+    results: any[];
+
+}

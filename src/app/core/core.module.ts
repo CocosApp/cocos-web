@@ -8,7 +8,7 @@ import { JwtService } from './services/shared/jwt.service';
 import { LocalStorageService } from './services/shared/local-storage.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastService } from './services/shared/toast.service';
-import { AdminAuthGuard } from './guards/admin-auth.guard';
+import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { BranchesService } from './services/branches.service';
 import { CategoriesService } from './services/categories.service';
@@ -18,13 +18,24 @@ import { SchedulesService } from './services/schedules.service';
 import { GeocodingService } from './services/geocoding.service';
 import { CardsService } from './services/cards.service';
 import { MatSnackBarModule } from '@angular/material';
+import { NgProgressModule } from '@ngx-progressbar/core';
+import { NgProgressHttpModule } from '@ngx-progressbar/http';
+import { InitComponent } from './components/init/init.component';
+import { RouterModule } from '@angular/router';
+import { InitGuard } from './guards/init.guard';
 
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    RouterModule,
+    NgProgressModule.forRoot({
+      color: '#ff9d3f',
+      thick: true
+    }),
+    NgProgressHttpModule
   ],
   providers: [
     ApiService,
@@ -33,7 +44,6 @@ import { MatSnackBarModule } from '@angular/material';
     JwtService,
     LocalStorageService,
     ToastService,
-    AdminAuthGuard,
     AdminGuard,
     BranchesService,
     CategoriesService,
@@ -41,8 +51,15 @@ import { MatSnackBarModule } from '@angular/material';
     DiscountsService,
     SchedulesService,
     GeocodingService,
-    CardsService
+    CardsService,
+    InitGuard,
+    AuthGuard,
+    AdminGuard
   ],
-  declarations: []
+  declarations: [ InitComponent ],
+  exports: [
+    NgProgressModule,
+    InitComponent
+  ]
 })
 export class CoreModule { }

@@ -11,7 +11,7 @@
           </p>
         </mat-card-content>
         <mat-card-actions class="flex-row-layout flex-gap">
-            <button mat-button class="flex-50">
+            <button mat-button class="flex-50" (click)="onRemove(discount)">
               <!-- <i class="material-icons">delete</i> -->
               <span>ELIMINAR</span>
             </button>
@@ -24,7 +24,7 @@
       </mat-card>
     </div>
   </div>
-  <button class="discount-list__add" mat-fab matTooltip="Agregar sucursal"
+  <button class="discount-list__add" mat-fab matTooltip="Agregar descuento"
   matTooltipPosition="left" routerLink="agregar">
     <i class="material-icons">add</i>
   </button>

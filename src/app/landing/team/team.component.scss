@@ -1,0 +1,46 @@
+@import "../../../assets/styles/2-tools/index";
+
+.team{
+    .team-member{
+        padding: 15px 8px;
+        mat-card{
+            font-family: inherit;
+            padding: 0px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            &:hover{
+                .team-member__description{
+                    @include transform(translateX(0%));
+                }
+            }
+            // @include borderRadius(50%);
+        }
+        &__image{
+            width: 250px;
+            height: 250px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+        &__description{
+            font-size: 20px;
+            text-align: center;
+            position: absolute;
+            left: 0;
+            top: 0;     
+            width: 100%;
+            height: 100%;       
+            color: #FFF;
+            background-color: rgba(0,0,0,.35);
+            @include transform(translateX(-100%));
+            @include transition2(all .2s ease-in-out);
+            .name{
+                font-weight: bold;
+            }
+            .position{
+
+            }
+        }
+    }
+}

@@ -8,16 +8,7 @@ import { UsersService } from '../core/services/users.service';
 })
 export class AdminComponent implements OnInit {
 
-  navLinks: any[] = [
-    {
-      path: 'sucursales',
-      label: 'Sucursales'
-    },
-    {
-      path: 'descuentos',
-      label: 'Descuentos'
-    }
-  ]
+  
 
   constructor(public users: UsersService) { }
 

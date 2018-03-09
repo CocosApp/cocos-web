@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { BranchesManagementComponent } from './branches-management.component';
 import { BranchListComponent } from './branch-list/branch-list.component';
 import { BranchDetailsComponent } from './branch-details/branch-details.component';
+import { InstanceResolverForBranch } from '../shared/resolvers/instance.resolver';
 
 const routes: Routes = [
   {
@@ -13,13 +14,16 @@ const routes: Routes = [
         path: '',
         component: BranchListComponent
       },
-      {
-        path: 'agregar',
-        component: BranchDetailsComponent,
-      },
+      // {
+      //   path: 'agregar',
+      //   component: BranchDetailsComponent,
+      // },
       {
         path: ':id',
-        component: BranchDetailsComponent
+        component: BranchDetailsComponent,
+        resolve: {
+          branch: InstanceResolverForBranch
+        }
       }
     ]
   }

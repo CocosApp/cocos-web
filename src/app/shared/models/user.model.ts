@@ -1,4 +1,5 @@
 import { Base } from './base/base.model';
+import { Branch } from './branch.model';
 
 export class User extends Base<User>{
     
@@ -10,4 +11,6 @@ export class User extends Base<User>{
     password: string;
     email: string;
     phone: string;
+    branchList: Branch[]; 
+    
 }

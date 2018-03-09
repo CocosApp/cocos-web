@@ -14,7 +14,9 @@ export class BranchListComponent implements OnInit {
 
   constructor(private branches: BranchesService,
     private sanitizer: DomSanitizer) { 
-    this.branches.get().subscribe( bs => this.branchList = bs );
+    this.branches.get().subscribe( bs => {
+      this.branchList = bs
+    } );
   }
 
   ngOnInit() {

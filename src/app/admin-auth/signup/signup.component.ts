@@ -26,6 +26,8 @@ import { ToastService } from '../../core/services/shared/toast.service';
 import { User } from '../../shared/models/user.model';
 import { Branch } from '../../shared/models/branch.model';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { SuccessRequestComponent } from '../success-request/success-request.component';
 
 @Component({
   selector: 'app-signup',
@@ -34,6 +36,7 @@ import { Router } from '@angular/router';
 })
 export class SignupComponent implements OnInit {
 
+  loading: boolean = false;
   signupFG: FormGroup;
   branchFG: FormGroup;
   categoryList: Category[];
@@ -52,7 +55,7 @@ export class SignupComponent implements OnInit {
   constructor(private fb: FormBuilder, private users: UsersService,private branches: BranchesService, 
   private categories: CategoriesService, private services: ServicesService, private geocoding: GeocodingService,
   private schedules: SchedulesService, private mapsAPILoader: MapsAPILoader, private ngZone: NgZone,
-  private sanitizer: DomSanitizer, private toast: ToastService, private router: Router) { 
+  private sanitizer: DomSanitizer, private toast: ToastService, private router: Router, private dialog: MatDialog) { 
     this.signupFG = this.fb.group({
       firstName: ['',[Validators.required]],
       lastName: ['',[Validators.required]],
@@ -66,12 +69,13 @@ export class SignupComponent implements OnInit {
     });
     this.branchFG = this.fb.group({
       name: ['',[Validators.required]],
+      ruc: '',
       subcategoryList: [[],[Validators.required]],
       longitude: ['',[Validators.required]],
       latitude: ['',[Validators.required]],
       address: ['',[new LocationValidator()]],
       scheduleList: [[],[Validators.required]],
-      menu: [undefined,[Validators.required]],
+      menu: [undefined,[]],
       // menuPublicUrl: ['',[Validators.required]],
       phoneList: this.fb.array(['','']),
       photoList: this.fb.array([]),
@@ -207,14 +211,23 @@ export class SignupComponent implements OnInit {
         Categorías: ${(this.branchFG.value.subcategoryList || []).map(c => c.name).join(', ')}; 
         Facebook: ${this.branchFG.value.facebookPageUrl};`  
       });
+      this.branchFG.patchValue({
+        ruc: this.signupFG.value.ruc
+      });
+      this.loading = true;
       this.users.register( new User(this.signupFG.value) )
       .subscribe(canRegister => {
         if(canRegister){
           this.branches.add(new Branch(this.branchFG.value)).subscribe(created=>{
             if(created){
+              this.dialog.open(SuccessRequestComponent,{ width: '320px', disableClose: true });
               this.users.logout();
+            }else{
+              this.loading = false;
             }
           });
+        }else{
+          this.loading = false;
         }
       })
     }else{

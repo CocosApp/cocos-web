@@ -25,4 +25,5 @@ body, caption, th, td, textarea, select, option, legend, fieldset {
 body {
     font-family: $font-primary;
     line-height: 1.5;
+    @extend .scrollbar;
 }

@@ -1,0 +1,46 @@
+@import "../../../assets/styles/2-tools/index";
+
+.testimonial{
+    padding: 100px 20px;
+    color: #FFF;
+    background-image: url('/assets/images/testimonial-bk.jpg');
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    position: relative;
+    .testimonial-overlay{
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0,0,0,.45);
+    }
+    .user{
+        position: relative;
+        max-width: 600px;
+        margin: 0 auto;
+        @include layoutFlex();
+        @include alignItems(center);
+        .avatar-container{
+            .avatar{
+                width: 110px;
+                height: 110px;
+                border: 2px solid #FFF;
+                background-image: url('/assets/images/chef.jpg');
+                background-position: center;
+                background-size: cover;
+                @include borderRadius(50%);
+            }
+        }
+        .testimony{
+            font-size: 18px;
+            padding-left: 20px;
+            .phrase{
+                font-size: 22px;
+                font-weight: bold;
+                text-align: justify;
+            }
+        }
+    }
+}

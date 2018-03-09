@@ -1,0 +1,57 @@
+<div class="profile fill-parent flex-col-layout ai-stretch">
+    <div class="flex padding-y overflow-y scrollbar" [formGroup]="profileFG">    
+      <mat-card>
+        <mat-card-title>
+          <button mat-icon-button type="button" goToBack>
+            <i class="material-icons">keyboard_backspace</i>
+          </button>
+          <span><b>Mi perfil</b></span>
+        </mat-card-title>
+        <mat-card-content class="flex-col-layout ai-stretch">
+          <form [formGroup]="profileFG" class="flex-col-layout ai-stretch"
+          (submit)="onConfirm()">
+            <mat-form-field>
+              <input autocomplete="off" type="text" matInput placeholder="Nombres" formControlName="firstName">
+              <mat-error>Requerido</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input autocomplete="off" type="text" matInput placeholder="Apellidos" formControlName="lastName">
+              <mat-error>Requerido</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input autocomplete="off" type="number" matInput placeholder="RUC" formControlName="ruc">
+              <mat-error>RUC inválido</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input autocomplete="off" type="text" matInput placeholder="Razón social" formControlName="businessName">
+              <mat-error>Requerido</mat-error>
+            </mat-form-field>
+            <!-- <mat-form-field>
+              <textarea cols="4" matInput placeholder="¿Qué actividades realiza su negocio?" formControlName="comments"></textarea>
+            </mat-form-field> -->
+            <!-- <mat-form-field>
+              <input autocomplete="off" type="password" matInput placeholder="Contraseña" formControlName="password">
+              <mat-error>Requerido</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input autocomplete="off" type="password" matInput placeholder="Repita su contraseña" formControlName="confirmPassword">
+              <mat-error>Las contraseñas no coinciden</mat-error>
+            </mat-form-field> -->
+            <mat-form-field>
+              <input autocomplete="off" type="text" matInput placeholder="Email" formControlName="email">
+              <mat-error>Email inválido</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input autocomplete="off" type="number" matInput placeholder="Celular" formControlName="phone">
+              <mat-error>Número de celular inválido</mat-error>
+            </mat-form-field>
+            <div class="flex-row-layout jc-flex-end">
+              <button  mat-raised-button color="primary">
+                Guardar
+              </button>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>

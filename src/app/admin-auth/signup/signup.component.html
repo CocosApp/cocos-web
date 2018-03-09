@@ -103,16 +103,16 @@
                   </mat-select>
                 </mat-form-field>
                 <div class="flex-row-layout flex-gap" formArrayName="phoneList">
-                  <mat-form-field class="fill-width">
+                  <mat-form-field class="flex-50">
                     <input autocomplete="off" type="number" matInput placeholder="Teléfono"
                     formControlName="0">
                     <mat-error>Requerido</mat-error>
                   </mat-form-field>
-                  <!-- <mat-form-field class="flex">
+                  <mat-form-field class="flex">
                     <input autocomplete="off" type="number" matInput placeholder="Teléfono 2"
                     formControlName="1">
                     <mat-error>Requerido</mat-error>
-                  </mat-form-field> -->
+                  </mat-form-field>
                 </div>
                 <mat-form-field>
                   <span matPrefix>+51&nbsp;&nbsp;</span>
@@ -156,10 +156,10 @@
                 </div>
                 <div class="padding-10-y">
                   <b>Carta del local</b>
-                  <input type="file" (change)="onChangeMenu($event)">
+                  <input type="file" (change)="onChangeMenu($event)"  accept="application/pdf">
                 </div>
                 <div class="flex-row-layout jc-flex-end">
-                  <button mat-raised-button color="primary">
+                  <button mat-raised-button color="primary" [disabled]="loading">
                     Enviar solicitud
                   </button>
                 </div>

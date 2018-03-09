@@ -1,8 +1,18 @@
 <div class="signin fill-parent">
   <div class="signin__left"></div>
   <div class="signin__right">
+    <div class="back-to-landing flex-row-layout ai-center">
+      <button mat-icon-button>
+        <i class="material-icons">
+          chevron_left
+        </i>
+      </button>
+      <a href="#" class=" cc-link " routerLink="/">
+        <span>Volver a COCOS</span>
+      </a>  
+    </div>
     <div class="signin__container flex-col-layout ai-stretch">
-      <img class="signin__logo" src="/assets/images/cocos-logo.svg" alt="">
+      <img class="signin__logo" src="/assets/images/cocos-logo.png" alt="">
       <form [formGroup]="signinFG" class="flex-col-layout ai-stretch flex-gap" (submit)="signin()">
           <mat-form-field>
             <input type="text" matInput formControlName="email" placeholder="Email">
@@ -16,7 +26,7 @@
             <button mat-raised-button color="primary">
               INGRESAR
             </button>
-            <button type="button" mat-button>
+            <button type="button" mat-button (click)="onRecoverPassword()">
               Olvidé mi contraseña
             </button>      
           </div>

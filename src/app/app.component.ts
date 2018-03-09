@@ -2,6 +2,8 @@ import { Component, AfterViewInit } from '@angular/core';
 import { Routing } from './shared/animations/routing';
 import { BaseComponent } from './shared/components/base.component';
 import { UsersService } from './core/services/users.service';
+import { Router } from '@angular/router';
+import 'rxjs/add/operator/delay';
 
 @Component({
   selector: 'app-root',
@@ -13,21 +15,11 @@ export class AppComponent extends BaseComponent implements AfterViewInit {
   title = 'app';
   ready: boolean = false;
 
-  constructor(private users: UsersService){
+  constructor(private users: UsersService, private router: Router){
     super();
   }
 
   ngAfterViewInit(){
-    setTimeout(() => {
-      this.users.populate().subscribe(couldPopulate => {
-        this.ready = true;
-        setTimeout(() => {
-          document.getElementById('preloader').classList.add('animated','fadeOut');
-          setTimeout(() => {
-            document.getElementById('preloader').remove();
-          }, 1000);        
-        }, 2000);
-      });
-    }, 0);
+    
   }
 }

@@ -24,5 +24,6 @@ export class Branch extends Base<Branch>{
     facebookPageUrl: string;
     serviceList: Service[];
     scheduleList: Schedule[];
+    userBranchId: number;
 
 }

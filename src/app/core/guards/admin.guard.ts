@@ -11,11 +11,13 @@ export class AdminGuard implements CanActivate{
     }
 
     canActivate(): Observable<boolean>{
-        return this.users.populate().first().map( canPopulate => {
-            if( !canPopulate ){
+        return this.users.getCurrentUser().first().map( u => {
+            console.log(u);
+            if( !u ){
                 this.router.navigateByUrl('/auth');
+                return false;
             }
-            return canPopulate;
+            return true;
             
         });
     }

@@ -1,0 +1,17 @@
+@import "../../../assets/styles/1-settings/index";
+@import "../../../assets/styles/2-tools/index";
+
+.profile{
+    position: relative;
+    >*:not(.profile__bk){
+        position: relative;
+    }
+    mat-card{
+        margin: 0 auto;
+        width: 95%;
+        max-width: 560px;
+        mat-form-field{
+            padding: 8px 0
+        }
+    }
+}

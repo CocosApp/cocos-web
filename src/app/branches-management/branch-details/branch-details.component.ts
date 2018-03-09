@@ -5,7 +5,7 @@ import { BranchesService } from '../../core/services/branches.service';
 import { CategoriesService } from '../../core/services/categories.service';
 import { ServicesService } from '../../core/services/services.service';
 import { DiscountsService } from '../../core/services/discounts.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Category } from '../../shared/models/category.model';
 import { Discount } from '../../shared/models/discount.model';
@@ -19,6 +19,8 @@ import 'rxjs/add/observable/forkJoin';
 import { GeocodingService } from '../../core/services/geocoding.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Photo } from '../../shared/models/shared/photo.model';
+import { ToastService } from '../../core/services/shared/toast.service';
+import { ArrayLengthValidator } from '../../shared/validators/array-length.validator';
 
 @Component({
   selector: 'app-branch-details',
@@ -44,22 +46,24 @@ export class BranchDetailsComponent implements OnInit {
   @ViewChild('photoInputAdd') photoInputAddElm: ElementRef;
   
   constructor(private fb: FormBuilder, private branches: BranchesService, 
-    private categories: CategoriesService, private services: ServicesService, private geocoding: GeocodingService,
-    private schedules: SchedulesService, private mapsAPILoader: MapsAPILoader, private ngZone: NgZone,
-    private sanitizer: DomSanitizer, private route: ActivatedRoute, private discounts: DiscountsService) {
+  private categories: CategoriesService, private services: ServicesService, private geocoding: GeocodingService,
+  private schedules: SchedulesService, private mapsAPILoader: MapsAPILoader, private ngZone: NgZone,
+  private sanitizer: DomSanitizer, private route: ActivatedRoute, private discounts: DiscountsService,
+  private router: Router, private toast: ToastService ) {
     this.branch = this.route.snapshot.data.branch;
+    console.log(this.branch);
     this.branchFG = this.fb.group({
       id: undefined,
       name: ['',[Validators.required]],
-      subcategoryList: [[],[Validators.required]],
+      subcategoryList: [[],[new ArrayLengthValidator(1,2)]],
       longitude: ['',[Validators.required]],
       latitude: ['',[Validators.required]],
       address: ['',[Validators.required]],
       scheduleList: [[],[Validators.required]],
-      discountList: [[],[Validators.required]],
-      menu: [undefined,[Validators.required]],
-      menuPublicUrl: ['',[Validators.required]],
-      phoneList: this.fb.array([]),
+      // discountList: [[],[Validators.required]],
+      menu: [undefined,[]],
+      menuPublicUrl: ['',[]],
+      phoneList: this.fb.array(['','']),
       photoList: this.fb.array([]),
       whatsapp: ['',[Validators.required]],
       facebookPageUrl: ['',[Validators.required]],
@@ -94,7 +98,15 @@ export class BranchDetailsComponent implements OnInit {
   }
 
   fillFormModels(){
-    if(this.branch) this.branchFG.patchValue(this.branch);
+    if(this.branch) {
+      this.branchFG.patchValue(this.branch);
+      (this.branch.phoneList || []).forEach( (p,i) => {
+        (this.branchFG.get('phoneList') as FormArray).controls[i].patchValue(p);
+      });
+      (this.branch.photoList || []).forEach( p => {
+        this.addPhotoFG(p);
+      });
+    };
     Observable.forkJoin(
       this.categories.get(), this.discounts.get(), this.services.get(), this.schedules.get()
     ).subscribe(results=>{
@@ -121,12 +133,12 @@ export class BranchDetailsComponent implements OnInit {
         }
       }
       this.branchFG.patchValue({
-        categoryList: categoriesFromList,
-        discountList: discountsFromList,
+        subcategoryList: categoriesFromList,
+        // discountList: discountsFromList,
         serviceList: servicesFromList,
         scheduleList: schedulesFromList
       });
-    })
+    });
   }
 
   ngOnInit(){
@@ -187,13 +199,22 @@ export class BranchDetailsComponent implements OnInit {
   addPhoto(ev){
     let file = ev.target.files[0];
     if(file){
-      this.photoListFA.push( this.fb.group({
-        image: file,
-        imageUrl: '',
-        forDelete: false
-      }));
+      // this.photoListFA.push( this.fb.group({
+      //   image: file,
+      //   imageUrl: '',
+      //   forDelete: false
+      // }));
+      this.addPhotoFG(new Photo({ image: file, imageUrl: undefined, forDelete: false }));
       this.reader.readAsDataURL( file );
     }
+  }
+  
+  addPhotoFG(photo: Photo){
+    this.photoListFA.push( this.fb.group({
+      image: photo.image,
+      imageUrl: photo.imageUrl,
+      forDelete: photo.forDelete
+    }));
   }
 
   changePhoto(ev,i){
@@ -217,6 +238,38 @@ export class BranchDetailsComponent implements OnInit {
     }else{
       this.photoListFA.controls[index].patchValue({
         forDelete: true
+      });
+    }
+  }
+
+  onConfirm(){
+    if(this.photoListFA.controls.length==0){
+      this.toast.warning('Al menos una imagen del restaurante');
+      return;
+    }
+    if(this.branchFG.valid){
+      let branch = new Branch(this.branchFG.value);
+      if(branch.id){
+        // console.log(branch);
+        this.branches.update(branch).subscribe( branch => {
+          if(branch){
+            this.toast.success('La sucursal ha sido actualizada correctamente');
+            this.router.navigateByUrl('/admin/sucursales');
+          }
+        });
+      }else{
+        this.toast.error('Usted no tiene permisos para crear sucursales');
+      }
+    }else{
+      this.toast.warning('Hay campos requeridos sin completar');
+      return;
+    }
+  }
+
+  onChangeMenu(ev){
+    if(ev.target.files[0]){
+      this.branchFG.patchValue({
+        menu: ev.target.files[0]
       });
     }
   }

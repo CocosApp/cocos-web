@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsersService } from '../../core/services/users.service';
+import { MatDialog } from '@angular/material';
+import { RecoverPasswordComponent } from '../recover-password/recover-password.component';
 
 @Component({
   selector: 'app-signin',
@@ -12,7 +14,7 @@ export class SigninComponent implements OnInit {
 
   signinFG: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router,
+  constructor(private fb: FormBuilder, private router: Router, private dialog: MatDialog,
   private users: UsersService) { 
     this.signinFG = this.fb.group({
       email: ['', [Validators.email]],
@@ -32,6 +34,12 @@ export class SigninComponent implements OnInit {
         }
       })
     }
+  }
+
+  onRecoverPassword(){
+    this.dialog.open(RecoverPasswordComponent,{
+      width: '300px'
+    });
   }
 
 }

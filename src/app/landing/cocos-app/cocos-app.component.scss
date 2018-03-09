@@ -1,0 +1,29 @@
+@import "../../../assets/styles/2-tools/index";
+
+.cocos-app{
+    .app-details-container{
+        @include layoutFlex();
+        @include alignItems(center);
+        @include directionFlex(column);
+        @include device-md{
+            @include directionFlex(row);
+        }
+        .app-details{
+            font-size: 14px;
+            @include flexFlex();
+            .detail{
+                padding: 15px 25px;
+                &__title{
+                    font-weight: bold;
+                }
+            }
+        }
+        .app-preview{
+            max-width: 335px;
+            display: none;
+            @include device-md{
+                display: block;
+            }
+        }
+    }
+}

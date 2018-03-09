@@ -9,6 +9,10 @@ import { EntityByIdSpecification } from "../../core/services/specifications/base
 import { Base } from '../models/base/base.model';
 import { Branch } from '../models/branch.model';
 import { BranchesService } from '../../core/services/branches.service';
+import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/first'
+import { Discount } from "../models/discount.model";
+import { DiscountsService } from "../../core/services/discounts.service";
 
 export class BaseInstanceResolver<T extends Base<T>> implements Resolve<T> {
 
@@ -45,6 +49,16 @@ export class InstanceResolverForBranch extends BaseInstanceResolver<Branch>{
     constructor(branches: BranchesService){
         super();
         this.init(branches);
+    }
+
+}   
+
+@Injectable()
+export class InstanceResolverForDiscount extends BaseInstanceResolver<Discount>{
+
+    constructor(discounts: DiscountsService){
+        super();
+        this.init(discounts);
     }
 
 }   

@@ -14,6 +14,7 @@ import { ToastService } from "./shared/toast.service";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/mergeMap';
+import { BranchMapper } from "./mappers/branch.mapper";
 
 @Injectable()
 export class UsersService extends BaseService implements CrudService<User>{
@@ -24,7 +25,8 @@ export class UsersService extends BaseService implements CrudService<User>{
     , toast: ToastService){
         super(api,toast);
         this.currentUser = new BehaviorSubject<User>(
-            new User(this.storage.load(LocalStorageKeys.CURRENT_USER) as any)
+            // new User(this.storage.load(LocalStorageKeys.CURRENT_USER) as any)
+            undefined
         );
     }
 
@@ -38,17 +40,25 @@ export class UsersService extends BaseService implements CrudService<User>{
 
     login(email :string, password: string): Observable<boolean>{
         return this.api.post('user/admin/login',{ email: email, password: password },undefined,false)
-                .map( resp => {
-                    if(resp.token){
-                        this.jwt.setToken(resp.token);
-                        return true;
-                    }
-                    this.toast.error('Credenciales incorrectas o usuario inactivo');
-                    return false;
-                }).catch( err => {
-                    this.toast.error('Credenciales incorrectas o usuario inactivo');
-                    return Observable.of(false);
-                });
+        .map( resp => {
+            if(resp.token){
+                this.jwt.setToken(resp.token);
+                return true;
+            }
+            this.toast.error('Credenciales incorrectas o usuario inactivo');
+            return false;
+        }).catch( err => {
+            this.toast.error('Credenciales incorrectas o usuario inactivo');
+            return Observable.of(false);
+        }).flatMap( couldLogin => {
+            if(couldLogin){
+                return this.populate();
+            }
+            return Observable.of(false);
+        }).catch( err => {
+            this.toast.error('No se pudo recuperar los datos del usuario');
+            return Observable.of(false);
+        });
     }
 
     register(user: User): Observable<boolean>{
@@ -71,6 +81,15 @@ export class UsersService extends BaseService implements CrudService<User>{
             this.toast.error('No se pudo registrar el usuario');
             return Observable.of(false);
         });
+    }
+
+    recoverPassword(email: string): Observable<boolean>{
+        return this.api.post('recovery/',{ email }).map( resp => {
+            return true;
+        }).catch( err => {
+            this.toast.error(`No se pudo recuperar su password`);
+            return Observable.of(false)
+        })
     }
 
     // loginWithFacebook(): Observable<boolean>{
@@ -108,6 +127,9 @@ export class UsersService extends BaseService implements CrudService<User>{
                             email: resp.email,
                             firstName: resp.first_name,
                             lastName: resp.last_name,
+                            ruc: resp.ruc,
+                            phone: resp.cellphone,
+                            branchList: resp.restaurant.map( BranchMapper.mapFromBe )
                         }));
                         return true;
                     }else{
@@ -121,21 +143,6 @@ export class UsersService extends BaseService implements CrudService<User>{
                 return Observable.of(false);
             });
         }
-        // return this.api.get('v1/accounts/')
-        //     .map( resp => {
-        //         this.currentUser.next(new User({
-        //             id: resp.id,
-        //             email: resp.email,
-        //             firstName: resp.first_name,
-        //             lastName: resp.last_name,
-        //             avatarUrl: resp.picture || '/assets/images/dashboard/veterinarian-person.svg',
-        //             phone: resp.cellphone
-        //         }));
-        //         return true;
-        //     }).catch( err => Observable.of(false).do( () => {
-        //         this.purge();
-        //         this.toast.error('Redireccionando a Login','No se pudo recuperar datos del usuario');
-        //     } ) );
     }
 
     purge(){
@@ -175,7 +182,36 @@ export class UsersService extends BaseService implements CrudService<User>{
         return Observable.of([]);
     }
     update(entity: User): Observable<User> {
-        throw new Error("Method not implemented.");
+        return this.api.put('user/admin/update',{
+        	password: entity.password,
+        	first_name: entity.firstName,
+            last_name: entity.lastName,
+            ruc: entity.ruc,
+            business_name: entity.businessName,
+            cellphone: entity.phone
+        })
+        .map( resp => {
+            let user = this.currentUser.value;
+            let newUser = {
+                id: resp.id,
+                email: resp.email,
+                firstName: resp.first_name,
+                lastName: resp.last_name,
+                ruc: resp.ruc,
+                phone: resp.cellphone,
+                businessName: resp.business_name
+            };
+            console.log(resp);
+            console.log(newUser);
+            delete user.phone;
+            delete user.businessName;
+            this.setCurrentUser(Object.assign({},user,newUser));
+            return this.currentUser.value;
+        })
+        .catch(err=>{
+            this.toast.error('No se pudo actualizar sus datos');
+            return Observable.of(undefined);
+        })
     }
     add(entity: User): Observable<User> {
         throw new Error("Method not implemented.");

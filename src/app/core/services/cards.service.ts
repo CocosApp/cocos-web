@@ -1,4 +1,4 @@
-import { BaseService } from './base/base-service';
+import { BaseService, DjangoPagination } from './base/base-service';
 import { CrudService } from './contracts/crud-service';
 import { Card } from '../../shared/models/card.model';
 import { Specification } from './specifications/base/specification';
@@ -11,28 +11,13 @@ import { Photo } from '../../shared/models/shared/photo.model';
 export class CardsService extends BaseService implements CrudService<Card>{
     
     get(specification?: Specification<Card>): Observable<Card[]> {
-        return Observable.of([
-            new Card({
-                id: 1,
-                name: 'Tarjeta X',
-                photo: new Photo({ imageUrl: '/assets/images/card-placeholder.svg' })
-            }),
-            new Card({
-                id: 2,
-                name: 'Tarjeta X',
-                photo: new Photo({ imageUrl: '/assets/images/card-placeholder.svg' })
-            }),
-            new Card({
-                id: 3,
-                name: 'Tarjeta X',
-                photo: new Photo({ imageUrl: '/assets/images/card-placeholder.svg' })
-            }),
-            new Card({
-                id: 4,
-                name: 'Tarjeta X',
-                photo: new Photo({ imageUrl: '/assets/images/card-placeholder.svg' })
-            })
-        ]);
+        return this.api.get('admin/card/list').map( (resp: DjangoPagination) =>{
+            return resp.results.map( be => new Card({
+                id: be.id,
+                name: be.name,
+                photo: new Photo({ imageUrl: be.photo })
+            }) )
+        });
     }
     update(entity: Card): Observable<Card> {
         throw new Error("Method not implemented.");

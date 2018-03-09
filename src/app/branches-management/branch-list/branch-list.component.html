@@ -4,28 +4,27 @@
       <mat-card>
         <div mat-card-image class="branch__image" 
         [style.backgroundImage]="getBackgroundImage(branch)">
+          <div class="branch__name">
+            <span>{{branch.name}}</span>
+          </div>
         </div>
-        <mat-card-content>
-          <p class="text-center">
-            <i>{{branch.name}}</i>
-          </p>
-        </mat-card-content>
+        <!-- <mat-card-content>
+          <p>{{branch.name}}</p>
+        </mat-card-content> -->
         <mat-card-actions class="flex-row-layout flex-gap">
-            <button mat-button class="flex-50">
-              <!-- <i class="material-icons">delete</i> -->
+            <!-- <button mat-button class="flex-50">
               <span>ELIMINAR</span>
-            </button>
-            <button mat-button color="primary" class="flex-50"
+            </button> -->
+            <button mat-button color="primary" class="flex"
             [routerLink]="branch.id">
-            <!-- <i class="material-icons">mode_edit</i> -->
-              <span>EDITAR</span>
+              <span>EDITAR INFORMACIÓN</span>
             </button>
         </mat-card-actions>
       </mat-card>
     </div>
   </div>
-  <button class="branch-list__add" mat-fab matTooltip="Agregar sucursal"
+  <!-- <button class="branch-list__add" mat-fab matTooltip="Agregar sucursal"
   matTooltipPosition="left" routerLink="agregar">
     <i class="material-icons">add</i>
-  </button>
+  </button> -->
 </div>

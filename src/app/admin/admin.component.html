@@ -1,12 +1,21 @@
 <div class="admin page flex-col-layout ai-stretch">
-  <mat-toolbar color="primary" class="flex-row-layout ai-center">
-    <span class="toolbar__brand">COCOS ADMIN</span>
+  <mat-toolbar color="primary" class="flex-row-layout ai-center flex-auto">
+    <!-- <span class="toolbar__brand">COCOS ADMIN</span> -->
+    <img src="/assets/images/logo-label.png" alt="" height="45">
     <span class="flex"></span>
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <i class="material-icons">more_vert</i>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item class="flex-row-layout ai-center flex-gap">
+      <button mat-menu-item class="flex-row-layout ai-center flex-gap" routerLink="/admin/sucursales">
+        <i class="material-icons">restaurant</i>
+        <span>Sucursales</span>
+      </button>
+      <button mat-menu-item class="flex-row-layout ai-center flex-gap" routerLink="/admin/descuentos">
+        <i class="material-icons">local_offer</i>
+        <span>Descuentos</span>
+      </button>
+      <button mat-menu-item class="flex-row-layout ai-center flex-gap" routerLink="/admin/perfil">
         <i class="material-icons">account_circle</i>
         <span>Perfil</span>
       </button>
@@ -16,16 +25,7 @@
       </button>
     </mat-menu>
   </mat-toolbar>
-  <nav mat-tab-nav-bar>
-      <a mat-tab-link
-         *ngFor="let link of navLinks"
-         [routerLink]="link.path"
-         routerLinkActive #rla="routerLinkActive"
-         [active]="rla.isActive">
-        {{link.label}}
-      </a>
-  </nav>
-  <div class="admin__content flex flex-row-layout ai-stretch overflow-y padding-10 scrollbar">
-    <router-outlet></router-outlet>
+  <div class="flex flex-col-layout ai-stretch overflow-y scrollbar">
+      <router-outlet></router-outlet>
   </div>
 </div>

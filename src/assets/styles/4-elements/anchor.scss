@@ -1,7 +1,8 @@
 a{
     color: inherit;
     text-decoration: none;
-    &, &:active, &:visited, &:active{
+    &, &:active, &:visited, &:active, &:focus{
         text-decoration: none;
+        outline: none;
     }
 }

@@ -2,7 +2,7 @@ $app-link-color-theme: $color-accent-darker;
 
 .#{$global-namespace}-link{
     cursor: pointer;
-    color: $app-link-color-theme;
+    color: inherit;//$app-link-color-theme;
     position: relative;
     text-decoration: none;
     &, &:active, &:visited, &:active{
@@ -15,7 +15,7 @@ $app-link-color-theme: $color-accent-darker;
         height: 1px;
         bottom: 0;
         left: 0;
-        background-color: $app-link-color-theme;
+        background-color: currentColor;//$app-link-color-theme;
         visibility: hidden;
         -webkit-transform: scaleX(0);
         transform: scaleX(0);

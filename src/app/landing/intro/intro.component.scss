@@ -1,0 +1,27 @@
+.intro{
+    height: 100vh;
+    width: 100%;
+    color: #FFF;
+    background-image: url('/assets/images/signin-bk.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    position: relative;
+    &__overlay{
+        position: absolute;
+        background: rgba(0,0,0,.4);
+        height: 100%;
+        width: 100%;
+        left: 0;
+        top: 0;
+    }
+    .logo{
+        width: 90%;
+        max-width: 690px;
+    }
+    .slogan{
+        font-size: 28px;
+        font-style: italic;
+    }
+}

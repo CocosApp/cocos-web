@@ -9,7 +9,7 @@ export class LengthValidator implements Validator {
     }
 
     validate(c: AbstractControl): { [key: string]: any; } {
-      if(!this.lengths.includes(c.value.toString().length)){
+      if( !c.value || !this.lengths.includes(c.value.toString().length)){
           return { length: true }
       }
       return undefined;

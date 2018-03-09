@@ -1,7 +1,7 @@
-import { BaseService } from './base/base-service';
+import { BaseService, DjangoPagination } from './base/base-service';
 import { CrudService } from './contracts/crud-service';
 import { Branch } from '../../shared/models/branch.model';
-import { Specification } from './specifications/base/specification';
+import { Specification, EntityByIdSpecification } from './specifications/base/specification';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/observable/of';
@@ -11,27 +11,32 @@ import { BranchMapper } from './mappers/branch.mapper';
 export class BranchesService extends BaseService implements CrudService<Branch>{
     
     get(specification?: Specification<Branch>): Observable<Branch[]> {
-        return Observable.of([
-            new Branch({
-                id: 1,
-                name: 'Dinjo Inn San Martín de Porres',
-            }),
-            new Branch({
-                id: 2,
-                name: 'Dinjo Inn San Martín de Porres',
-            }),
-            new Branch({
-                id: 3,
-                name: 'Dinjo Inn San Martín de Porres',
-            }),
-            new Branch({
-                id: 4,
-                name: 'Dinjo Inn San Martín de Porres',
-            })
-        ]);
+        if( specification instanceof EntityByIdSpecification ){
+            return this.api.get(`admin/restaurant/RUD/${specification.id}`)
+            .map( resp => {
+                return [
+                    BranchMapper.mapFromBe(resp)
+                ];
+            });
+        }
+        return this.api.get('user/admin/restaurant/listcreate')
+        .map( (resp: DjangoPagination) => {
+            return resp.results.map( be => BranchMapper.mapFromBe(be.restaurant) );
+        })
+        .catch( err => {
+            this.toast.error(`No se pudo cargar las sucursales: ${err.message}`)
+            return Observable.of([]);
+        });
     }
     update(entity: Branch): Observable<Branch> {
-        throw new Error("Method not implemented.");
+        return this.api.put(`admin/restaurant/RUD/${entity.id}`,BranchMapper.mapToBe(entity))
+        .map( resp => {
+            return BranchMapper.mapFromBe(resp);
+        })
+        .catch( err => {
+            this.toast.error('No se pudo actualizar la sucursal')
+            return Observable.of(undefined);
+        });;
     }
     add(entity: Branch): Observable<Branch> {
         return this.api.post('admin/create/restaurant', BranchMapper.mapToBe(entity))
@@ -39,7 +44,7 @@ export class BranchesService extends BaseService implements CrudService<Branch>{
                 return new Branch({ id: resp.id });
             })
             .catch( err => {
-                this.toast.error('No se pudo crear el restaurante');
+                this.toast.error('No se pudo crear la sucursal');
                 return Observable.of(undefined);
             })
             .flatMap(created =>{
@@ -54,7 +59,7 @@ export class BranchesService extends BaseService implements CrudService<Branch>{
                         return Observable.of(undefined);
                     })
                     .catch( err => {
-                        this.toast.error('No se pudo asignar el restaurante a su usuario');
+                        this.toast.error('No se pudo asignar la sucursal a su usuario');
                         return Observable.of(undefined);
                     })
                 }else{

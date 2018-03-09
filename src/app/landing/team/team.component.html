@@ -1,0 +1,20 @@
+<div class="team section-informative">
+    <div>
+        <p class="title">EL EQUIPO</p>
+    </div>
+    <div class="team-members-container flex-row-layout flex-wrap jc-space-around">
+        <div class="team-member" *ngFor="let member of team">
+            <mat-card>
+                <div class="team-member__image" [style.backgroundImage]="getBackgroundUrl(member.imageUrl)"></div>
+                <div class="team-member__description flex-col-layout jc-center ai-stretch flex-gap">
+                    <p class="name">{{member.name}}</p>
+                    <p class="position text-muted">{{member.position}}</p>
+                    <div class="flex-row-layout flex-gap jc-center">
+                        <img src="/assets/images/fb-icon.svg" alt="" width="45">
+                        <img src="/assets/images/linkedin-icon.svg" alt="" width="45">
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>

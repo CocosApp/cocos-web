@@ -1,0 +1,17 @@
+@import "../../../assets/styles/2-tools/mixins/media.queries.scss";
+
+.affiliate{
+    .title{
+        font-weight: bold;
+        font-size: 65px;
+        text-align: center;
+    }
+    .preview{
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 90%;
+        @include device-md{
+            width: 340px;
+        }
+    }
+}

@@ -1,6 +1,7 @@
 import { Base } from './base/base.model';
 import { Card } from './card.model';
 import { Photo } from './shared/photo.model';
+import { Branch } from './branch.model';
 
 export class Discount extends Base<Discount>{
 
@@ -9,8 +10,9 @@ export class Discount extends Base<Discount>{
     card: Card;
     percentage: number;
     price: number;
-    photo: Photo;
+    photoList: Photo[];
     termsAndConditions: string;
     isOwner: boolean;
+    branch: Branch
 
 }

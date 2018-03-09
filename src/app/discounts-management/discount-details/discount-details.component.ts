@@ -4,11 +4,14 @@ import { Discount } from '../../shared/models/discount.model';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Card } from '../../shared/models/card.model';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DiscountsService } from '../../core/services/discounts.service';
 import { CardsService } from '../../core/services/cards.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
+import { ToastService } from '../../core/services/shared/toast.service';
+import { BranchesService } from '../../core/services/branches.service';
+import { Branch } from '../../shared/models/branch.model';
 
 @Component({
   selector: 'app-discount-details',
@@ -20,6 +23,7 @@ export class DiscountDetailsComponent implements OnInit {
   discount: Discount;
   discountFG: FormGroup;
   cardList: Card[];
+  branchList: Branch[];
   //FOR IMAGE UPLOAD
   maxPhotoQuantity: number = 1;
   changingPhotoIndex: number = undefined;
@@ -27,17 +31,19 @@ export class DiscountDetailsComponent implements OnInit {
   @ViewChild('photoInputAdd') photoInputAddElm: ElementRef;
   
   constructor(private fb: FormBuilder, private sanitizer: DomSanitizer, private route: ActivatedRoute, 
-    private discounts: DiscountsService, private cards: CardsService) {
+    private discounts: DiscountsService, private cards: CardsService, private toast: ToastService,
+    private router: Router, private branches: BranchesService) {
     this.discount = this.route.snapshot.data.discount;
     this.discountFG = this.fb.group({
       id: undefined,
       name: ['',[Validators.required]],
-      card: [undefined,[Validators.required]],
+      card: [undefined,[]],
+      branch: [undefined,[Validators.required]],
       photoList: this.fb.array([]),
-      percentage: [0,[Validators.required]],
-      price: [0,[Validators.required]],
+      percentage: [0,[]],
+      price: [0,[]],
       termsAndConditions: ['',[Validators.required]],
-      description: ['',[Validators.required]],
+      description: ['',[]],
       isOwner: [false,[Validators.required]],
     });
     this.fillFormModels();
@@ -46,20 +52,26 @@ export class DiscountDetailsComponent implements OnInit {
   fillFormModels(){
     if(this.discount) {
       this.discountFG.patchValue(this.discount);
-      ( this.discount.photo? [this.discount.photo] : []).forEach( p => this.addPhotoFC(p) );
+      ( this.discount.photoList || []).forEach( p => this.addPhotoFC(p) );
     };
     Observable.forkJoin(
-      this.cards.get()
+      this.cards.get(), this.branches.get()
     ).subscribe(results=>{
       this.cardList = results[0];
+      this.branchList = results[1];
       let cardFromList = undefined;
+      let branchFromList = undefined;
       if(this.discount){
         if( this.discount.card){
           cardFromList = this.cardList.find( c => c.id == this.discount.card.id );
         }
+        if(this.discount.branch){
+          branchFromList = this.branchList.find( b => b.id == this.discount.branch.id );
+        }
       }
       this.discountFG.patchValue({
-        card: cardFromList
+        card: cardFromList,
+        branch: branchFromList
       });
     })
   }
@@ -77,6 +89,12 @@ export class DiscountDetailsComponent implements OnInit {
         });
       }
       this.photoInputAddElm.nativeElement.value = '';
+    });
+  }
+
+  clearCards(){
+    this.discountFG.patchValue({
+      card: undefined
     });
   }
 
@@ -99,7 +117,7 @@ export class DiscountDetailsComponent implements OnInit {
   addPhoto(ev){
     let file = ev.target.files[0];
     if(file){
-      this.photoListFA.push( this.fb.group({
+      this.addPhotoFC(new Photo({
         image: file,
         imageUrl: '',
         forDelete: false
@@ -133,4 +151,27 @@ export class DiscountDetailsComponent implements OnInit {
     }
   }
 
+  onConfirm(){
+    if(this.discountFG.valid){
+      let discount = new Discount(this.discountFG.value);
+      // console.log(discount);
+      if(discount.id){
+        this.discounts.update(discount).subscribe( d => {
+          if(d){
+            this.toast.success('Descuento actualizado con éxito');
+            this.router.navigateByUrl('/admin/descuentos');
+          }
+        })
+      }else {
+        this.discounts.add(discount).subscribe( d => {
+          if(d){
+            this.toast.success('Descuento creado con éxito');
+            this.router.navigateByUrl('/admin/descuentos');
+          }
+        })
+      }
+    }else{
+      this.toast.warning('Hay campos requeridos sin completar');
+    }
+  }
 }
