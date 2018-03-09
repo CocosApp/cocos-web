@@ -34,6 +34,7 @@ export class DiscountDetailsComponent implements OnInit {
     private discounts: DiscountsService, private cards: CardsService, private toast: ToastService,
     private router: Router, private branches: BranchesService) {
     this.discount = this.route.snapshot.data.discount;
+    console.log(this.discount);
     this.discountFG = this.fb.group({
       id: undefined,
       name: ['',[Validators.required]],
@@ -108,6 +109,7 @@ export class DiscountDetailsComponent implements OnInit {
 
   addPhotoFC(photo: Photo){
     this.photoListFA.push(this.fb.group({
+      id: photo.id,
       image: photo.image,
       imageUrl: photo.imageUrl,
       forDelete: false

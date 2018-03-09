@@ -129,6 +129,7 @@ export class UsersService extends BaseService implements CrudService<User>{
                             lastName: resp.last_name,
                             ruc: resp.ruc,
                             phone: resp.cellphone,
+                            businessName: resp.business_name,
                             branchList: resp.restaurant.map( BranchMapper.mapFromBe )
                         }));
                         return true;
@@ -194,7 +195,7 @@ export class UsersService extends BaseService implements CrudService<User>{
             let user = this.currentUser.value;
             let newUser = {
                 id: resp.id,
-                email: resp.email,
+                // email: resp.email,
                 firstName: resp.first_name,
                 lastName: resp.last_name,
                 ruc: resp.ruc,

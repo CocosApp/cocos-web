@@ -29,7 +29,7 @@ export class BranchMapper{
             })),
             menuPublicUrl: be.food_letter,
             phoneList: [be.mobile,be.mobile2],
-            photoList: [be.photo1,be.photo2,be.photo3].filter(p => p).map(p => new Photo({ imageUrl: p })),
+            photoList: [be.photo1,be.photo2,be.photo3].filter(p => p).map((p,id) => new Photo({ id: id+1, imageUrl: p })),
             subcategoryList: (be.subcategory || []).map( i => new Category({
                 id: i.id,
                 name: i.name
@@ -68,20 +68,21 @@ export class BranchMapper{
         entity.phoneList[0] && formData.append('mobile', entity.phoneList[0]);
         entity.phoneList[1] && formData.append('mobile2', entity.phoneList[1]);
         entity.whatsapp && formData.append('whatsapp',entity.whatsapp.startsWith('+51')? entity.whatsapp : '+51'+entity.whatsapp);
+        console.log(entity.photoList);
         if(entity.photoList[0] && entity.photoList[0].image){
             formData.append('photo1',entity.photoList[0].image, entity.photoList[0].image.name);
         }else if(entity.photoList[0] && entity.photoList[0].forDelete){
-            formData.append('photo1',null);
+            formData.append('photo1','');
         }
         if(entity.photoList[1] && entity.photoList[1].image){
             formData.append('photo2',entity.photoList[1].image, entity.photoList[1].image.name);
         }else if(entity.photoList[1] && entity.photoList[1].forDelete){
-            formData.append('photo2',null);
+            formData.append('photo2','');
         }
         if(entity.photoList[2] && entity.photoList[2].image){
             formData.append('photo3',entity.photoList[2].image, entity.photoList[2].image.name);
         }else if(entity.photoList[2] && entity.photoList[2].forDelete){
-            formData.append('photo3',null);
+            formData.append('photo3','');
         }
         return formData
     }    

@@ -1,7 +1,7 @@
 import { BaseService, DjangoPagination } from './base/base-service';
 import { CrudService } from './contracts/crud-service';
 import { Discount } from '../../shared/models/discount.model';
-import { Specification } from './specifications/base/specification';
+import { Specification, EntityByIdSpecification } from './specifications/base/specification';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/observable/of';
@@ -23,6 +23,22 @@ export class DiscountsService extends BaseService implements CrudService<Discoun
     }
 
     get(specification?: Specification<Discount>): Observable<Discount[]> {
+        // console.log(specification);
+        if( specification instanceof EntityByIdSpecification ){
+            // debugger;
+            // let observables = this.currentUser.branchList.map(
+            //     b => this.api.get(`admin/restaurant/${b.id}/discount/listcreate`)
+            //     .map( (resp: DjangoPagination) => (resp.results[0].discount || []).map( DiscountMapper.mapFromBe )
+            // ));
+            // return Observable.forkJoin(...observables).map( results => {
+            //     console.log([].concat(...results));
+            //     return [].concat(...results).filter( d => d.id == specification.id );
+            // })
+            return this.api.get(`discount/admin/CRUD/${specification.id}`)
+            .map((resp) => {
+                return [DiscountMapper.mapFromBe(resp)];
+            });
+        }
         let observables = this.currentUser.branchList.map(
             b => this.api.get(`admin/restaurant/${b.id}/discount/listcreate`)
             .map( (resp: DjangoPagination) => (resp.results[0].discount || []).map( DiscountMapper.mapFromBe )
@@ -37,7 +53,7 @@ export class DiscountsService extends BaseService implements CrudService<Discoun
         // })
     }
     update(entity: Discount): Observable<Discount> {
-        return this.api.put(`discount/CRUD/${entity.id}/`,DiscountMapper.mapToBe(entity))
+        return this.api.put(`discount/admin/CRUD/${entity.id}`,DiscountMapper.mapToBe(entity))
         .map((resp) => {
             return DiscountMapper.mapFromBe(resp);
         });
@@ -63,7 +79,7 @@ export class DiscountsService extends BaseService implements CrudService<Discoun
         // });
     }
     remove(entity: Discount): Observable<Discount> {
-        return this.api.delete(`discount/CRUD/${entity.id}/`)
+        return this.api.delete(`discount/admin/CRUD/${entity.id}`)
         .map((resp) => {
             return entity;
         });

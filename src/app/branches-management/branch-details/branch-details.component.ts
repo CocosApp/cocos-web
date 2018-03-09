@@ -211,6 +211,7 @@ export class BranchDetailsComponent implements OnInit {
   
   addPhotoFG(photo: Photo){
     this.photoListFA.push( this.fb.group({
+      id: photo.id,
       image: photo.image,
       imageUrl: photo.imageUrl,
       forDelete: photo.forDelete
