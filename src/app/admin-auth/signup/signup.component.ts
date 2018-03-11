@@ -28,6 +28,7 @@ import { Branch } from '../../shared/models/branch.model';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { SuccessRequestComponent } from '../success-request/success-request.component';
+import { ArrayLengthValidator } from '../../shared/validators/array-length.validator';
 
 @Component({
   selector: 'app-signup',
@@ -70,7 +71,7 @@ export class SignupComponent implements OnInit {
     this.branchFG = this.fb.group({
       name: ['',[Validators.required]],
       ruc: '',
-      subcategoryList: [[],[Validators.required]],
+      subcategoryList: [[],[new ArrayLengthValidator(1,2)]],
       longitude: ['',[Validators.required]],
       latitude: ['',[Validators.required]],
       address: ['',[new LocationValidator()]],
