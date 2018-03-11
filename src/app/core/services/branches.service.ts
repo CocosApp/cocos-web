@@ -24,7 +24,7 @@ export class BranchesService extends BaseService implements CrudService<Branch>{
             return resp.results.map( be => BranchMapper.mapFromBe(be.restaurant) );
         })
         .catch( err => {
-            this.toast.error(`No se pudo cargar las sucursales: ${err.message}`)
+            this.toast.error(`No se pudo cargar los restaurantes: ${err.message}`)
             return Observable.of([]);
         });
     }
@@ -34,7 +34,7 @@ export class BranchesService extends BaseService implements CrudService<Branch>{
             return BranchMapper.mapFromBe(resp);
         })
         .catch( err => {
-            this.toast.error('No se pudo actualizar la sucursal')
+            this.toast.error('No se pudo actualizar el restaurante')
             return Observable.of(undefined);
         });;
     }
@@ -44,7 +44,7 @@ export class BranchesService extends BaseService implements CrudService<Branch>{
                 return new Branch({ id: resp.id });
             })
             .catch( err => {
-                this.toast.error('No se pudo crear la sucursal');
+                this.toast.error('No se pudo crear el restaurante');
                 return Observable.of(undefined);
             })
             .flatMap(created =>{
@@ -59,7 +59,7 @@ export class BranchesService extends BaseService implements CrudService<Branch>{
                         return Observable.of(undefined);
                     })
                     .catch( err => {
-                        this.toast.error('No se pudo asignar la sucursal a su usuario');
+                        this.toast.error('No se pudo asignar el restaurante a su usuario');
                         return Observable.of(undefined);
                     })
                 }else{

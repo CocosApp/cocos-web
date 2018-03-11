@@ -9,8 +9,8 @@ export class TabsComponent implements OnInit {
   
   navLinks: any[] = [
     {
-      path: 'sucursales',
-      label: 'Sucursales'
+      path: 'restaurantes',
+      label: 'Restaurantes'
     },
     {
       path: 'descuentos',

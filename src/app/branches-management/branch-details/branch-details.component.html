@@ -2,10 +2,10 @@
   <form class="flex padding-y overflow-y scrollbar" [formGroup]="branchFG">    
     <mat-card>
       <mat-card-title>
-        <button mat-icon-button type="button" routerLink="/admin/sucursales">
+        <button mat-icon-button type="button" routerLink="/admin/restaurantes">
           <i class="material-icons">keyboard_backspace</i>
         </button>
-        <span><b>{{ branch ? 'Editar sucursal' : 'Crear sucursal' }}</b></span>
+        <span><b>{{ branch ? 'Editar restaurante' : 'Crear restaurante' }}</b></span>
       </mat-card-title>
       <!-- <mat-card-subtitle>
         Si desea designar la gestión de esta sucursal a alguien más, deberá contactar con el equipo de
@@ -111,12 +111,12 @@
               </div>
             </div>
             <div class="padding-10-y">
-              <b>Carta del local</b>
+              <b>Carta del restaurante</b>
               <input type="file" (change)="onChangeMenu($event)" accept="application/pdf">
             </div>
             <div class="padding-10-y" *ngIf="branchFG.value.menuPublicUrl">
               <a class="cc-link" [href]="branchFG.value.menuPublicUrl? branchFG.value.menuPublicUrl : '!#'" target="_blank">
-                <b>Abrir actual Carta del local</b>
+                <b>Abrir actual Carta del restaurante</b>
               </a>
             </div>
             <div class="flex-row-layout jc-flex-end">

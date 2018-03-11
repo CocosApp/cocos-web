@@ -31,7 +31,7 @@
           <mat-error>Requerido</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <mat-select placeholder="Asociar a la sucursal" formControlName="branch">
+          <mat-select placeholder="Asociar al restaurante" formControlName="branch">
             <mat-option *ngFor="let branch of branchList" [value]="branch">
               {{branch.name}}
             </mat-option>

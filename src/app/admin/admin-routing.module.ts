@@ -18,7 +18,7 @@ const routes: Routes = [
         component: TabsComponent,
         children: [
           {
-            path: 'sucursales',
+            path: 'restaurantes',
             loadChildren: 'app/branches-management/branches-management.module#BranchesManagementModule',
           },
           {
@@ -28,7 +28,7 @@ const routes: Routes = [
           {
             path: '',
             pathMatch: 'exact',
-            redirectTo: 'sucursales'
+            redirectTo: 'restaurantes'
           }
         ]
       }

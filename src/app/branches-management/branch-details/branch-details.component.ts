@@ -254,12 +254,12 @@ export class BranchDetailsComponent implements OnInit {
         // console.log(branch);
         this.branches.update(branch).subscribe( branch => {
           if(branch){
-            this.toast.success('La sucursal ha sido actualizada correctamente');
-            this.router.navigateByUrl('/admin/sucursales');
+            this.toast.success('El restaurante ha sido actualizada correctamente');
+            this.router.navigateByUrl('/admin/restaurantes');
           }
         });
       }else{
-        this.toast.error('Usted no tiene permisos para crear sucursales');
+        this.toast.error('Usted no tiene permisos para crear restaurantes');
       }
     }else{
       this.toast.warning('Hay campos requeridos sin completar');

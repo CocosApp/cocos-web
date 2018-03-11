@@ -1,27 +1,38 @@
 <div class="admin page flex-col-layout ai-stretch">
   <mat-toolbar color="primary" class="flex-row-layout ai-center flex-auto">
     <!-- <span class="toolbar__brand">COCOS ADMIN</span> -->
-    <img src="/assets/images/logo-label.png" alt="" height="45">
+    <img src="/assets/images/logo-label.png" alt="" height="45" routerLink="/">
     <span class="flex"></span>
+    <button mat-icon-button [matMenuTriggerFor]="share">
+      <i class="material-icons">share</i>
+    </button>
+    <mat-menu #share="matMenu">
+      <button mat-menu-item class="flex-row-layout ai-center flex-gap">
+        <span>Facebook</span>
+      </button>
+      <button mat-menu-item class="flex-row-layout ai-center flex-gap">
+        <span>Twitter</span>
+      </button>
+    </mat-menu>
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <i class="material-icons">more_vert</i>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item class="flex-row-layout ai-center flex-gap" routerLink="/admin/sucursales">
+      <button mat-menu-item class="flex-row-layout ai-center flex-gap" routerLink="/admin/restaurantes">
         <i class="material-icons">restaurant</i>
-        <span>Sucursales</span>
+        <span class="flex">Restaurantes</span>
       </button>
       <button mat-menu-item class="flex-row-layout ai-center flex-gap" routerLink="/admin/descuentos">
         <i class="material-icons">local_offer</i>
-        <span>Descuentos</span>
+        <span class="flex">Descuentos</span>
       </button>
       <button mat-menu-item class="flex-row-layout ai-center flex-gap" routerLink="/admin/perfil">
         <i class="material-icons">account_circle</i>
-        <span>Perfil</span>
+        <span class="flex">Perfil</span>
       </button>
       <button mat-menu-item class="flex-row-layout ai-center flex-gap" (click)="users.logout()">
         <i class="material-icons">exit_to_app</i>
-        <span>Cerrar sesión</span>
+        <span class="flex">Cerrar sesión</span>
       </button>
     </mat-menu>
   </mat-toolbar>

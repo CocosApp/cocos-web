@@ -63,7 +63,7 @@
             </form>
           </mat-step>
           <mat-step [stepControl]="branchFG">
-            <ng-template matStepLabel>Datos de su negocio</ng-template>
+            <ng-template matStepLabel>Datos de su restaurante</ng-template>
             <form class="flex-col-layout ai-stretch" [formGroup]="branchFG"
             (submit)="onConfirm()">
                 <mat-form-field>
@@ -156,7 +156,7 @@
                   </div>
                 </div>
                 <div class="padding-10-y">
-                  <b>Carta del local</b>
+                  <b>Carta del restaurante</b>
                   <input type="file" (change)="onChangeMenu($event)"  accept="application/pdf">
                 </div>
                 <div class="flex-row-layout jc-flex-end">
