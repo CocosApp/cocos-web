@@ -7,10 +7,10 @@
       <i class="material-icons">share</i>
     </button>
     <mat-menu #share="matMenu">
-      <button mat-menu-item class="flex-row-layout ai-center flex-gap">
+      <button mat-menu-item class="flex-row-layout ai-center flex-gap" (click)="onShareFacebook()">
         <span>Facebook</span>
       </button>
-      <button mat-menu-item class="flex-row-layout ai-center flex-gap">
+      <button mat-menu-item class="flex-row-layout ai-center flex-gap" (click)="onShareTwitter()">
         <span>Twitter</span>
       </button>
     </mat-menu>

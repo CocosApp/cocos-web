@@ -43,10 +43,12 @@ export class DiscountsService extends BaseService implements CrudService<Discoun
             b => this.api.get(`admin/restaurant/${b.id}/discount/listcreate`)
             .map( (resp: DjangoPagination) => (resp.results[0].discount || []).map( DiscountMapper.mapFromBe )
         ));
-        return Observable.forkJoin(...observables).map( results => {
+        return observables.length > 0 ?
+         Observable.forkJoin(...observables).map( results => {
             // console.log(results);
             return [].concat(...results);
-        })
+        }) : 
+        Observable.of([]);
         // return this.api.get('discount/list/')
         // .map((resp: DjangoPagination) => {
         //     return resp.results.map( DiscountMapper.mapFromBe );

@@ -23,6 +23,7 @@ import { NgProgressHttpModule } from '@ngx-progressbar/http';
 import { InitComponent } from './components/init/init.component';
 import { RouterModule } from '@angular/router';
 import { InitGuard } from './guards/init.guard';
+import { ShareService } from './services/share.service';
 
 @NgModule({
   imports: [
@@ -54,7 +55,8 @@ import { InitGuard } from './guards/init.guard';
     CardsService,
     InitGuard,
     AuthGuard,
-    AdminGuard
+    AdminGuard,
+    ShareService
   ],
   declarations: [ InitComponent ],
   exports: [
