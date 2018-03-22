@@ -23,7 +23,7 @@
     &__right{
         position: relative;
         background-color: #FFF;
-        padding: 60px;
+        padding: 30px;
         @include flexFlex();
         @include layoutFlex();
         @include directionFlex(column);

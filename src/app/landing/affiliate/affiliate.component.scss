@@ -3,8 +3,14 @@
 .affiliate{
     .title{
         font-weight: bold;
-        font-size: 65px;
+        font-size: 38px;
         text-align: center;
+        @include device-md{
+            font-size: 55px;
+        }
+        @include device-lg{
+            font-size: 65px;
+        }
     }
     .preview{
         margin-left: auto;
