@@ -46,6 +46,7 @@ export class DiscountDetailsComponent implements OnInit {
       termsAndConditions: ['',[Validators.required]],
       description: ['',[]],
       isOwner: [false,[Validators.required]],
+      finishAt: [new Date(),[Validators.required]]
     });
     this.fillFormModels();
   }

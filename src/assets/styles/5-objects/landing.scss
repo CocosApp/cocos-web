@@ -27,7 +27,7 @@
         @extend .section;
         .title{
             font-weight: bold;
-            color: $color-primary;
+            color: $color-primary-darker;
             text-align: center;
             font-size: 2em;
             &::after{
@@ -75,7 +75,7 @@
         }
     }
     .lnd-btn{
-        background-color: $color-primary;
+        background-color: $color-primary-darker;
         color: #FFF;
         padding: 15px 45px;
         @include mat-elevation-transition;

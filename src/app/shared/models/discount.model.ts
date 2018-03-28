@@ -13,6 +13,7 @@ export class Discount extends Base<Discount>{
     photoList: Photo[];
     termsAndConditions: string;
     isOwner: boolean;
-    branch: Branch
+    branch: Branch;
+    finishAt: Date;
 
 }

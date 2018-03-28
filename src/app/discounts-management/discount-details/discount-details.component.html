@@ -37,6 +37,12 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" placeholder="Fecha de vencimiento"
+          formControlName="finishAt">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
         <div class="mat-form-field flex-col-layout flex-gap ai-stretch">
           <p><b>Tarjeta asociada al descuento (opcional):</b></p>
           <mat-radio-group class="cards-container flex-col-layout flex-gap scrollbar" formControlName="card">

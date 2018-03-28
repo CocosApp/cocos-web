@@ -17,7 +17,8 @@ export class DiscountMapper{
             isOwner: be.is_owner,
             termsAndConditions: be.terms_condition,
             branch: be.restaurants && be.restaurants.length > 0? 
-                new Branch({ id: be.restaurants[0] }) : undefined
+                new Branch({ id: be.restaurants[0] }) : undefined,
+            finishAt: be.finished_at
         });
     }
 
@@ -26,6 +27,7 @@ export class DiscountMapper{
         entity.id && formData.append('id',entity.id.toString());
         // entity.card && formData.append('card',entity.card.id.toString());
         formData.append('card', entity.card? entity.card.id.toString() : '');
+        formData.append('finished_at', entity.finishAt.toLocaleDateYearFirst()+' 00:00:00.000000-05:00' );
         formData.append('is_owner',entity.card ? 'false' : 'true');
         entity.description && formData.append('descrip',entity.description);
         entity.name && formData.append('name',entity.name);
