@@ -1,10 +1,31 @@
+@import "../../../assets/styles/1-settings/index";
 @import "../../../assets/styles/2-tools/index";
 
 .contact-us{
-    input, textarea{
+    // input, textarea{
+    //     padding: 12px;
+    //     border: 1px solid rgba(0,0,0,.3);
+    //     width: 100%;
+    //     @include borderRadius(3px);
+    // }
+    input,textarea{
         padding: 12px;
         border: 1px solid rgba(0,0,0,.3);
         width: 100%;
+        background-color: transparent;
         @include borderRadius(3px);
+        @include transition2(all .2s linear);
+        @include placeholder{
+            @include transition2(all .2s linear);
+        }
+    }
+    input.ng-invalid.ng-dirty, input.ng-invalid.ng-touched,
+    textarea.ng-invalid.ng-dirty, textarea.ng-invalid.ng-touched{
+        border-color: $color-warn;
+        background-color: rgba($color-warn,0.3);
+        color: $color-warn;
+        @include placeholder{
+            color: $color-warn;
+        } 
     }
 }

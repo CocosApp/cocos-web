@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment';
 import { GoToBackDirective } from './directives/go-to-back.directive';
 import './extensions/array.extensions';
 import './extensions/date.extensions';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import './extensions/date.extensions';
     GoToBackDirective,
     MatRadioModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    FlexLayoutModule
   ],
   providers: [
     InstanceResolverForBranch,

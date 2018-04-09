@@ -16,4 +16,7 @@ export class Discount extends Base<Discount>{
     branch: Branch;
     finishAt: Date;
 
+    //FOR CRUD PURPOUSES
+    previousBranch: Branch;
+
 }

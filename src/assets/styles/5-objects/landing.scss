@@ -84,5 +84,9 @@
         &:hover {
           @include mat-elevation(8);
         }
+        &:disabled, &[disabled]{
+            background-color: #ebede0;
+            color: #696a67;
+        }
     }
 }

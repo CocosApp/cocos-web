@@ -220,5 +220,19 @@ export class UsersService extends BaseService implements CrudService<User>{
     remove(entity: User): Observable<User> {
         throw new Error("Method not implemented.");
     }
+
+    contactUs(name: string, email: string, message: string): Observable<boolean>{
+        return this.api.post('webcontact/',{
+            msg: message,
+            full_name: name,
+            email: email
+        },undefined,false).map( resp => {
+            if(resp[0]=="Correo envíado"){
+                return true;
+            }
+            this.toast.error('No se pudo enviar su solicitud de contact');
+            return false;
+        })
+    }
     
 }

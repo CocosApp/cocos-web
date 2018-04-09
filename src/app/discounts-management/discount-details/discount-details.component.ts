@@ -40,6 +40,7 @@ export class DiscountDetailsComponent implements OnInit {
       name: ['',[Validators.required]],
       card: [undefined,[]],
       branch: [undefined,[Validators.required]],
+      previousBranch: [undefined,[]],
       photoList: this.fb.array([]),
       percentage: [0,[]],
       price: [0,[]],
@@ -155,6 +156,7 @@ export class DiscountDetailsComponent implements OnInit {
   }
 
   onConfirm(){
+    console.log(this.discountFG.value);
     if(this.discountFG.valid){
       let discount = new Discount(this.discountFG.value);
       // console.log(discount);

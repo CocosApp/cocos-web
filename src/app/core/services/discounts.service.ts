@@ -11,6 +11,7 @@ import { ToastService } from './shared/toast.service';
 import { ApiService } from './shared/api.service';
 import { User } from '../../shared/models/user.model';
 import { BranchMapper } from './mappers/branch.mapper';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class DiscountsService extends BaseService implements CrudService<Discount>{
@@ -55,10 +56,50 @@ export class DiscountsService extends BaseService implements CrudService<Discoun
         // })
     }
     update(entity: Discount): Observable<Discount> {
+        let resDiscount: any;
         return this.api.put(`discount/admin/CRUD/${entity.id}`,DiscountMapper.mapToBe(entity))
         .map((resp) => {
             return DiscountMapper.mapFromBe(resp);
+        }).catch( err => {
+            console.error(err);
+            this.toast.error('No se pudo actualizar el descuento')
+            return Observable.of(undefined);
+        })
+        .flatMap( updated => {
+            if(updated){
+                return this.api.get('admin/list/restaurantdiscount',{
+                    params: new HttpParams()
+                        .append('restaurant',entity.previousBranch.id.toString())
+                        .append('discount',entity.id.toString())
+                })
+            }
+            return Observable.of(undefined);
+        }).flatMap( (resp: DjangoPagination) => {
+            if(!!resp && !!resp.results && resp.results.length > 0){
+                resDiscount = resp.results.find( r => !!r.restaurant && !!r.discount 
+                    && r.restaurant.id == entity.previousBranch.id && r.discount.id == entity.id );
+                if(!!resDiscount){                    
+                    return this.api.delete(`admin/restaurant/${resDiscount.id}/discount`)
+                    .flatMap( resp => {
+                        return this.api.post(`admin/restaurant/${entity.branch.id}/discount/listcreate`,{
+                            discount: entity.id
+                        });
+                    })
+                }else{
+                    // this.toast.error('No se pudo actualizar el descuento')
+                    // return Observable.of(undefined);
+                    return this.api.post(`admin/restaurant/${entity.branch.id}/discount/listcreate`,{
+                        discount: entity.id
+                    });
+                }
+            }
+            // this.toast.error('No se pudo actualizar el descuento')
+            return Observable.of(undefined);
+        })
+        .map((resp) => {
+            return entity;
         });
+        
     }
     add(entity: Discount): Observable<Discount> {
         return this.api.post('discount/create',DiscountMapper.mapToBe(entity))
@@ -66,19 +107,19 @@ export class DiscountsService extends BaseService implements CrudService<Discoun
             return DiscountMapper.mapFromBe(resp);
         })
         .catch(err => {
-            this.toast.error('No se pudo crear el restaurante');
+            this.toast.error('No se pudo crear el descuento');
             return Observable.of(undefined);
         })
-        // .flatMap(created=>{
-        //     if(created){
-        //         return this.api.post(`admin/restaurant/${entity.branch.id}/discount/listcreate`,{
-        //             discount: created.id
-        //         })
-        //         .map( resp => new Discount() )
-        //         .catch( err => Observable.of(undefined) )
-        //     }
-        //     return Observable.of(undefined);
-        // });
+        .flatMap(created=>{
+            if(created){
+                return this.api.post(`admin/restaurant/${entity.branch.id}/discount/listcreate`,{
+                    discount: created.id
+                })
+                .map( resp => new Discount() )
+                .catch( err => Observable.of(undefined) )
+            }
+            return Observable.of(undefined);
+        });
     }
     remove(entity: Discount): Observable<Discount> {
         return this.api.delete(`discount/admin/CRUD/${entity.id}`)

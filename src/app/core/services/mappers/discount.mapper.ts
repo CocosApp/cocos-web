@@ -18,7 +18,9 @@ export class DiscountMapper{
             termsAndConditions: be.terms_condition,
             branch: be.restaurants && be.restaurants.length > 0? 
                 new Branch({ id: be.restaurants[0] }) : undefined,
-            finishAt: be.finished_at
+            previousBranch: be.restaurants && be.restaurants.length > 0? 
+            new Branch({ id: be.restaurants[0] }) : undefined,
+            finishAt: Date.fromString(be.finished_at)
         });
     }
 
@@ -31,8 +33,8 @@ export class DiscountMapper{
         formData.append('is_owner',entity.card ? 'false' : 'true');
         entity.description && formData.append('descrip',entity.description);
         entity.name && formData.append('name',entity.name);
-        entity.percentage && formData.append('porc',entity.percentage.toString());
-        entity.price && formData.append('price',entity.price.toString());
+        formData.append('porc',(entity.percentage || 0).toString());
+        formData.append('price',(entity.price || 0).toString());
         entity.termsAndConditions && formData.append('terms_condition',entity.termsAndConditions);
         console.log(entity.photoList);
         if(entity.photoList && entity.photoList[0] && entity.photoList[0].image){
