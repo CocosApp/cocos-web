@@ -13,6 +13,7 @@ import { AffiliateComponent } from './affiliate/affiliate.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { TestimonialComponent } from './testimonial/testimonial.component';
 import { MenuPopupComponent } from './menu-popup/menu-popup.component';
+import { IncreaseYourSalesComponent } from './increase-your-sales/increase-your-sales.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,7 @@ import { MenuPopupComponent } from './menu-popup/menu-popup.component';
   ],
   declarations: [LandingComponent, HeaderComponent, FooterComponent, IntroComponent, 
     InformationComponent, TeamComponent, CocosAppComponent, AffiliateComponent, ContactUsComponent, 
-    TestimonialComponent, MenuPopupComponent, ],
+    TestimonialComponent, MenuPopupComponent, IncreaseYourSalesComponent, ],
   entryComponents: [
     MenuPopupComponent
   ]

@@ -12,6 +12,8 @@ import 'rxjs/add/observable/forkJoin';
 import { ToastService } from '../../core/services/shared/toast.service';
 import { BranchesService } from '../../core/services/branches.service';
 import { Branch } from '../../shared/models/branch.model';
+import { CreatedDiscountDialogComponent } from '../created-discount-dialog/created-discount-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-discount-details',
@@ -32,7 +34,7 @@ export class DiscountDetailsComponent implements OnInit {
   
   constructor(private fb: FormBuilder, private sanitizer: DomSanitizer, private route: ActivatedRoute, 
     private discounts: DiscountsService, private cards: CardsService, private toast: ToastService,
-    private router: Router, private branches: BranchesService) {
+    private router: Router, private branches: BranchesService, private dialog: MatDialog) {
     this.discount = this.route.snapshot.data.discount;
     console.log(this.discount);
     this.discountFG = this.fb.group({
@@ -163,15 +165,29 @@ export class DiscountDetailsComponent implements OnInit {
       if(discount.id){
         this.discounts.update(discount).subscribe( d => {
           if(d){
-            this.toast.success('Descuento actualizado con éxito');
-            this.router.navigateByUrl('/admin/descuentos');
+            // this.toast.success('Descuento actualizado con éxito');
+            let dialogRef = this.dialog.open(CreatedDiscountDialogComponent,{
+              data: {
+                title: 'El descuento ha sido actualizado con éxito'
+              }
+            });
+            dialogRef.afterClosed().subscribe( () => {
+              this.router.navigateByUrl('/admin/descuentos');
+            })
           }
         })
       }else {
         this.discounts.add(discount).subscribe( d => {
           if(d){
-            this.toast.success('Descuento creado con éxito');
-            this.router.navigateByUrl('/admin/descuentos');
+            // this.toast.success('Descuento creado con éxito');
+            let dialogRef = this.dialog.open(CreatedDiscountDialogComponent,{
+              data: {
+                title: 'El descuento ha sido creado con éxito'
+              }
+            });
+            dialogRef.afterClosed().subscribe( () => {
+              this.router.navigateByUrl('/admin/descuentos');
+            })
           }
         })
       }

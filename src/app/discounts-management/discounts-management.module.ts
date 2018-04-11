@@ -6,6 +6,7 @@ import { DiscountListComponent } from './discount-list/discount-list.component';
 import { DiscountDetailsComponent } from './discount-details/discount-details.component';
 import { SharedModule } from '../shared/shared.module';
 import { AnyDiscountComponent } from './any-discount/any-discount.component';
+import { CreatedDiscountDialogComponent } from './created-discount-dialog/created-discount-dialog.component';
 
 @NgModule({
   imports: [
@@ -13,8 +14,9 @@ import { AnyDiscountComponent } from './any-discount/any-discount.component';
     DiscountsManagementRoutingModule
   ],
   entryComponents: [
-    AnyDiscountComponent
+    AnyDiscountComponent,
+    CreatedDiscountDialogComponent
   ],
-  declarations: [DiscountsManagementComponent, DiscountListComponent, DiscountDetailsComponent, AnyDiscountComponent]
+  declarations: [DiscountsManagementComponent, DiscountListComponent, DiscountDetailsComponent, AnyDiscountComponent, CreatedDiscountDialogComponent]
 })
 export class DiscountsManagementModule { }

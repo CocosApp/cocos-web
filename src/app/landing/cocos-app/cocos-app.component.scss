@@ -1,33 +1,64 @@
+@import "../../../assets/styles/1-settings/index";
 @import "../../../assets/styles/2-tools/index";
 
 .cocos-app{
     .app-details-container{
         @include layoutFlex();
-        @include alignItems(center);
+        @include alignItems(start);
         @include directionFlex(column);
         @include device-md{
+            @include alignItems(stretch);
             @include directionFlex(row);
         }
         .app-details{
             font-size: 14px;
             @include flexFlex();
+            @include layoutFlex();
+            @include justifyContent(space-around);
+            @include directionFlex(column);
             .detail{
                 padding: 15px 25px;
                 &__title{
                     font-weight: bold;
                 }
+                &__description{
+                    padding-left: 65px;
+                }
+                @include device-md{
+                    // min-height: 170px;
+                    // &:first-child{
+                    //     margin-bottom: 40px;
+                    // }
+                }
             }
         }
         .app-preview{
-            max-width: 335px;
+            // max-width: 335px;
             display: none;
             @include device-md{
+                height: 530px;
                 display: block;
             }
         }
     }
     .get-app{
-        max-width: 460px;
+        max-width: 480px;
         margin: 50px auto 0;
+        @include device-md{
+            background-color: #FFF;
+            background-image: url(/assets/images/smartphone.png);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: -110px center;
+        }
+        &__content{
+            padding: 20px;
+            @include device-md{
+                padding-left: 80px;
+            }
+            // p{
+            //     @include borderRadius(15px);
+            // }
+        }
     }
 }
