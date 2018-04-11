@@ -10,8 +10,14 @@
         color: #5d5f61;
         display: block;
         width: fit-content;
-        margin: 0 auto;
+        margin: 20px auto;
         font-family: $gotham-medium;
+        .overlay{
+            left: 50%;
+            background-color: #f5f5f5;
+            width: calc(100vw - 6px);
+            @include transform(translateX(-50%));
+        }
         &::before, &::after{
             content: '';
             background-color: currentColor;
@@ -67,20 +73,44 @@
             }
         }
     }
+    .get-app-container{
+        padding: 30px 0;
+        margin-top: 50px;
+        .overlay{
+            left: 50%;
+            background-color: #f5f5f5;
+            width: calc(100vw - 6px);
+            @include transform(translateX(-50%));
+        }
+    }
     .get-app{
         max-width: 480px;
-        margin: 50px auto 0;
-        @include device-md{
-            background-color: #FFF;
-            background-image: url(/assets/images/smartphone.png);
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: -110px center;
+        margin: 0 auto 0;
+        position: relative;
+        @include device-lg{
+            max-width: 635px;
+            // background-color: #FFF;
+            // background-image: url(/assets/images/cocos-hand.png);
+            // background-size: contain;
+            // background-repeat: no-repeat;
+            // background-position: -110px center;
+        }
+        .app-phone{
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 100%;
+            width: auto;
+            display: none;
+            @include device-md{
+                display: block;
+            }
         }
         &__content{
             padding: 20px;
+            position: relative;
             @include device-md{
-                padding-left: 80px;
+                padding-left: 160px;
             }
             // p{
             //     @include borderRadius(15px);

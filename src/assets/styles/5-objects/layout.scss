@@ -57,12 +57,12 @@ $flex-points: (
 .flex-row-layout{
     @include directionFlex(row);
     @each $point in $flex-points{
-        .flex-#{$point}{
+        >.flex-#{$point}{
             width: #{$point+'%'};
         }
     }
     &.flex-gap{
-        &>*:not(:first-child){
+        >*:not(:first-child){
             margin-left: 10px;
         }
     }
@@ -71,12 +71,12 @@ $flex-points: (
 .flex-col-layout{
     @include directionFlex(column);
     @each $point in $flex-points{
-        .flex-#{$point}{
+        >.flex-#{$point}{
             height: #{$point+'%'};
         }
     }
     &.flex-gap{
-        &>*:not(:first-child){
+        >*:not(:first-child){
             margin-top: 10px;
         }
     }

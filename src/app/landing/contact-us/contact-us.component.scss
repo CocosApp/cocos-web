@@ -1,6 +1,13 @@
 @import "../../../assets/styles/1-settings/index";
 @import "../../../assets/styles/2-tools/index";
 
+:host{
+    background-image: url(/assets/images/contact-bk.jpg);
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+
 .contact-us{
     // input, textarea{
     //     padding: 12px;
@@ -8,14 +15,18 @@
     //     width: 100%;
     //     @include borderRadius(3px);
     // }
+    color: #FFF;
+    font-family: $gotham-medium;
     input,textarea{
         padding: 12px;
-        border: 1px solid rgba(0,0,0,.3);
+        border: 1px solid #FFF;
+        color: #FFF;
         width: 100%;
         background-color: transparent;
         @include borderRadius(3px);
         @include transition2(all .2s linear);
         @include placeholder{
+            color: #FFF;
             @include transition2(all .2s linear);
         }
     }

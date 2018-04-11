@@ -15,6 +15,9 @@
     color: #000;    
     @include transition2(all .2s linear);
     @include animationDuration(.2s !important);
+    .logo-black{
+        display: none;
+    }
     &--fixed{
         // background-color: $color-primary;
         color: #FFF;    
@@ -22,6 +25,12 @@
         position: fixed;
         padding: 8px 20px;
         // @include mat-elevation(2);
+        .logo-white{
+            display: none;
+        }
+        .logo-black{
+            display: block;
+        }
     }
     .logo{
         height: 50px;
@@ -32,7 +41,7 @@
             margin: 0 8px;
             font-size: 18px;
             position: relative;
-            font-weight: bold;
+            // font-weight: bold;
         }
     }
 }

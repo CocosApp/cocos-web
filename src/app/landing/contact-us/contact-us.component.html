@@ -1,8 +1,9 @@
-<form class="contact-us section-sides" [formGroup]="contactFG" (submit)="onSend()">
+<div class="overlay"></div>
+<form class="contact-us section-sides overlay-container" [formGroup]="contactFG" (submit)="onSend()">
     <div class="fill-width">
         <h3 class="text-primary">Contáctanos</h3>    
         <div class="flex-row-layout ai-stretch fill-width flex-wrap">
-            <div class="section-left flex-50 flex-col-layout ai-stretch">
+            <div class="section-left flex-50 flex-col-layout ai-stretch jc-space-between">
                 <div class="name">
                     <h4>Tu nombre</h4>
                     <input type="text" formControlName="name">
@@ -11,18 +12,17 @@
                     <h4>Tu correo</h4>
                     <input type="text" formControlName="email">
                 </div>
-                <div class="flex-row-layout padding-10-y hide-xs hide-sm">
-                    <span class="flex"></span>
-                    <button class="lnd-btn flex-row-layout ai-center flex-gap" [disabled]="loading">
-                        <i class="material-icons">send</i>
-                        <span>ENVIAR</span>
-                    </button>
-                </div>
             </div>
             <div class="section-right flex">
                 <h4>Tu mensaje</h4>
-                <textarea rows="10" formControlName="message"></textarea>
+                <textarea rows="6" formControlName="message"></textarea>
             </div>
+        </div>
+        <div class="flex-row-layout jc-center padding-10-y hide-xs hide-sm">
+            <button class="lnd-btn flex-row-layout ai-center flex-gap" [disabled]="loading">
+                <i class="material-icons">send</i>
+                <span>ENVIAR</span>
+            </button>
         </div>
     </div>
     <div class="flex-row-layout padding-10-y hide-md hide-lg hide-xl">
