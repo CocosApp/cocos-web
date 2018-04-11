@@ -1,3 +1,6 @@
+@include font-face($gotham-medium,"/assets/fonts/Gotham Fonts Family/Gotham-Medium", 400, normal, otf);
+@include font-face($gotham-rounded,"/assets/fonts/Gotham Fonts Family/gotham-rounded-medium", 400, normal, otf);
+
 *{
     padding: 0;
     margin: 0;

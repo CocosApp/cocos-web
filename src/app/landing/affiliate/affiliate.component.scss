@@ -1,15 +1,18 @@
+@import "../../../assets/styles/1-settings/index";
 @import "../../../assets/styles/2-tools/mixins/media.queries.scss";
 
 .affiliate{
     .title{
+        font-family: $gotham-medium;
         font-weight: bold;
         font-size: 38px;
         text-align: center;
+        line-height: 1.5;
         @include device-md{
-            font-size: 55px;
+            font-size: 2.8em;
         }
         @include device-lg{
-            font-size: 65px;
+            font-size: 3em;
         }
     }
     .preview{

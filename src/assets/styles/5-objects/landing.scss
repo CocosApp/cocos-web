@@ -27,6 +27,7 @@
     .section-informative{
         @extend .section;
         .title{
+            font-family: $gotham-medium;
             font-weight: bold;
             color: $color-primary;
             text-align: center;
