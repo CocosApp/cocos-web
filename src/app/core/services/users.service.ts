@@ -56,7 +56,7 @@ export class UsersService extends BaseService implements CrudService<User>{
             }
             return Observable.of(false);
         }).catch( err => {
-            this.toast.error('No se pudo recuperar los datos del usuario');
+            // this.toast.error('No se pudo recuperar los datos del usuario');
             return Observable.of(false);
         });
     }
@@ -140,7 +140,8 @@ export class UsersService extends BaseService implements CrudService<User>{
                 }
                 return false;
             }).catch( err => {
-                this.toast.error('No se pudo recuperar la información del usuario');
+                // this.toast.error('No se pudo recuperar la información del usuario');
+                console.error(err);
                 return Observable.of(false);
             });
         }

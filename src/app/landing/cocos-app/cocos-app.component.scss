@@ -21,6 +21,7 @@
         &::before, &::after{
             content: '';
             background-color: currentColor;
+            z-index: 2;
             position: absolute;
             height: 2px;
             width: 50px;
