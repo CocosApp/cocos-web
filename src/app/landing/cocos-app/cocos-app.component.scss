@@ -4,7 +4,8 @@
 .cocos-app{
     .increase-your-sales{
         padding: 40px 0;
-        font-size: 2em;
+        font-size: 20px;
+        max-width: 235px;
         text-align: center;
         position: relative;
         color: #5d5f61;
@@ -12,6 +13,10 @@
         width: fit-content;
         margin: 20px auto;
         font-family: $gotham-medium;
+        @include device-md{
+            font-size: 2em;
+            max-width: unset;
+        }
         .overlay{
             left: 50%;
             background-color: #f5f5f5;
@@ -24,9 +29,12 @@
             z-index: 2;
             position: absolute;
             height: 2px;
-            width: 50px;
+            width: 30px;
             top: 50%;
             @include transform(translateY(-50%));
+            @include device-md{
+                width: 50px;
+            }
         }
         &::before{
             right: calc(100% + 15px);
@@ -97,14 +105,13 @@
             // background-position: -110px center;
         }
         .app-phone{
-            position: absolute;
+            width: 220px;
             left: 0;
             bottom: 0;
-            height: 100%;
-            width: auto;
-            display: none;
             @include device-md{
-                display: block;
+                position: absolute;
+                height: 100%;
+                width: auto;
             }
         }
         &__content{
