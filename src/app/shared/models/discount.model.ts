@@ -15,6 +15,7 @@ export class Discount extends Base<Discount>{
     isOwner: boolean;
     branch: Branch;
     finishAt: Date;
+    promotion: string;
 
     //FOR CRUD PURPOUSES
     previousBranch: Branch;

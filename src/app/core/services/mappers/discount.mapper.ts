@@ -20,7 +20,8 @@ export class DiscountMapper{
                 new Branch({ id: be.restaurants[0] }) : undefined,
             previousBranch: be.restaurants && be.restaurants.length > 0? 
             new Branch({ id: be.restaurants[0] }) : undefined,
-            finishAt: Date.fromString(be.finished_at)
+            finishAt: Date.fromString(be.finished_at),
+            promotion: be.promotion
         });
     }
 
@@ -30,11 +31,12 @@ export class DiscountMapper{
         // entity.card && formData.append('card',entity.card.id.toString());
         formData.append('card', entity.card? entity.card.id.toString() : '');
         formData.append('finished_at', entity.finishAt.toLocaleDateYearFirst()+' 00:00:00.000000-05:00' );
-        formData.append('is_owner',entity.card ? 'false' : 'true');
+        // formData.append('is_owner',entity.card ? 'false' : 'true');
         entity.description && formData.append('descrip',entity.description);
         entity.name && formData.append('name',entity.name);
         formData.append('porc',(entity.percentage || 0).toString());
         formData.append('price',(entity.price || 0).toString());
+        formData.append('promotion',entity.promotion);
         entity.termsAndConditions && formData.append('terms_condition',entity.termsAndConditions);
         console.log(entity.photoList);
         if(entity.photoList && entity.photoList[0] && entity.photoList[0].image){
