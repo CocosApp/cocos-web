@@ -58,10 +58,10 @@ export class SignupComponent implements OnInit {
   private schedules: SchedulesService, private mapsAPILoader: MapsAPILoader, private ngZone: NgZone,
   private sanitizer: DomSanitizer, private toast: ToastService, private router: Router, private dialog: MatDialog) { 
     this.signupFG = this.fb.group({
-      firstName: ['',[Validators.required]],
-      lastName: ['',[Validators.required]],
       ruc: ['',[Validators.required, new LengthValidator(11)]],
       businessName: ['',[Validators.required]],
+      firstName: ['',[Validators.required]],
+      lastName: ['',[Validators.required]],
       comments: ['',[/*Validators.required*/]],
       password: ['',[Validators.required]],
       confirmPassword: ['',[EqualsToValidator.buildValidator('password')]],
@@ -69,8 +69,9 @@ export class SignupComponent implements OnInit {
       phone: ['', [new LengthValidator(9)]],
     });
     this.branchFG = this.fb.group({
+      ruc: ['',[Validators.required, new LengthValidator(11)]],
+      businessName: ['',[Validators.required]],
       name: ['',[Validators.required]],
-      ruc: '',
       subcategoryList: [[],[new ArrayLengthValidator(1,2)]],
       longitude: ['',[Validators.required]],
       latitude: ['',[Validators.required]],
@@ -210,11 +211,14 @@ export class SignupComponent implements OnInit {
         Nombre: ${this.branchFG.value.name}; 
         Dirección: ${this.branchFG.value.address}; 
         Categorías: ${(this.branchFG.value.subcategoryList || []).map(c => c.name).join(', ')}; 
-        Facebook: ${this.branchFG.value.facebookPageUrl};`  
+        Facebook: ${this.branchFG.value.facebookPageUrl};`,
+        ruc: this.branchFG.value.ruc,
+        businessName: this.branchFG.value.businessName
       });
-      this.branchFG.patchValue({
-        ruc: this.signupFG.value.ruc
-      });
+      // this.branchFG.patchValue({
+      //   ruc: this.signupFG.value.ruc
+      // });
+      this.signupFG
       this.loading = true;
       this.users.register( new User(this.signupFG.value) )
       .subscribe(canRegister => {

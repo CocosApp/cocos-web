@@ -28,14 +28,6 @@
                 <input autocomplete="off" type="text" matInput placeholder="Apellidos" formControlName="lastName">
                 <mat-error>Requerido</mat-error>
               </mat-form-field>
-              <mat-form-field>
-                <input autocomplete="off" type="number" matInput placeholder="RUC" formControlName="ruc">
-                <mat-error>RUC inválido</mat-error>
-              </mat-form-field>
-              <mat-form-field>
-                <input autocomplete="off" type="text" matInput placeholder="Razón social" formControlName="businessName">
-                <mat-error>Requerido</mat-error>
-              </mat-form-field>
               <!-- <mat-form-field>
                 <textarea cols="4" matInput placeholder="¿Qué actividades realiza su negocio?" formControlName="comments"></textarea>
               </mat-form-field> -->
@@ -66,6 +58,14 @@
             <ng-template matStepLabel>Datos de su restaurante</ng-template>
             <form class="flex-col-layout ai-stretch" [formGroup]="branchFG"
             (submit)="onConfirm()">
+                <mat-form-field>
+                  <input autocomplete="off" type="number" matInput placeholder="RUC" formControlName="ruc">
+                  <mat-error>RUC inválido</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                  <input autocomplete="off" type="text" matInput placeholder="Razón social" formControlName="businessName">
+                  <mat-error>Requerido</mat-error>
+                </mat-form-field>
                 <mat-form-field>
                   <input autocomplete="off" type="text" matInput placeholder="Nombre" formControlName="name">
                   <mat-error>Requerido</mat-error>

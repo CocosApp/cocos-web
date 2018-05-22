@@ -34,9 +34,15 @@ export class DiscountMapper{
         // formData.append('is_owner',entity.card ? 'false' : 'true');
         entity.description && formData.append('descrip',entity.description);
         entity.name && formData.append('name',entity.name);
-        formData.append('porc',(entity.percentage || 0).toString());
-        formData.append('price',(entity.price || 0).toString());
-        formData.append('promotion',entity.promotion);
+        if(entity.percentage>0 && entity.percentage != null){
+            formData.append('porc',(entity.percentage || 0).toString());
+        }
+        if(entity.price>0 && entity.price != null){
+            formData.append('price',(entity.price || 0).toString());
+        }
+        if(!!entity.promotion &&entity.promotion != ''){
+            formData.append('promotion',entity.promotion);
+        }
         entity.termsAndConditions && formData.append('terms_condition',entity.termsAndConditions);
         console.log(entity.photoList);
         if(entity.photoList && entity.photoList[0] && entity.photoList[0].image){

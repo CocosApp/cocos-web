@@ -22,17 +22,25 @@
           <mat-error>Requerido</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <textarea autocomplete="off" type="text" matInput placeholder="Promoción" rows="6"
-          formControlName="promotion"></textarea>
+          <mat-select formControlName="discountType" placeholder="Tipo de descuento">
+            <mat-option *ngFor="let type of discountTypeList" [value]="type">
+              {{type}}
+            </mat-option>
+          </mat-select>
+          <mat-error>Seleccione un tipo</mat-error>
+        </mat-form-field>
+        <mat-form-field class="animated fadeIn" *ngIf="discountFG.value.discountType==discountTypeList[0]">
+          <input autocomplete="off" type="number" matInput placeholder="Precio" formControlName="price">
           <mat-error>Requerido</mat-error>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field class="animated fadeIn" *ngIf="discountFG.value.discountType==discountTypeList[1]">
           <input autocomplete="off" type="number" matInput placeholder="Porcentaje (sin %)" formControlName="percentage">
           <span matSuffix><h3>%</h3></span>
           <mat-error>Requerido</mat-error>
         </mat-form-field>
-        <mat-form-field>
-          <input autocomplete="off" type="number" matInput placeholder="Precio" formControlName="price">
+        <mat-form-field class="animated fadeIn" *ngIf="discountFG.value.discountType==discountTypeList[2]">
+          <textarea autocomplete="off" type="text" matInput placeholder="Promoción" rows="6"
+          formControlName="promotion"></textarea>
           <mat-error>Requerido</mat-error>
         </mat-form-field>
         <mat-form-field>

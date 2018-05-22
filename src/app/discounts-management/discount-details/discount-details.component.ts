@@ -30,6 +30,7 @@ export class DiscountDetailsComponent implements OnInit {
   maxPhotoQuantity: number = 1;
   changingPhotoIndex: number = undefined;
   reader = new FileReader();
+  discountTypeList = ['Precio', 'Porcentaje', 'Promoción'];
   @ViewChild('photoInputAdd') photoInputAddElm: ElementRef;
   
   constructor(private fb: FormBuilder, private sanitizer: DomSanitizer, private route: ActivatedRoute, 
@@ -44,14 +45,22 @@ export class DiscountDetailsComponent implements OnInit {
       branch: [undefined,[Validators.required]],
       previousBranch: [undefined,[]],
       photoList: this.fb.array([]),
+      discountType: [null,[Validators.required]],
       percentage: [0,[]],
       price: [0,[]],
+      promotion: ['',[]],
       termsAndConditions: ['',[Validators.required]],
       description: ['',[]],
       isOwner: [false,[Validators.required]],
-      promotion: ['',[]],
       finishAt: [new Date(),[Validators.required]]
     });
+    this.discountFG.get('discountType').valueChanges.subscribe((val)=>{
+      this.discountFG.patchValue({
+        percentage: undefined,
+        price: undefined,
+        promotion: undefined
+      })
+    })
     this.fillFormModels();
   }
 
