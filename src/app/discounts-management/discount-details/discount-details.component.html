@@ -39,8 +39,7 @@
           <mat-error>Requerido</mat-error>
         </mat-form-field>
         <mat-form-field class="animated fadeIn" *ngIf="discountFG.value.discountType==discountTypeList[2]">
-          <textarea autocomplete="off" type="text" matInput placeholder="Promoción" rows="6"
-          formControlName="promotion"></textarea>
+          <input autocomplete="off" type="text" matInput placeholder="Promoción (ej. 2x1)" formControlName="promotion">
           <mat-error>Requerido</mat-error>
         </mat-form-field>
         <mat-form-field>
@@ -52,7 +51,7 @@
         </mat-form-field>
         <mat-form-field>
           <input matInput [matDatepicker]="picker" placeholder="Fecha de vencimiento"
-          formControlName="finishAt">
+          formControlName="finishAt" readonly>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
