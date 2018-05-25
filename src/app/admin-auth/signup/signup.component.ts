@@ -58,8 +58,8 @@ export class SignupComponent implements OnInit {
   private schedules: SchedulesService, private mapsAPILoader: MapsAPILoader, private ngZone: NgZone,
   private sanitizer: DomSanitizer, private toast: ToastService, private router: Router, private dialog: MatDialog) { 
     this.signupFG = this.fb.group({
-      ruc: ['',[Validators.required, new LengthValidator(11)]],
-      businessName: ['',[Validators.required]],
+      ruc: ['',[]],
+      businessName: ['',[]],
       firstName: ['',[Validators.required]],
       lastName: ['',[Validators.required]],
       comments: ['',[/*Validators.required*/]],
