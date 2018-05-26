@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  backendUrl: 'http://backend.appcocos.com/',
+  backendUrl: 'http://appcocos.com/api/',
   googleMaps: {
     apiKey: 'AIzaSyCkMxWbKR4Y2SUSnkBRgsK4xxCGzKAoxt0'
   },

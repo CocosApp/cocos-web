@@ -67,6 +67,12 @@ export class DiscountDetailsComponent implements OnInit {
   fillFormModels(){
     if(this.discount) {
       this.discountFG.patchValue(this.discount);
+      if(this.discount.price != null) 
+        this.discountFG.patchValue({ discountType: this.discountTypeList[0] });
+      else if(this.discount.percentage != null) 
+        this.discountFG.patchValue({ discountType: this.discountTypeList[1] });
+      else if(this.discount.promotion != null) 
+        this.discountFG.patchValue({ discountType: this.discountTypeList[2] });
       ( this.discount.photoList || []).forEach( p => this.addPhotoFC(p) );
     };
     Observable.forkJoin(
