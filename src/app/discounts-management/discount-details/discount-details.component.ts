@@ -55,10 +55,20 @@ export class DiscountDetailsComponent implements OnInit {
       finishAt: [new Date(),[Validators.required]]
     });
     this.discountFG.get('discountType').valueChanges.subscribe((val)=>{
+      if(val == this.discountTypeList[0])
+        this.discountFG.patchValue({
+          percentage: undefined,
+          promotion: undefined
+        })
+      else if(val == this.discountTypeList[1])
+      this.discountFG.patchValue({
+        price: undefined,
+        promotion: undefined
+      })
+      else if(val == this.discountTypeList[2])
       this.discountFG.patchValue({
         percentage: undefined,
         price: undefined,
-        promotion: undefined
       })
     })
     this.fillFormModels();

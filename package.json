@@ -28,6 +28,7 @@
     "@angular/router": "^5.2.0",
     "@ngx-progressbar/core": "^4.1.1",
     "@ngx-progressbar/http": "^4.1.1",
+    "angular2-smd": "^1.0.3-SNAPSHOT",
     "core-js": "^2.4.1",
     "jquery": "^3.3.1",
     "jquery.scrollto": "^2.1.2",

@@ -51,6 +51,23 @@
               </button>
             </div>
           </form>
+          <h5>Cambiar contraseña</h5>
+          <form class="flex-col-layout ai-stretch" [formGroup]="changePasswordFG" (submit)="onChangePassword()">
+            <mat-form-field>
+              <input type="password" matInput formControlName="oldPassword" placeholder="Contraseña antigua">
+            </mat-form-field>
+            <mat-form-field>
+              <input type="password" matInput formControlName="newPassword" placeholder="Nueva contraseña">
+            </mat-form-field>
+            <mat-form-field>
+              <input type="password" matInput formControlName="confirmNewPassword" placeholder="Confirmar nueva contraseña">
+            </mat-form-field>
+            <div class="flex-row-layout jc-flex-end">
+              <button  mat-raised-button color="primary">
+                Cambiar
+              </button>
+            </div>
+          </form>
         </mat-card-content>
       </mat-card>
     </div>

@@ -236,4 +236,17 @@ export class UsersService extends BaseService implements CrudService<User>{
         })
     }
     
+    changePassword(oldPassword: string, newPassword: string): Observable<boolean>{
+        return this.api.put('change-password/',{
+            old_password: oldPassword,
+            new_password: newPassword,
+            email: this.currentUser.value.email
+        }).map( resp => {
+            return true;
+        }).catch( err => {
+            console.error(err);
+            this.toast.error('No se pudo cambiar la contraseña');
+            return Observable.of(false);
+        })
+    }
 }
