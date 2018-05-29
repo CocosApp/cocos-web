@@ -45,27 +45,36 @@
               <input autocomplete="off" type="number" matInput placeholder="Celular" formControlName="phone">
               <mat-error>Número de celular inválido</mat-error>
             </mat-form-field>
-            <div class="flex-row-layout jc-flex-end">
+            <div class="flex-row-layout jc-space-between">
+              <div class="flex-row-layout">
+                <button mat-button type="button" 
+                (click)="toggleChangePassword(changePasswordForm)">
+                  <h5>Cambiar contraseña</h5>
+                </button>
+              </div>
               <button  mat-raised-button color="primary">
                 Guardar
               </button>
             </div>
           </form>
-          <h5>Cambiar contraseña</h5>
-          <form class="flex-col-layout ai-stretch" [formGroup]="changePasswordFG" (submit)="onChangePassword()">
-            <mat-form-field>
-              <input type="password" matInput formControlName="oldPassword" placeholder="Contraseña antigua">
-            </mat-form-field>
-            <mat-form-field>
-              <input type="password" matInput formControlName="newPassword" placeholder="Nueva contraseña">
-            </mat-form-field>
-            <mat-form-field>
-              <input type="password" matInput formControlName="confirmNewPassword" placeholder="Confirmar nueva contraseña">
-            </mat-form-field>
-            <div class="flex-row-layout jc-flex-end">
-              <button  mat-raised-button color="primary">
-                Cambiar
-              </button>
+          <form [formGroup]="changePasswordFG" 
+          (submit)="onChangePassword()" style="display: none;" #changePasswordForm>
+            <div class="flex-col-layout ai-stretch">
+              <mat-form-field>
+                <input type="password" matInput formControlName="oldPassword" 
+                placeholder="Contraseña antigua" #oldPasswordInput>
+              </mat-form-field>
+              <mat-form-field>
+                <input type="password" matInput formControlName="newPassword" placeholder="Nueva contraseña">
+              </mat-form-field>
+              <mat-form-field>
+                <input type="password" matInput formControlName="confirmNewPassword" placeholder="Confirmar nueva contraseña">
+              </mat-form-field>
+              <div class="flex-row-layout jc-flex-end">
+                <button  mat-raised-button color="primary">
+                  Cambiar
+                </button>
+              </div>
             </div>
           </form>
         </mat-card-content>

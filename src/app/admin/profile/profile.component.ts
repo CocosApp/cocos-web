@@ -6,6 +6,7 @@ import { LengthValidator } from '../../shared/validators/length.validator';
 import { User } from '../../shared/models/user.model';
 import { Subscription } from 'rxjs';
 import { EqualsToValidator } from '../../shared/validators/equals-to.validator';
+declare var $;
 
 @Component({
   selector: 'app-profile',
@@ -76,6 +77,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
         }
       })
     }
+  }
+
+  toggleChangePassword(form){
+    $(form).slideToggle(250,'swing',()=>{
+      if(getComputedStyle(form).display != 'none'){
+        // oldPasswordInput.focus();
+        $('#dashboardContent').animate({
+          scrollTop: 250
+      }, 800);
+      }
+    });
   }
 
 }
