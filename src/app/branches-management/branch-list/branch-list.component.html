@@ -19,6 +19,10 @@
             [routerLink]="branch.id">
               <span>EDITAR INFORMACIÓN</span>
             </button>
+            <button mat-button color="primary" class="flex-auto" matTooltip="Duplicar"
+            [routerLink]="branch.id" [queryParams]="{duplicar: true}">
+              <img src="/assets/images/file_copy.png" alt="">
+            </button>
         </mat-card-actions>
       </mat-card>
     </div>

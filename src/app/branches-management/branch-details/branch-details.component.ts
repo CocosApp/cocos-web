@@ -46,6 +46,7 @@ export class BranchDetailsComponent implements OnInit {
   changingPhotoIndex: number = undefined;
   reader = new FileReader();
   currentUser: User;
+  duplicated = false;
   @ViewChild('photoInputAdd') photoInputAddElm: ElementRef;
   
   constructor(private fb: FormBuilder, private branches: BranchesService, 
@@ -54,6 +55,7 @@ export class BranchDetailsComponent implements OnInit {
   private sanitizer: DomSanitizer, private route: ActivatedRoute, private discounts: DiscountsService,
   private router: Router, private toast: ToastService ) {
     this.branch = this.route.snapshot.data.branch;
+    this.duplicated = this.route.snapshot.queryParams.duplicar;
     this.currentUser = this.route.snapshot.data.user;
     this.branchFG = this.fb.group({
       id: undefined,
@@ -63,7 +65,7 @@ export class BranchDetailsComponent implements OnInit {
       latitude: ['',[Validators.required]],
       address: ['',[new LocationValidator()]],
       scheduleList: [[],[Validators.required]],
-      ruc: [this.currentUser.ruc,[Validators.required]],
+      ruc: ['',[Validators.required]],
       // discountList: [[],[Validators.required]],
       menu: [undefined,[]],
       menuPublicUrl: ['',[]],
@@ -113,6 +115,15 @@ export class BranchDetailsComponent implements OnInit {
       (this.branch.photoList || []).forEach( p => {
         this.addPhotoFG(p);
       });
+      if(this.duplicated){
+        this.branchFG.patchValue({
+          address: '',
+          latitude: 0,
+          longitude: 0
+        });
+        this.lat = 0;
+        this.lng = 0;
+      }
     };
     Observable.forkJoin(
       this.categories.get(), this.discounts.get(), this.services.get(), this.schedules.get()
@@ -257,11 +268,15 @@ export class BranchDetailsComponent implements OnInit {
     }
     if(this.branchFG.valid){
       let branch = new Branch(this.branchFG.value);
-      if(!!branch.id){
+      if(!!branch.id && !this.duplicated){
         // console.log(branch);
         this.branches.update(branch).subscribe( branch => {
           if(branch){
-            this.toast.success('El restaurante ha sido actualizado correctamente');
+            if(this.duplicated){
+              this.toast.success('El restaurante ha sido duplicado correctamente');
+            }else{
+              this.toast.success('El restaurante ha sido actualizado correctamente');
+            }
             this.router.navigateByUrl('/admin/restaurantes');
           }
         });

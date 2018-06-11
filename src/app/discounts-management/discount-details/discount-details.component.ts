@@ -51,7 +51,7 @@ export class DiscountDetailsComponent implements OnInit {
       promotion: ['',[]],
       termsAndConditions: ['',[Validators.required]],
       description: ['',[]],
-      isOwner: [false,[Validators.required]],
+      isOwner: [false,[/*Validators.required*/]],
       finishAt: [new Date(),[Validators.required]]
     });
     this.discountFG.get('discountType').valueChanges.subscribe((val)=>{

@@ -5,7 +5,7 @@
         <button mat-icon-button type="button" routerLink="/admin/restaurantes">
           <i class="material-icons">keyboard_backspace</i>
         </button>
-        <span><b>{{ branch ? 'Editar restaurante' : 'Crear restaurante' }}</b></span>
+        <span><b>{{ duplicated ? 'Duplicando restaurante...' : branch ? 'Editar restaurante' : 'Crear restaurante' }}</b></span>
       </mat-card-title>
       <!-- <mat-card-subtitle>
         Si desea designar la gestión de esta sucursal a alguien más, deberá contactar con el equipo de
