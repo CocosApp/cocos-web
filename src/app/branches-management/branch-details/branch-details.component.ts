@@ -21,6 +21,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Photo } from '../../shared/models/shared/photo.model';
 import { ToastService } from '../../core/services/shared/toast.service';
 import { ArrayLengthValidator } from '../../shared/validators/array-length.validator';
+import { User } from '../../shared/models/user.model';
+import { LocationValidator } from '../../shared/validators/location.validator';
 
 @Component({
   selector: 'app-branch-details',
@@ -43,6 +45,7 @@ export class BranchDetailsComponent implements OnInit {
   maxPhotoQuantity: number = 3;
   changingPhotoIndex: number = undefined;
   reader = new FileReader();
+  currentUser: User;
   @ViewChild('photoInputAdd') photoInputAddElm: ElementRef;
   
   constructor(private fb: FormBuilder, private branches: BranchesService, 
@@ -51,15 +54,16 @@ export class BranchDetailsComponent implements OnInit {
   private sanitizer: DomSanitizer, private route: ActivatedRoute, private discounts: DiscountsService,
   private router: Router, private toast: ToastService ) {
     this.branch = this.route.snapshot.data.branch;
-    console.log(this.branch);
+    this.currentUser = this.route.snapshot.data.user;
     this.branchFG = this.fb.group({
       id: undefined,
       name: ['',[Validators.required]],
       subcategoryList: [[],[new ArrayLengthValidator(1,2)]],
       longitude: ['',[Validators.required]],
       latitude: ['',[Validators.required]],
-      address: ['',[Validators.required]],
+      address: ['',[new LocationValidator()]],
       scheduleList: [[],[Validators.required]],
+      ruc: [this.currentUser.ruc,[Validators.required]],
       // discountList: [[],[Validators.required]],
       menu: [undefined,[]],
       menuPublicUrl: ['',[]],
@@ -88,7 +92,8 @@ export class BranchDetailsComponent implements OnInit {
           this.lng = place.geometry.location.lng();
           this.branchFG.patchValue({
             latitude: this.lat,
-            longitude: this.lng
+            longitude: this.lng,
+            address: place.formatted_address
           });
           this.branchFG.get('address').updateValueAndValidity();
         });
@@ -100,6 +105,8 @@ export class BranchDetailsComponent implements OnInit {
   fillFormModels(){
     if(this.branch) {
       this.branchFG.patchValue(this.branch);
+      this.lat = this.branch.latitude;
+      this.lng = this.branch.longitude;
       (this.branch.phoneList || []).forEach( (p,i) => {
         (this.branchFG.get('phoneList') as FormArray).controls[i].patchValue(p);
       });
@@ -250,16 +257,21 @@ export class BranchDetailsComponent implements OnInit {
     }
     if(this.branchFG.valid){
       let branch = new Branch(this.branchFG.value);
-      if(branch.id){
+      if(!!branch.id){
         // console.log(branch);
         this.branches.update(branch).subscribe( branch => {
           if(branch){
-            this.toast.success('El restaurante ha sido actualizada correctamente');
+            this.toast.success('El restaurante ha sido actualizado correctamente');
             this.router.navigateByUrl('/admin/restaurantes');
           }
         });
       }else{
-        this.toast.error('Usted no tiene permisos para crear restaurantes');
+        this.branches.add(branch).subscribe( branch => {
+          if(branch){
+            this.toast.success('El restaurante ha sido creado correctamente');
+            this.router.navigateByUrl('/admin/restaurantes');
+          }
+        });
       }
     }else{
       this.toast.warning('Hay campos requeridos sin completar');

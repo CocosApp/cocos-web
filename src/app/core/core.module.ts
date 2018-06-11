@@ -24,6 +24,7 @@ import { InitComponent } from './components/init/init.component';
 import { RouterModule } from '@angular/router';
 import { InitGuard } from './guards/init.guard';
 import { ShareService } from './services/share.service';
+import { CurrentUserResolver } from './resolvers/current-user.resolver';
 
 @NgModule({
   imports: [
@@ -56,7 +57,8 @@ import { ShareService } from './services/share.service';
     InitGuard,
     AuthGuard,
     AdminGuard,
-    ShareService
+    ShareService,
+    CurrentUserResolver
   ],
   declarations: [ InitComponent ],
   exports: [

@@ -67,8 +67,8 @@ export class BranchMapper{
         entity.menu && formData.append('food_letter',entity.menu, entity.menu.name);
         entity.phoneList[0] && formData.append('mobile', entity.phoneList[0]);
         entity.phoneList[1] && formData.append('mobile2', entity.phoneList[1]);
+        console.log(entity.phoneList);
         entity.whatsapp && formData.append('whatsapp',entity.whatsapp.startsWith('+51')? entity.whatsapp : '+51'+entity.whatsapp);
-        console.log(entity.photoList);
         if(entity.photoList[0] && entity.photoList[0].image){
             formData.append('photo1',entity.photoList[0].image, entity.photoList[0].image.name);
         }else if(entity.photoList[0] && entity.photoList[0].forDelete){

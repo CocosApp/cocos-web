@@ -112,7 +112,8 @@ export class SignupComponent implements OnInit {
           this.zoom = 18;
           this.branchFG.patchValue({
             latitude: this.lat,
-            longitude: this.lng
+            longitude: this.lng,
+            address: place.formatted_address
           });
           this.branchFG.get('address').updateValueAndValidity();
         });
