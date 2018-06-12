@@ -23,6 +23,8 @@ import { ToastService } from '../../core/services/shared/toast.service';
 import { ArrayLengthValidator } from '../../shared/validators/array-length.validator';
 import { User } from '../../shared/models/user.model';
 import { LocationValidator } from '../../shared/validators/location.validator';
+import { MatDialog } from '@angular/material';
+import { SuccessComponent } from '../../shared/components/success/success.component';
 
 @Component({
   selector: 'app-branch-details',
@@ -53,7 +55,7 @@ export class BranchDetailsComponent implements OnInit {
   private categories: CategoriesService, private services: ServicesService, private geocoding: GeocodingService,
   private schedules: SchedulesService, private mapsAPILoader: MapsAPILoader, private ngZone: NgZone,
   private sanitizer: DomSanitizer, private route: ActivatedRoute, private discounts: DiscountsService,
-  private router: Router, private toast: ToastService ) {
+  private router: Router, private toast: ToastService, private dialog: MatDialog ) {
     this.branch = this.route.snapshot.data.branch;
     this.duplicated = this.route.snapshot.queryParams.duplicar;
     this.currentUser = this.route.snapshot.data.user;
@@ -119,7 +121,8 @@ export class BranchDetailsComponent implements OnInit {
         this.branchFG.patchValue({
           address: '',
           latitude: 0,
-          longitude: 0
+          longitude: 0,
+          ruc: ''
         });
         this.lat = 0;
         this.lng = 0;
@@ -272,18 +275,19 @@ export class BranchDetailsComponent implements OnInit {
         // console.log(branch);
         this.branches.update(branch).subscribe( branch => {
           if(branch){
-            if(this.duplicated){
-              this.toast.success('El restaurante ha sido duplicado correctamente');
-            }else{
-              this.toast.success('El restaurante ha sido actualizado correctamente');
-            }
+            this.toast.success('El restaurante ha sido actualizado correctamente');
             this.router.navigateByUrl('/admin/restaurantes');
           }
         });
       }else{
         this.branches.add(branch).subscribe( branch => {
           if(branch){
-            this.toast.success('El restaurante ha sido creado correctamente');
+            if(this.duplicated){
+              this.toast.success('El restaurante ha sido duplicado correctamente');
+            }else{
+              this.toast.success('El restaurante ha sido creado correctamente');
+            }
+            this.dialog.open(SuccessComponent);
             this.router.navigateByUrl('/admin/restaurantes');
           }
         });

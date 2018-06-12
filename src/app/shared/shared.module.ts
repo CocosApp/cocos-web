@@ -11,6 +11,7 @@ import { GoToBackDirective } from './directives/go-to-back.directive';
 import './extensions/array.extensions';
 import './extensions/date.extensions';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { SuccessComponent } from './components/success/success.component';
 
 @NgModule({
   imports: [
@@ -18,12 +19,17 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FormsModule,
     ReactiveFormsModule,
     MaterialTimeControlModule,
+    MatDialogModule,
+    MatButtonModule,
     AgmCoreModule.forRoot({
       apiKey: environment.googleMaps.apiKey,
       libraries: ["places"]
     })
   ],
-  declarations: [ GoToBackDirective ],
+  entryComponents: [
+    SuccessComponent
+  ],
+  declarations: [ GoToBackDirective, SuccessComponent ],
   exports: [
     AgmCoreModule,
     CommonModule,
@@ -47,7 +53,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatRadioModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    SuccessComponent
   ],
   providers: [
     InstanceResolverForBranch,
