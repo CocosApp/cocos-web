@@ -1,3 +1,4 @@
+@import "../../../assets/styles/1-settings/index";
 @import "../../../assets/styles/2-tools/index";
 
 .branch-list{
@@ -12,6 +13,7 @@
     }
     .branch{
         padding: 10px;
+        position: relative;
         @include flexFlex(0 0 100%);
         @include device-md{
             @include flexFlex(0 0 50%);
@@ -34,6 +36,18 @@
             font-size: 16px;
             letter-spacing: 2px;
             background-color: rgba(#000,.4);
+        }
+        &__delete{
+            z-index: 2;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            color: #FFF;
+            background-color: rgba($color-primary,.6);
+            &:hover{
+                background-color: $color-primary
+            }
         }
         // mat-card-actions{
         //     @include layoutFlex();

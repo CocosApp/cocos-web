@@ -1,6 +1,9 @@
 <div class="branch-list">
   <div class="branches-container" *ngIf="branchList">
     <div class="branch" *ngFor="let branch of branchList">
+      <button class="branch__delete" (click)="onDelete(branch)" matTooltip="Eliminar" matTooltipPosition="above">
+        <mat-icon>close</mat-icon>
+      </button>
       <mat-card>
         <div mat-card-image class="branch__image" 
         [style.backgroundImage]="getBackgroundImage(branch)">
@@ -16,9 +19,6 @@
             [routerLink]="branch.id">
               <span>EDITAR INFORMACIÓN</span>
             </button>
-            <button mat-button class="flex-auto" matTooltip="Eliminar" (click)="onDelete(branch)">
-              <mat-icon>delete</mat-icon>
-            </button>
             <button mat-button class="flex-auto" matTooltip="Duplicar"
             [routerLink]="branch.id" [queryParams]="{duplicar: true}">
               <img src="/assets/images/file_copy.png" alt="">
@@ -27,7 +27,7 @@
       </mat-card>
     </div>
   </div>
-  <button class="branch-list__add" mat-fab matTooltip="Agregar restaurante"
+  <button class="branch-list__add" mat-fab matTooltip="Agregar restaurante" color="primary"
   matTooltipPosition="left" routerLink="agregar">
     <i class="material-icons">add</i>
   </button>
