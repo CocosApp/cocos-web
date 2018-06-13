@@ -36,7 +36,7 @@ export class BranchesService extends BaseService implements CrudService<Branch>{
         .catch( err => {
             this.toast.error('No se pudo actualizar el restaurante')
             return Observable.of(undefined);
-        });;
+        });
     }
     add(entity: Branch): Observable<Branch> {
         return this.api.post('admin/create/restaurant', BranchMapper.mapToBe(entity))
@@ -68,7 +68,14 @@ export class BranchesService extends BaseService implements CrudService<Branch>{
             })
     }
     remove(entity: Branch): Observable<Branch> {
-        throw new Error("Method not implemented.");
+        return this.api.delete(`admin/restaurant/RUD/${entity.id}`)
+        .map( resp => {
+            return entity;
+        })
+        .catch( err => {
+            this.toast.error('No se pudo eliminar el restaurante')
+            return Observable.of(undefined);
+        });;
     }
 
     

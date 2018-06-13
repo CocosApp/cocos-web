@@ -12,6 +12,7 @@ import './extensions/array.extensions';
 import './extensions/date.extensions';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SuccessComponent } from './components/success/success.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   imports: [
@@ -27,9 +28,10 @@ import { SuccessComponent } from './components/success/success.component';
     })
   ],
   entryComponents: [
-    SuccessComponent
+    SuccessComponent,
+    ConfirmDialogComponent
   ],
-  declarations: [ GoToBackDirective, SuccessComponent ],
+  declarations: [ GoToBackDirective, SuccessComponent, ConfirmDialogComponent ],
   exports: [
     AgmCoreModule,
     CommonModule,
@@ -54,7 +56,8 @@ import { SuccessComponent } from './components/success/success.component';
     MatDatepickerModule,
     MatNativeDateModule,
     FlexLayoutModule,
-    SuccessComponent
+    SuccessComponent,
+    ConfirmDialogComponent
   ],
   providers: [
     InstanceResolverForBranch,

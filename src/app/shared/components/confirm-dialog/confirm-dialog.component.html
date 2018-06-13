@@ -1,0 +1,17 @@
+<h3 mat-dialog-title>
+  {{title}}
+</h3>
+<mat-dialog-content>
+  <p>{{message}}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="fill-width flex-row-layout ai-center">
+    <button mat-button mat-dialog-close>
+      Cancelar
+    </button>
+    <span class="flex"></span>
+    <button mat-raised-button color="primary" [mat-dialog-close]="true">
+      Confirmar
+    </button>
+  </div>
+</mat-dialog-actions>
