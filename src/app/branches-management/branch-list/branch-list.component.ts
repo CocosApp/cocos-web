@@ -44,7 +44,7 @@ export class BranchListComponent implements OnInit {
     (this.dialog.open(ConfirmDialogComponent,{
       data: {
         title: `Eliminar el restaurante ${branch.name}?`,
-        message: 'Al eliminarse, ningún usuario podrá visualizar este restaurante desde la aplicación.'
+        message: 'Al eliminarse, ningún usuario podrá visualizar este restaurante en la aplicación.'
       }
     })).afterClosed().subscribe( confirm => {
       if(confirm){
