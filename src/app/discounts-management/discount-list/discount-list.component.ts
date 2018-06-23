@@ -6,6 +6,7 @@ import { ToastService } from '../../core/services/shared/toast.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { AnyDiscountComponent } from '../any-discount/any-discount.component';
+import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-discount-list',
@@ -53,11 +54,20 @@ export class DiscountListComponent implements OnInit {
     });
   }
 
-  onRemove(discount: Discount){
-    this.discounts.remove(discount).subscribe( d => {
-      if(d){
-        this.toast.success('Descuento eliminado con éxito');
-        this.load();
+  onRemove(discount: Discount){    
+    (this.dialog.open(ConfirmDialogComponent,{
+      data: {
+        title: `Eliminar el descuento ${discount.name}?`,
+        message: 'Al eliminarse, ningún usuario podrá visualizar este descuento en la aplicación.'
+      }
+    })).afterClosed().subscribe( confirm => {
+      if(confirm){
+        this.discounts.remove(discount).subscribe( d => {
+          if(d){
+            this.toast.success('Descuento eliminado con éxito');
+            this.load();
+          }
+        })
       }
     })
   }

@@ -81,8 +81,8 @@ export class SignupComponent implements OnInit {
       // menuPublicUrl: ['',[Validators.required]],
       phoneList: this.fb.array(['','']),
       photoList: this.fb.array([]),
-      whatsapp: ['', [new LengthValidator(9)]],
-      facebookPageUrl: ['',[new UrlValidator()]],
+      whatsapp: ['', [/*new LengthValidator(9)*/]],
+      facebookPageUrl: ['',[/*new UrlValidator()*/]],
       serviceList: [[],[Validators.required]],
     });
     Observable.forkJoin(

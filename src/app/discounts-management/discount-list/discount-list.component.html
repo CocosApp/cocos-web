@@ -1,31 +1,46 @@
 <div class="discount-list">
   <div class="discounts-container" *ngIf="discountList">
     <div class="discount" *ngFor="let discount of discountList">
+      <button class="discount__delete" (click)="onRemove(discount)" matTooltip="Eliminar" matTooltipPosition="above">
+        <mat-icon>close</mat-icon>
+      </button>
       <mat-card>
         <div mat-card-image class="discount__image" 
         [style.backgroundImage]="getBackgroundImage(discount)">
+          <div class="discount__name">
+            <span>{{discount.name}}</span>
+          </div>
         </div>
-        <mat-card-content>
+        <!-- <mat-card-content>
           <p class="text-center">
             <i>{{discount.name}}</i>
           </p>
-        </mat-card-content>
+        </mat-card-content> -->
         <mat-card-actions class="flex-row-layout flex-gap">
-            <button mat-button class="flex-50" (click)="onRemove(discount)">
-              <!-- <i class="material-icons">delete</i> -->
+            <!-- <button mat-button class="flex-50" (click)="onRemove(discount)">
               <span>ELIMINAR</span>
-            </button>
-            <button mat-button color="primary" class="flex-50"
+            </button> -->
+            <button mat-button color="primary" class="flex"
             [routerLink]="discount.id">
             <!-- <i class="material-icons">mode_edit</i> -->
-              <span>EDITAR</span>
+              <span>EDITAR INFORMACIÓN</span>
             </button>
         </mat-card-actions>
       </mat-card>
     </div>
+    <div class="discount discount--operations">
+      <mat-card>
+        <button class="fill-parent" mat-button routerLink="agregar">
+          <div class="fill-parent flex-col-layout ai-center jc-center">
+            <img src="/assets/images/add.svg" alt="">
+            <span>Agregar descuento</span>
+          </div>
+        </button>
+      </mat-card>
+    </div>
   </div>
-  <button class="discount-list__add" mat-fab matTooltip="Agregar descuento" color="primary"
+  <!-- <button class="discount-list__add" mat-fab matTooltip="Agregar descuento" color="primary"
   matTooltipPosition="left" routerLink="agregar">
     <i class="material-icons">add</i>
-  </button>
+  </button> -->
 </div>

@@ -19,16 +19,40 @@
             [routerLink]="branch.id">
               <span>EDITAR INFORMACIÓN</span>
             </button>
-            <button mat-button class="flex-auto" matTooltip="Duplicar"
+            <!-- <button mat-button class="flex-auto" matTooltip="Duplicar"
             [routerLink]="branch.id" [queryParams]="{duplicar: true}">
               <img src="/assets/images/file_copy.png" alt="">
-            </button>
+            </button> -->
         </mat-card-actions>
       </mat-card>
     </div>
+    <div class="branch branch--operations">
+      <mat-card>
+        <div class="fill-parent flex-row-layout ai-stretch flex-wrap">
+          <button class="flex" mat-button routerLink="agregar">
+            <div class="fill-parent flex-col-layout ai-center jc-center">
+              <img src="/assets/images/add.svg" alt="">
+              <span>Nuevo restaurante</span>
+            </div>
+          </button>
+          <button class="flex" mat-button [matMenuTriggerFor]="menu">
+            <div class="fill-parent flex-col-layout ai-center jc-center">
+              <img src="/assets/images/copy.svg" alt="">
+              <span>Duplicar restaurante</span>
+            </div>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item *ngFor="let branch of nonDuplicatedBranches"
+            [routerLink]="branch.id" [queryParams]="{duplicar: true}">
+              {{branch.name}}
+            </button>
+          </mat-menu>
+        </div>
+      </mat-card>
+    </div>
   </div>
-  <button class="branch-list__add" mat-fab matTooltip="Agregar restaurante" color="primary"
+  <!-- <button class="branch-list__add" mat-fab matTooltip="Agregar restaurante" color="primary"
   matTooltipPosition="left" routerLink="agregar">
     <i class="material-icons">add</i>
-  </button>
+  </button> -->
 </div>

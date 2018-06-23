@@ -25,5 +25,6 @@ export class Branch extends Base<Branch>{
     serviceList: Service[];
     scheduleList: Schedule[];
     userBranchId: number;
+    duplicado: boolean;
 
 }

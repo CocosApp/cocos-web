@@ -17,7 +17,15 @@
         @include flexFlex(0 0 100%);
         @include device-md{
             @include flexFlex(0 0 50%);
-        }        
+        }   
+        &--operations{
+            mat-card{
+                height: 252px;
+                img{
+                    height: 30px;
+                }
+            }
+        }     
         &__image{
             position: relative;
             height: 200px;

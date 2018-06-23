@@ -76,6 +76,7 @@ export class BranchDetailsComponent implements OnInit {
       whatsapp: ['',[Validators.required]],
       facebookPageUrl: ['',[Validators.required]],
       serviceList: [[],[Validators.required]],
+      duplicado: false
     });
     this.mapsAPILoader.load().then(() => {
       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
@@ -122,7 +123,8 @@ export class BranchDetailsComponent implements OnInit {
           address: '',
           latitude: 0,
           longitude: 0,
-          ruc: ''
+          ruc: '',
+          duplicado: true
         });
         this.lat = 0;
         this.lng = 0;

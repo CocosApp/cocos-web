@@ -14,6 +14,7 @@ import { BranchesService } from '../../core/services/branches.service';
 import { Branch } from '../../shared/models/branch.model';
 import { CreatedDiscountDialogComponent } from '../created-discount-dialog/created-discount-dialog.component';
 import { MatDialog } from '@angular/material';
+declare var $;
 
 @Component({
   selector: 'app-discount-details',
@@ -220,5 +221,9 @@ export class DiscountDetailsComponent implements OnInit {
     }else{
       this.toast.warning('Hay campos requeridos sin completar');
     }
+  }
+
+  toggle(cardsContainer){
+    $(cardsContainer).slideToggle(300);
   }
 }

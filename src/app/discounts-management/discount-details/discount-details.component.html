@@ -55,21 +55,28 @@
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-        <div class="mat-form-field flex-col-layout flex-gap ai-stretch">
-          <p><b>Tarjeta asociada al descuento (opcional):</b></p>
-          <mat-radio-group class="cards-container flex-col-layout flex-gap scrollbar" formControlName="card">
-            <mat-radio-button *ngFor="let card of cardList" [value]="card" color="primary">
-              <div class="flex-row-layout ai-center flex-gap">
-                  <img [src]="card.photo.imageUrl" [attr.alt]="card.name" width="40">
-                  <span>{{card.name}}</span>
-              </div>
-            </mat-radio-button>
-          </mat-radio-group>
-          <div class="flex-row-layout">
-            <span class="flex"></span>
-            <button type="button" mat-button color="primary" (click)="clearCards()">
-              LIMPIAR SELECCIÓN
-            </button>
+        <button (click)="toggle(cardsContainer)" type="button" mat-button>
+          <p style="white-space: normal;">
+            <b>¿Tu descuento está asociado a una tarjeta?</b>&nbsp;<span>Haz click aquí</span>
+          </p>
+        </button>
+        <div class="cards-container-wrapper" #cardsContainer >
+          <div class="mat-form-field flex-col-layout flex-gap ai-stretch">
+            <p><b>Tarjeta asociada al descuento</b></p>
+            <mat-radio-group class="cards-container flex-col-layout flex-gap scrollbar" formControlName="card">
+              <mat-radio-button *ngFor="let card of cardList" [value]="card" color="primary">
+                <div class="flex-row-layout ai-center flex-gap">
+                    <img [src]="card.photo.imageUrl" [attr.alt]="card.name" width="40">
+                    <span>{{card.name}}</span>
+                </div>
+              </mat-radio-button>
+            </mat-radio-group>
+            <div class="flex-row-layout">
+              <span class="flex"></span>
+              <button type="button" mat-button color="primary" (click)="clearCards()">
+                LIMPIAR SELECCIÓN
+              </button>
+            </div>
           </div>
         </div>
         <div class="mat-form-field photos-container">

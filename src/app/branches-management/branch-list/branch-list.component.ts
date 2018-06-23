@@ -23,6 +23,10 @@ export class BranchListComponent implements OnInit {
   ngOnInit() {
   }
 
+  get nonDuplicatedBranches(): Branch[]{
+    return (this.branchList||[]).filter( b => !b.duplicado );
+  }
+
   load(){
     this.branches.get().subscribe( bs => {
       this.branchList = bs

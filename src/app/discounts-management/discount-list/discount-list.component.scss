@@ -12,17 +12,44 @@
     }
     .discount{
         padding: 10px;
+        position: relative;
         @include flexFlex(0 0 100%);
         @include device-md{
             @include flexFlex(0 0 50%);
         }        
+        // &__image{
+        //     position: relative;
+        //     height: 200px;
+        //     background-position: top left;
+        //     background-size: cover;
+        //     background-repeat: no-repeat;
+        //     // margin-bottom: 0px;
+        // }
+        // &__name{
+        //     padding: 8px;
+        //     position: absolute;
+        //     width: 100%;
+        //     bottom: 0;
+        //     left: 0;
+        //     color: #FFF;
+        //     font-size: 16px;
+        //     background-color: rgba(#000,.4);
+        // } 
+        &--operations{
+            mat-card{
+                height: 252px;
+                img{
+                    height: 30px;
+                }
+            }
+        }             
         &__image{
             position: relative;
             height: 200px;
-            background-position: top left;
+            background-position: center;
             background-size: cover;
             background-repeat: no-repeat;
-            // margin-bottom: 0px;
+            margin-bottom: 0px;
         }
         &__name{
             padding: 8px;
@@ -32,7 +59,22 @@
             left: 0;
             color: #FFF;
             font-size: 16px;
+            letter-spacing: 2px;
             background-color: rgba(#000,.4);
+        }
+        &__delete{
+            z-index: 2;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px;
+            color: #FFF;
+            @include borderRadius(5px);
+            // background-color: rgba($color-primary,.6);
+            background-color: rgba(#000,.8);
+            &:hover{
+                // background-color: $color-primary
+            }
         }
         // mat-card-actions{
         //     @include layoutFlex();
