@@ -28,7 +28,7 @@ export class BranchMapper{
                 name: i.name
             })),
             menuPublicUrl: be.food_letter,
-            duplicado: be.duplicado,
+            duplicado: be.is_duplicated,
             phoneList: [be.mobile,be.mobile2],
             photoList: [be.photo1,be.photo2,be.photo3].filter(p => p).map((p,id) => new Photo({ id: id+1, imageUrl: p })),
             subcategoryList: (be.subcategory || []).map( i => new Category({
@@ -48,7 +48,7 @@ export class BranchMapper{
         entity.latitude && formData.append('latitude',entity.latitude.toString());
         entity.address && formData.append('address',entity.address);
         entity.facebookPageUrl && formData.append('facebook',entity.facebookPageUrl);
-        formData.append('duplicado',entity.duplicado? "true" : "false");
+        formData.append('is_duplicated',entity.duplicado? "true" : "false");
         formData.append('is_enable','false');
         if(entity.subcategoryList){
             entity.subcategoryList.forEach( i => formData.append('subcategory',i.id.toString()));

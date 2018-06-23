@@ -73,8 +73,8 @@ export class BranchDetailsComponent implements OnInit {
       menuPublicUrl: ['',[]],
       phoneList: this.fb.array(['','']),
       photoList: this.fb.array([]),
-      whatsapp: ['',[Validators.required]],
-      facebookPageUrl: ['',[Validators.required]],
+      whatsapp: ['',[/*Validators.required*/]],
+      facebookPageUrl: ['',[/*Validators.required*/]],
       serviceList: [[],[Validators.required]],
       duplicado: false
     });
