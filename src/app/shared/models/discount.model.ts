@@ -14,10 +14,22 @@ export class Discount extends Base<Discount>{
     termsAndConditions: string;
     isOwner: boolean;
     branch: Branch;
+    branches: Branch[];
     finishAt: Date;
     promotion: string;
 
     //FOR CRUD PURPOUSES
     previousBranch: Branch;
+    previousBranches: Branch[];
+    get allBranches(): Branch[]{
+        let branchesIds = [];     
+        return (this.branches.concat(...this.previousBranches)).filter( b => {
+            if( branchesIds.indexOf(b.id) < 0 ){
+                branchesIds.push(b.id)
+                return true;
+            }
+            return false;
+        });
+    }
 
 }

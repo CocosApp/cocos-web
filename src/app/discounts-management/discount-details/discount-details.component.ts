@@ -43,8 +43,9 @@ export class DiscountDetailsComponent implements OnInit {
       id: undefined,
       name: ['',[Validators.required]],
       card: [undefined,[]],
-      branch: [undefined,[Validators.required]],
+      branches: [[],[Validators.required]],
       previousBranch: [undefined,[]],
+      previousBranches: [[],[/*Validators.required*/]],
       photoList: this.fb.array([]),
       discountType: [null,[Validators.required]],
       percentage: [0,[]],
@@ -92,18 +93,19 @@ export class DiscountDetailsComponent implements OnInit {
       this.cardList = results[0];
       this.branchList = results[1];
       let cardFromList = undefined;
-      let branchFromList = undefined;
+      let branchesFromList = [];
       if(this.discount){
         if( this.discount.card){
           cardFromList = this.cardList.find( c => c.id == this.discount.card.id );
         }
-        if(this.discount.branch){
-          branchFromList = this.branchList.find( b => b.id == this.discount.branch.id );
+        if(this.discount.branches){
+          let discountBranchesId = (this.discount.branches||[]).map( b => b.id );
+          branchesFromList = this.branchList.filter( b => discountBranchesId.indexOf(b.id) >= 0 );
         }
       }
       this.discountFG.patchValue({
         card: cardFromList,
-        branch: branchFromList
+        branches: branchesFromList
       });
     })
   }
@@ -185,7 +187,7 @@ export class DiscountDetailsComponent implements OnInit {
   }
 
   onConfirm(){
-    console.log(this.discountFG.value);
+    // console.log(this.discountFG.value);
     if(this.discountFG.valid){
       let discount = new Discount(this.discountFG.value);
       // console.log(discount);

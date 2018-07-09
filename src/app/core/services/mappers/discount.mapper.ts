@@ -16,8 +16,10 @@ export class DiscountMapper{
             description: be.descrip,
             isOwner: be.is_owner,
             termsAndConditions: be.terms_condition,
-            branch: be.restaurants && be.restaurants.length > 0? 
-                new Branch({ id: be.restaurants[0] }) : undefined,
+            // branch: be.restaurants && be.restaurants.length > 0? 
+            //     new Branch({ id: be.restaurants[0] }) : undefined,
+            branches: (be.restaurants||[]).map( res => new Branch({ id: res })),
+            previousBranches: (be.restaurants||[]).map( res => new Branch({ id: res })),
             previousBranch: be.restaurants && be.restaurants.length > 0? 
             new Branch({ id: be.restaurants[0] }) : undefined,
             finishAt: Date.fromString(be.finished_at),

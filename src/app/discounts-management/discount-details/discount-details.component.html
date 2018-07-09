@@ -44,11 +44,12 @@
           <mat-error>Requerido</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <mat-select placeholder="Asociar al restaurante" formControlName="branch">
+          <mat-select placeholder="Asociar a los restaurantes" formControlName="branches" multiple>
             <mat-option *ngFor="let branch of branchList" [value]="branch">
               {{branch.name}}
             </mat-option>
           </mat-select>
+          <mat-error>Al menos 1 restaurante</mat-error>
         </mat-form-field>
         <mat-form-field>
           <input matInput [matDatepicker]="picker" placeholder="Fecha de vencimiento"
